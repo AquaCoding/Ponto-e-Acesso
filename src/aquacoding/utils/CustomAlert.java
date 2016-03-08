@@ -18,11 +18,11 @@ public class CustomAlert {
         a.setContentText(content);
         
         // Define o estilo do alert
-        a.getDialogPane().getScene().getStylesheets().add(""+Main.class.getResource("application.css"));
+        //a.getDialogPane().getScene().getStylesheets().add(""+Main.class.getResource("application.css"));
         
         // Define os icons dos alerts
-        Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new Image(""+Main.class.getResource("icon.png")));
+        //Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
+        //stage.getIcons().add(new Image(""+Main.class.getResource("icon.png")));
         
         // Exibe e retorna o resultado do botão clicado
         return  a.showAndWait();

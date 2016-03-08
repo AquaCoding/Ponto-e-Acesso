@@ -19,7 +19,7 @@ public abstract class DatabaseConnect {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// Cria uma conexão com o MySQL
-			con = DriverManager.getConnection("jdbc:mysql://localhost/loja",
+			con = DriverManager.getConnection("jdbc:mysql://localhost/PontoAcesso",
 					"root", "");
 		} catch (Exception e) {
 			e.printStackTrace();
