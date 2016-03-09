@@ -2,7 +2,9 @@ package aquacoding.pontoacesso;
 
 import java.io.IOException;
 
+import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.SetorEditarController;
+import aquacoding.model.Funcao;
 import aquacoding.model.Setor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -156,4 +158,22 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	// Carrega a view de edição da função dentro da janela principal
+		public static void loadFuncaoEditarView(Funcao funcao) {
+			try {
+				primaryStage.setTitle(pageTitle + " - Editar Setor");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoEditar.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+				
+				// Obtem o controller da interface e passa o setor a ser editado
+				FuncaoEditarController controller = loader.getController();
+				controller.setFuncao(funcao);
+				
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 }

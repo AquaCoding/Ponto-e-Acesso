@@ -21,7 +21,7 @@ public class FuncaoListaController implements Initializable {
 	ListView<Funcao> funcaoListagem;
 	
 	@FXML
-	Button cancelar;
+	Button cancelar, alterar;
 	
 	// Atributos
 	ObservableList<Funcao> items;
@@ -31,6 +31,12 @@ public class FuncaoListaController implements Initializable {
 		// Cancela a exibição e retorna pra tela inicial
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
+		});
+		
+		// Inicia a view de edição de uma função
+		alterar.setOnMouseClicked((MouseEvent e) -> {
+			if(funcaoListagem.getSelectionModel().getSelectedItem() != null)
+				Main.loadFuncaoEditarView(funcaoListagem.getSelectionModel().getSelectedItem());
 		});
 				
 		// Define o nome método de criação de células

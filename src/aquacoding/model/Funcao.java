@@ -117,4 +117,36 @@ public class Funcao {
 			throw new RuntimeException("Um erro ocorreu");
 		}
 	}
+	
+	public boolean update() {
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"UPDATE Funcao SET nome = ?, idSetor = ? WHERE idSetor = ?");
+
+			// Realiza o bind dos valores
+			statement.setString(1, this.nome);
+			statement.setInt(2, this.setor.getId());
+			statement.setInt(3, this.id);
+
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();
+
+			// Retorna resultado
+			if (ret == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Um erro ocorreu ao atualizar o Setor");
+		}
+	}
 }
