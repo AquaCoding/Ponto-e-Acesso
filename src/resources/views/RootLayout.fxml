@@ -14,6 +14,12 @@
                   <MenuItem fx:id="menuBarSetorNovo" mnemonicParsing="false" text="Novo" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Função">
+              <items>
+                  <MenuItem fx:id="menuBarFuncaoLista" mnemonicParsing="false" text="Ver todos" />
+                <MenuItem fx:id="menuBarFuncaoNovo" mnemonicParsing="false" text="Novo" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>

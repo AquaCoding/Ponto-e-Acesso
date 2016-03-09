@@ -15,6 +15,9 @@ public class RootLayoutController implements Initializable {
 	
 	@FXML
 	MenuItem menuBarSetorNovo, menuBarSetorLista;
+	
+	@FXML
+	MenuItem menuBarFuncaoNovo, menuBarFuncaoLista;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -25,6 +28,14 @@ public class RootLayoutController implements Initializable {
 		
 		menuBarSetorLista.setOnAction((ActionEvent e) -> {
 			Main.loadListaSetorView();
+		});
+		
+		menuBarFuncaoNovo.setOnAction((ActionEvent e) -> {
+			Main.loadNovoFuncaoView();
+		});
+		
+		menuBarFuncaoLista.setOnAction((ActionEvent e) -> {
+			Main.loadListaFuncaoView();
 		});
 	}
 

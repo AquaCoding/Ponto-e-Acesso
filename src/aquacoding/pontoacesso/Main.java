@@ -83,4 +83,30 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	// Carrega a view de novo setor dentro da janela principal
+	public static void loadNovoFuncaoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Nova Função");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Carrega a view de novo setor dentro da janela principal
+	public static void loadListaFuncaoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Funções");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoLista.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

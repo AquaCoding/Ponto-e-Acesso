@@ -6,12 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import aquacoding.utils.DatabaseConnect;
 
-public class Setor {
-	
+public class Funcao {
 	private int id;
 	private String nome;
+	private Setor setor;
 	
 	public int getId() {
 		return id;
@@ -27,17 +28,30 @@ public class Setor {
 	
 	public void setNome(String nome) {
 		if(nome.equals(""))
-			throw new RuntimeException("O nome do setor não pode ser vazio.");
+			throw new RuntimeException("O nome da função não pode ser vazio.");
 		this.nome = nome;
 	}
 	
-	public Setor(int id, String nome) {
-		setId(id);
-		setNome(nome);
+	public Setor getSetor() {
+		return setor;
 	}
 	
-	public Setor(String nome) {
+	public void setSetor(Setor setor) {
+		if(setor == null)
+			throw new RuntimeException("Uma função precisa ter um setor.");
+		this.setor = setor;
+	}
+	
+	// CONSTRUTORES
+	public Funcao(int id, String nome, Setor setor) {
+		setId(id);
 		setNome(nome);
+		setSetor(setor);
+	}
+	
+	public Funcao(String nome, Setor setor) {
+		setNome(nome);
+		setSetor(setor);
 	}
 	
 	public boolean create() {
@@ -47,10 +61,11 @@ public class Setor {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("INSERT INTO Setor (nome) VALUES (?)", Statement.RETURN_GENERATED_KEYS);
+					.prepareStatement("INSERT INTO Funcao (nome, idSetor) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
+			statement.setInt(2, this.setor.getId());
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -71,11 +86,12 @@ public class Setor {
 				return false;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar o setor");
+			throw new RuntimeException("Um erro ocorreu ao criar a função");
 		}
 	}
-
-	public static ArrayList<Setor> getAll() {
+	
+	// Retorna todas as funções cadastradas
+	public static ArrayList<Funcao> getAll() {
 		try{
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
@@ -84,48 +100,21 @@ public class Setor {
 			Statement statement = connect.createStatement();
 			
 			// Executa um SQL
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM Setor");
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcao");
 			
-			ArrayList<Setor> setores = new ArrayList<Setor>();
+			ArrayList<Funcao> funcoes = new ArrayList<Funcao>();
 			while(resultSet.next()) {
 				// Cria um cliente com os dados do BD
-				Setor c = new Setor(resultSet.getInt("idSetor"), resultSet.getString("nome"));
+				Funcao c = new Funcao(resultSet.getInt("idSetor"), resultSet.getString("nome"), Setor.getByID(resultSet.getInt("idSetor")));
 				
 				// Adiciona o cliente ao retorno
-				setores.add(c);
+				funcoes.add(c);
 			}
 			
 			// Retorna os clientes
-			return setores;
+			return funcoes;
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu");
 		}
 	}
-
-	public static Setor getByID(int id) {
-		try{
-			// Obtem uma conexão com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-			
-			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("SELECT * FROM Setor WHERE idSetor = ?", Statement.RETURN_GENERATED_KEYS);
-
-			// Realiza o bind dos valores
-			statement.setInt(1, id);
-
-			// Executa o SQL
-			ResultSet resultSet = statement.executeQuery();
-			
-			// Obtem o primeiro resultado e o retorna
-			if(resultSet.next())
-				return new Setor(resultSet.getInt("idSetor"), resultSet.getString("nome"));
-			
-			// Se nada for achado, retorna nulo
-			return null;
-		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
-		}
-	}
-
 }
