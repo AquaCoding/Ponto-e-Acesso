@@ -1,6 +1,9 @@
 package aquacoding.pontoacesso;
 
 import java.io.IOException;
+
+import aquacoding.controller.SetorEditarController;
+import aquacoding.model.Setor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,18 +17,18 @@ public class Main extends Application {
 	private static Stage primaryStage;
 	private static BorderPane rootLayout;
 	private static String pageTitle = "Controle de Ponto e Acesso";
-	
+
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Inicia a janela principal (Main.fxml)
 		primaryStage = stage;
 		initRootLayout();
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	// Realiza a inicialização da janela princpal
 	public static void initRootLayout() {
 		try {
@@ -38,13 +41,13 @@ public class Main extends Application {
 			Scene scene = new Scene(rootLayout);
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
+
 			loadMainView();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadMainView() {
 		try {
@@ -57,7 +60,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadNovoSetorView() {
 		try {
@@ -70,11 +73,11 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadListaSetorView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Novo Setor");
+			primaryStage.setTitle(pageTitle + " - Setor");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/SetorLista.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -104,6 +107,24 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoLista.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de edição do setor dentro da janela principal
+	public static void loadSetorEditarView(Setor setor) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Setor");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/SetorEditar.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			
+			// Obtem o controller da interface e passa o setor a ser editado
+			SetorEditarController controller = loader.getController();
+			controller.setSetor(setor);
+			
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
