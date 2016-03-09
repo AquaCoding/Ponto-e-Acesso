@@ -51,7 +51,7 @@ public class CustomAlert {
         //Define estilo e icone
         applyAlertStyleAndIcon(a);
         
-        // Define os boões do alert
+        // Define os botões do alert
         ButtonType yesButton = new ButtonType("Sim", ButtonData.OK_DONE);
         ButtonType noButton = new ButtonType("Não", ButtonData.CANCEL_CLOSE);
         
