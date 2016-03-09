@@ -18,6 +18,9 @@ public class RootLayoutController implements Initializable {
 	
 	@FXML
 	MenuItem menuBarFuncaoNovo, menuBarFuncaoLista;
+	
+	@FXML
+	MenuItem menuBarHorarioNovo, menuBarHorarioLista;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -36,6 +39,14 @@ public class RootLayoutController implements Initializable {
 		
 		menuBarFuncaoLista.setOnAction((ActionEvent e) -> {
 			Main.loadListaFuncaoView();
+		});
+		
+		menuBarHorarioNovo.setOnAction((ActionEvent e) -> {
+			Main.loadNovoHorarioView();
+		});
+		
+		menuBarHorarioLista.setOnAction((ActionEvent e) -> {
+			Main.loadListaHorarioView();
 		});
 	}
 

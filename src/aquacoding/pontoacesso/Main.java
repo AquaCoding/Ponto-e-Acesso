@@ -130,4 +130,30 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	// Carrega a view de novo setor dentro da janela principal
+	public static void loadNovoHorarioView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Novo Horário");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Carrega a view de novo setor dentro da janela principal
+	public static void loadListaHorarioView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Novo Horário");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioLista.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
