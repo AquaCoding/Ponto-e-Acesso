@@ -21,6 +21,8 @@ public class SetorEditarController implements Initializable {
 
 	@FXML
 	TextField setorNome;
+	
+	private Setor setor;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -32,11 +34,11 @@ public class SetorEditarController implements Initializable {
 		// Tenta realizar a edição
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			try {
-				// Cria um novo objeto do setor
-				Setor s = new Setor(setorNome.getText());
+				// Atualiza a info do setor
+				setor.setNome(setorNome.getText());
 
 				// Tenta alterar o setor no BD
-				if (s.update()) {
+				if (setor.update()) {
 					// Setor alterado com sucesso
 					CustomAlert.showAlert("Editar Setor", "Setor alterado com sucesso", AlertType.WARNING);
 					Main.loadListaSetorView();
@@ -51,6 +53,11 @@ public class SetorEditarController implements Initializable {
 		});
 
 		
+	}
+
+	public void setSetor(Setor setor) {
+		this.setor = setor;
+		setorNome.setText(setor.getNome());
 	}
 
 }

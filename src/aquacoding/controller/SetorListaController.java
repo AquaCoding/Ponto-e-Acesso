@@ -46,23 +46,28 @@ public class SetorListaController implements Initializable {
 		setorListagem.setItems(items);
 
 		alterar.setOnMouseClicked((MouseEvent e) -> {
-			Main.loadSetorEditarView();
+			// Verifica se um setor foi selecionado
+			if(setorListagem.getSelectionModel().getSelectedItem() != null)
+					Main.loadSetorEditarView(setorListagem.getSelectionModel().getSelectedItem());
 		});
 		
 		// Tenta realizar a remoção
 		remover.setOnMouseClicked((MouseEvent e) -> {
 			try {
-				// Cria um novo objeto do setor
-				Setor s = new Setor(setorListagem.getId());
+				// Verifica se algum setor foi selecionado e pergunta se ele realmente o que remover
+				if(setorListagem.getSelectionModel().getSelectedItem() != null && CustomAlert.showConfirmationAlert("Remover Setor", "Você tem certeza que deseja remover esse Setor?")) {
+					// Obtem o setor selecionado
+					Setor s = setorListagem.getSelectionModel().getSelectedItem();
 
-				// Tenta remover o setor no BD
-				if (s.delete()) {
-					// Setor removido com sucesso
-					CustomAlert.showAlert("Remover Setor", "Setor removido com sucesso", AlertType.WARNING);
-					Main.loadListaSetorView();
-				} else {
-					// Erro ao remover o setor
-					CustomAlert.showAlert("Remover Setor", "Algo deu errado", AlertType.WARNING);
+					// Tenta remover o setor no BD
+					if (s.delete()) {
+						// Setor removido com sucesso
+						CustomAlert.showAlert("Remover Setor", "Setor removido com sucesso", AlertType.WARNING);
+						Main.loadListaSetorView();
+					} else {
+						// Erro ao remover o setor
+						CustomAlert.showAlert("Remover Setor", "Algo deu errado", AlertType.WARNING);
+					}
 				}
 			} catch (RuntimeException ex) {
 				// Erro de validação

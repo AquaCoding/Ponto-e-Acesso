@@ -1,6 +1,9 @@
 package aquacoding.pontoacesso;
 
 import java.io.IOException;
+
+import aquacoding.controller.SetorEditarController;
+import aquacoding.model.Setor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -74,7 +77,7 @@ public class Main extends Application {
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadListaSetorView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Novo Setor");
+			primaryStage.setTitle(pageTitle + " - Setor");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/SetorLista.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -85,12 +88,17 @@ public class Main extends Application {
 	}
 
 	// Carrega a view de edição do setor dentro da janela principal
-	public static void loadSetorEditarView() {
+	public static void loadSetorEditarView(Setor setor) {
 		try {
 			primaryStage.setTitle(pageTitle + " - Editar Setor");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/SetorEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
+			
+			// Obtem o controller da interface e passa o setor a ser editado
+			SetorEditarController controller = loader.getController();
+			controller.setSetor(setor);
+			
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
