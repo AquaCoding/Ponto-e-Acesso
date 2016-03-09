@@ -9,40 +9,40 @@ import java.util.ArrayList;
 import aquacoding.utils.DatabaseConnect;
 
 public class Setor {
-	
+
 	private int id;
 	private String nome;
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
-		if(nome.equals(""))
-			throw new RuntimeException("O nome do setor n„o pode ser vazio.");
+		if (nome.equals(""))
+			throw new RuntimeException("O nome do setor n√£o pode ser vazio.");
 		this.nome = nome;
 	}
-	
+
 	public Setor(int id, String nome) {
 		setId(id);
 		setNome(nome);
 	}
-	
+
 	public Setor(String nome) {
 		setNome(nome);
 	}
-	
+
 	public boolean create() {
 		try {
-			// Obtem uma conex„o com o banco de dados
+			// Obtem uma conex√£o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
@@ -57,11 +57,11 @@ public class Setor {
 
 			// Retorna resultado
 			if (ret == 1) {
-				//Define o id a classe
+				// Define o id a classe
 				ResultSet id = statement.getGeneratedKeys();
-				while(id.next())
+				while (id.next())
 					setId(id.getInt(1));
-				
+
 				// Encerra conexao
 				connect.close();
 				return true;
@@ -76,29 +76,90 @@ public class Setor {
 	}
 
 	public static ArrayList<Setor> getAll() {
-		try{
-			// Obtem uma conex„o com o banco de dados
+		try {
+			// Obtem uma conex√£o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
-			
+
 			// Cria um statement
 			Statement statement = connect.createStatement();
-			
+
 			// Executa um SQL
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM Setor");
-			
+
 			ArrayList<Setor> setores = new ArrayList<Setor>();
-			while(resultSet.next()) {
+			while (resultSet.next()) {
 				// Cria um cliente com os dados do BD
 				Setor c = new Setor(resultSet.getInt("idSetor"), resultSet.getString("nome"));
-				
+
 				// Adiciona o cliente ao retorno
 				setores.add(c);
 			}
-			
+
 			// Retorna os clientes
 			return setores;
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu");
+		}
+	}
+
+	public boolean update() {
+		try {
+			// Obtem uma conex√£o com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"UPDATE Setor SET nome = ? WHERE idSetor = ?");
+
+			// Realiza o bind dos valores
+			statement.setString(1, this.nome);
+			statement.setInt(2, this.id);
+
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();
+
+			// Retorna resultado
+			if (ret == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Um erro ocorreu ao atualizar o Setor");
+		}
+	}
+
+	public boolean delete() {
+		try {
+			// Obtem uma conexÔøΩo com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("DELETE FROM Setor WHERE idSetor = ?");
+
+			// Realiza o bind dos valores
+			statement.setInt(1, this.id);
+
+			// Executa o SQL
+			int resp = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();	
+			
+			if(resp == 1) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException("Um erro ocorreu ao deletar o Setor");
 		}
 	}
 
