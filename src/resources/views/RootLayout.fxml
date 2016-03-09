@@ -20,6 +20,12 @@
                 <MenuItem fx:id="menuBarFuncaoNovo" mnemonicParsing="false" text="Novo" />
               </items>
             </Menu>
+           <Menu mnemonicParsing="false" text="Funcionário">
+            <items>
+                  <MenuItem fx:id="menuBarFuncionarioLista" mnemonicParsing="false" text="Ver todos" />
+                  <MenuItem fx:id="menuBarFuncionarioNovo" mnemonicParsing="false" text="Novo" />
+            </items>
+          </Menu> 
         </menus>
       </MenuBar>
    </top>
