@@ -1,7 +1,6 @@
 package aquacoding.pontoacesso;
 
 import java.io.IOException;
-
 import aquacoding.controller.SetorEditarController;
 import aquacoding.model.Setor;
 import javafx.application.Application;

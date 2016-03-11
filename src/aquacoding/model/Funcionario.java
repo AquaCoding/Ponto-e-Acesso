@@ -1,13 +1,5 @@
 package aquacoding.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import aquacoding.utils.DatabaseConnect;
-
 public class Funcionario {
 
 	private int id;
@@ -21,10 +13,11 @@ public class Funcionario {
 	private int numero;
 	private String bairro;
 	private String cidade;
+	private String estado;
 	private double salarioTotal;
 	private double salarioHoras;
 	
-	
+	// Setters e Getters
 	public int getId() {
 		return id;
 	}
@@ -38,16 +31,18 @@ public class Funcionario {
 	}
 
 	public void setNome(String nome) {
-		if (nome.equals(""))
-			throw new RuntimeException("O nome do Funcionario não pode ser vazio.");
+		if(nome == null || nome.equals(""))
+			throw new RuntimeException("O nome do funcionário não pode estar vazio.");
 		this.nome = nome;
 	}
-	
+
 	public String getSobrenome() {
 		return sobrenome;
 	}
 
 	public void setSobrenome(String sobrenome) {
+		if(sobrenome == null || sobrenome.equals(""))
+			throw new RuntimeException("O sobrenome do funcionário não pode estar vazio.");
 		this.sobrenome = sobrenome;
 	}
 
@@ -56,6 +51,8 @@ public class Funcionario {
 	}
 
 	public void setRg(String rg) {
+		if(rg == null || rg.equals(""))
+			throw new RuntimeException("O RG do funcionário não pode estar vazio.");
 		this.rg = rg;
 	}
 
@@ -64,6 +61,8 @@ public class Funcionario {
 	}
 
 	public void setCpf(String cpf) {
+		if(cpf == null || cpf.equals(""))
+			throw new RuntimeException("O CPF do funcionário não pode estar vazio.");
 		this.cpf = cpf;
 	}
 
@@ -72,6 +71,8 @@ public class Funcionario {
 	}
 
 	public void setCtps(String ctps) {
+		if(ctps == null || ctps.equals(""))
+			throw new RuntimeException("O CTPS do funcionário não pode estar vazio.");
 		this.ctps = ctps;
 	}
 
@@ -88,6 +89,8 @@ public class Funcionario {
 	}
 
 	public void setRua(String rua) {
+		if(rua == null || rua.equals(""))
+			throw new RuntimeException("A rua do endereço do funcionário não pode estar vazio.");
 		this.rua = rua;
 	}
 
@@ -104,6 +107,8 @@ public class Funcionario {
 	}
 
 	public void setBairro(String bairro) {
+		if(bairro == null || bairro.equals(""))
+			throw new RuntimeException("O bairro do endereço do funcionário não pode estar vazio.");
 		this.bairro = bairro;
 	}
 
@@ -112,7 +117,19 @@ public class Funcionario {
 	}
 
 	public void setCidade(String cidade) {
+		if(cidade == null || cidade.equals(""))
+			throw new RuntimeException("A cidade do endereço do funcionário não pode estar vazio.");
 		this.cidade = cidade;
+	}
+	
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		if(estado == null || estado.equals(""))
+			throw new RuntimeException("O estado do endereço do funcionário não pode estar vazio.");
+		this.estado = estado;
 	}
 
 	public double getSalarioTotal() {
@@ -120,6 +137,8 @@ public class Funcionario {
 	}
 
 	public void setSalarioTotal(double salarioTotal) {
+		if(salarioTotal <= 0)
+			throw new RuntimeException("O sálario total do funcionário precisa ser maior que 0.");
 		this.salarioTotal = salarioTotal;
 	}
 
@@ -128,196 +147,123 @@ public class Funcionario {
 	}
 
 	public void setSalarioHoras(double salarioHoras) {
+		if(salarioHoras <= 0)
+			throw new RuntimeException("O sálario por hora do funcionário precisa ser maior que 0.");
 		this.salarioHoras = salarioHoras;
 	}
-
-	public Funcionario(int id, String nome, String sobrenome, String rg, String cpf, String ctps, int telefone, String rua, int numero, String bairro,	String cidade, double salarioTotal, double salarioHoras) {
-		setId(id);
-		setNome(nome);
-		setSobrenome(sobrenome);
-		setRg(rg);
-		setCpf(cpf);
-		setCtps(ctps);
-		setTelefone(telefone);
-		setRua(rua);
-		setNumero(numero);
-		setBairro(bairro);
-		setCidade(cidade);
-		setSalarioTotal(salarioTotal);
-		setSalarioHoras(salarioHoras);		
+	
+	// Construtor de Funcionario
+	// Só pode ser chamado pelo método build() da classe Builder
+	protected Funcionario(Builder builder) {
+		setId(builder.id);
+		setNome(builder.nome);
+		setSobrenome(builder.sobrenome);
+		setRg(builder.rg);
+		setCpf(builder.cpf);
+		setCtps(builder.ctps);
+		setTelefone(builder.telefone);
+		setRua(builder.rua);
+		setNumero(builder.numero);
+		setBairro(builder.bairro);
+		setCidade(builder.cidade);
+		setEstado(builder.estado);
+		setSalarioTotal(builder.salarioTotal);
+		setSalarioHoras(builder.salarioHoras);
 	}
 
-	public boolean create() {
-		try {
-			// Obtem uma conexão com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-
-			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, salarioTotal, salarioHoras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-
-			// Realiza o bind dos valores
-			statement.setString(1, this.nome);
-			statement.setString(1, this.sobrenome);
-			statement.setString(1, this.rg);
-			statement.setString(1, this.cpf);
-			statement.setString(1, this.ctps);
-			statement.setInt(1, this.telefone);
-			statement.setString(1, this.rua);
-			statement.setInt(1, this.numero);
-			statement.setString(1, this.bairro);
-			statement.setString(1, this.cidade);
-			statement.setDouble(1, this.salarioTotal);
-			statement.setDouble(1, this.salarioHoras);
-
-			// Executa o SQL
-			int ret = statement.executeUpdate();
-
-			// Retorna resultado
-			if (ret == 1) {
-				// Define o id a classe
-				ResultSet id = statement.getGeneratedKeys();
-				while (id.next())
-					setId(id.getInt(1));
-
-				// Encerra conexao
-				connect.close();
-				return true;
-			} else {
-				// Encerra conexao
-				connect.close();
-				return false;
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar o funcionario");
+	// Builder utilizado para criar instancias de Funcionario
+	public static class Builder {
+		
+		// Atributos
+		private int id;
+		private String nome;
+		private String sobrenome;
+		private String rg;
+		private String cpf;
+		private String ctps;
+		private int telefone;
+		private String rua;
+		private int numero;
+		private String bairro;
+		private String cidade;
+		private String estado;
+		private double salarioTotal;
+		private double salarioHoras;
+		
+		// Sets do Builder
+		public Builder setId(int id) {
+			this.id = id;
+			return this;
+		}
+		
+		public Builder setNome(String nome) {
+			this.nome = nome;
+			return this;
+		}
+		
+		public Builder setSobrenome(String sobrenome) {
+			this.sobrenome = sobrenome;
+			return this;
+		}
+		
+		public Builder setRg(String rg) {
+			this.rg = rg;
+			return this;
+		}
+		
+		public Builder setCpf(String cpf) {
+			this.cpf = cpf;
+			return this;
+		}
+		
+		public Builder setCtps(String ctps) {
+			this.ctps = ctps;
+			return this;
+		}
+		
+		public Builder setTelefone(int telefone) {
+			this.telefone = telefone;
+			return this;
+		}
+		
+		public Builder setRua(String rua) {
+			this.rua = rua;
+			return this;
+		}
+		
+		public Builder setNumero(int numero) {
+			this.numero = numero;
+			return this;
+		}
+		
+		public Builder setBairro(String bairro) {
+			this.bairro = bairro;
+			return this;
+		}
+		
+		public Builder setCidade(String cidade) {
+			this.cidade = cidade;
+			return this;
+		}
+		
+		public Builder setEstado(String estado) {
+			this.estado = estado;
+			return this;
+		}
+		
+		public Builder setSalarioTotal(double salarioTotal) {
+			this.salarioTotal = salarioTotal;
+			return this;
+		}
+		
+		public Builder setSalarioHoras(double salarioHoras) {
+			this.salarioHoras = salarioHoras;
+			return this;
+		}
+		
+		// Cria a instancia de Funcionario
+		public Funcionario build() {
+			return new Funcionario(this);
 		}
 	}
-
-	public static ArrayList<Setor> getAll() {
-		try {
-			// Obtem uma conexão com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-
-			// Cria um statement
-			Statement statement = connect.createStatement();
-
-			// Executa um SQL
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario");
-
-			ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
-			while (resultSet.next()) {
-				// Cria um funcionario com os dados do BD
-				Funcionario f = new Funcionario(resultSet.getInt("idFuncionario"), resultSet.getString("nome"), resultSet.getString("sobrenome"), resultSet.getString("rg"), resultSet.getString("cpf"), resultSet.getString("ctps"), resultSet.getInt("telefone"), resultSet.getInt("numero"), resultSet.getString("rua"), resultSet.getString("bairro"), resultSet.getString("cidade"), resultSet.getDouble("salarioTotal"), resultSet.getDouble("salarioHoras"));
-
-				// Adiciona o funcionario ao retorno
-				funcionarios.add(f);
-			}
-
-			// Retorna os funcionarios
-			return funcionarios;
-		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
-		}
-	}
-
-	public static Setor getByID(int id) {
-		try{
-			// Obtem uma conex�o com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-			
-			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("SELECT * FROM Funcionario WHERE idFuncionario = ?", Statement.RETURN_GENERATED_KEYS);
-
-			// Realiza o bind dos valores
-			statement.setInt(1, id);
-			statement.setString(2, nome);
-			statement.setString(3, sobrenome);
-			statement.setString(4, rg);
-			statement.setString(5, cpf);
-			statement.setString(6, ctps);
-			statement.setInt(7, telefone);
-			statement.setString(8, rua);
-			statement.setInt(9, numero);
-			statement.setString(10, bairro);
-			statement.setString(11, cidade);
-			statement.setDouble(12, salarioTotal);
-			statement.setDouble(13, salarioHoras);
-			
-			
-			// Executa o SQL
-			ResultSet resultSet = statement.executeQuery();
-			
-			// Obtem o primeiro resultado e o retorna
-			if(resultSet.next())
-				return new Setor(resultSet.getInt("idSetor"), resultSet.getString("nome"));
-			
-			// Se nada for achado, retorna nulo
-			return null;
-		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
-		}
-	}
-
-	public boolean update() {
-		try {
-			// Obtem uma conexão com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-
-			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Funcionario SET nome = ? WHERE idSetor = ?");
-
-			// Realiza o bind dos valores
-			statement.setString(1, this.nome);
-			statement.setInt(2, this.id);
-
-			// Executa o SQL
-			int ret = statement.executeUpdate();
-
-			// Encerra conexao
-			connect.close();
-
-			// Retorna resultado
-			if (ret == 1) {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o Funcionario");
-		}
-	}
-
-	public boolean delete() {
-		try {
-			// Obtem uma conex�o com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-
-			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("DELETE FROM Funcionario WHERE idFuncionario = ?");
-
-			// Realiza o bind dos valores
-			statement.setInt(1, this.id);
-
-			// Executa o SQL
-			int resp = statement.executeUpdate();
-
-			// Encerra conexao
-			connect.close();	
-			
-			if(resp == 1) {
-				return true;
-			}else {
-				return false;
-			}
-			
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao deletar o Funcionario");
-		}
-	}
-
 }
