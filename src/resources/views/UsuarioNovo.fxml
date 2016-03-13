@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="aquacoding.controller.UsuariooNovoController">
+   <children>
+      <Label layoutX="34.0" layoutY="34.0" text="Novo Usuario" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <VBox layoutX="219.0" layoutY="88.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <Label text="Nome" />
+            <TextField fx:id="usuarioNome" VBox.vgrow="ALWAYS" />
+            <Label text="Senha" />
+            <AnchorPane>
+               <children>
+                  <PasswordField fx:id="usuarioPassword" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <Label text="Confirme a senha" />
+            <AnchorPane>
+               <children>
+                  <PasswordField fx:id="usuarioConPassword" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <Button fx:id="cadastrar" mnemonicParsing="false" text="Cadastar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="cancelar" mnemonicParsing="false" text="Cancelar" AnchorPane.leftAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
