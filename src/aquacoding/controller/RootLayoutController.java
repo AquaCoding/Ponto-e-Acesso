@@ -56,6 +56,11 @@ public class RootLayoutController implements Initializable {
 		menuBarUsuarioNovo.setOnAction((ActionEvent e) -> {
 			Main.loadUsuarioNovoView();
 		});
+
+		// Cria o evento de click no botão Usuário > Ver todos
+		menuBarUsuarioLista.setOnAction((ActionEvent e) -> {
+			Main.loadListaUsuarioView();
+		});
 	}
 
 }

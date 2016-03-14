@@ -6,18 +6,25 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.UsuarioNovoController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="aquacoding.controller.UsuariooListaController">
    <children>
-      <Label layoutX="34.0" layoutY="34.0" text="Novo Usuário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <Label layoutX="44.0" layoutY="44.0" text="Editar Usuário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <VBox layoutX="219.0" layoutY="88.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+      <VBox layoutX="229.0" layoutY="98.0" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
          <children>
             <Label text="Nome" />
             <TextField fx:id="usuarioNome" VBox.vgrow="ALWAYS" />
-            <Label text="Senha" />
+            <Label text="Senha atual" />
+            <AnchorPane>
+               <children>
+                  <PasswordField fx:id="usuarioAtualPassword" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <Label text="Senha nova" />
             <AnchorPane>
                <children>
                   <PasswordField fx:id="usuarioPassword" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -31,7 +38,7 @@
             </AnchorPane>
             <AnchorPane prefWidth="200.0">
                <children>
-                  <Button fx:id="alterar" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="Alterar" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Button fx:id="cancelar" mnemonicParsing="false" text="Cancelar" AnchorPane.leftAnchor="0.0" />
                </children>
             </AnchorPane>

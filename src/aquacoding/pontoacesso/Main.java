@@ -4,8 +4,10 @@ import java.io.IOException;
 
 import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.SetorEditarController;
+import aquacoding.controller.UsuarioEditarController;
 import aquacoding.model.Funcao;
 import aquacoding.model.Setor;
+import aquacoding.model.Usuario;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -184,6 +186,37 @@ public class Main extends Application {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
 				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Carrega a view de listagem de usuário dentro da janela principal
+		public static void loadListaUsuarioView() {
+			try {
+				primaryStage.setTitle(pageTitle + " - Usuários");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuariosLista.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Carrega a view de edição do usuario dentro da janela principal
+		public static void loadUsuarioEditarView(Usuario usuario) {
+			try {
+				primaryStage.setTitle(pageTitle + " - Editar Usuário");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioEditar.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+
+				// Obtem o controller da interface e passa o setor a ser editado
+				UsuarioEditarController controller = loader.getController();
+				controller.setUsuario(usuario);
+
 				rootLayout.setCenter(personOverview);
 			} catch (IOException e) {
 				e.printStackTrace();
