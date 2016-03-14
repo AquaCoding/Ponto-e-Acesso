@@ -28,7 +28,7 @@ public class Funcao {
 	
 	public void setNome(String nome) {
 		if(nome.equals(""))
-			throw new RuntimeException("O nome da função não pode ser vazio.");
+			throw new RuntimeException("O nome da funÃ§Ã£o nÃ£o pode ser vazio.");
 		this.nome = nome;
 	}
 	
@@ -38,7 +38,7 @@ public class Funcao {
 	
 	public void setSetor(Setor setor) {
 		if(setor == null)
-			throw new RuntimeException("Uma função precisa ter um setor.");
+			throw new RuntimeException("Uma funÃ§Ã£o precisa ter um setor.");
 		this.setor = setor;
 	}
 	
@@ -56,7 +56,7 @@ public class Funcao {
 	
 	public boolean create() {
 		try {
-			// Obtem uma conexão com o banco de dados
+			// Obtem uma conexÃ£o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
@@ -86,14 +86,14 @@ public class Funcao {
 				return false;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar a função");
+			throw new RuntimeException("Um erro ocorreu ao criar a funÃ§Ã£o");
 		}
 	}
 	
-	// Retorna todas as funções cadastradas
+	// Retorna todas as funÃ§Ãµes cadastradas
 	public static ArrayList<Funcao> getAll() {
 		try{
-			// Obtem uma conexão com o banco de dados
+			// Obtem uma conexÃ£o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 			
 			// Cria um statement
@@ -115,6 +115,36 @@ public class Funcao {
 			return funcoes;
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu");
+		}
+	}
+	
+	public boolean delete() {
+		try {
+			// Obtem uma conexï¿½o com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("DELETE FROM Funcao WHERE idFuncao = ?");
+
+			// Realiza o bind dos valores
+			statement.setInt(1, this.id);
+
+			// Executa o SQL
+			int resp = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();	
+			
+			if(resp == 1) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException("Um erro ocorreu ao deletar o Funcao");
 		}
 	}
 }
