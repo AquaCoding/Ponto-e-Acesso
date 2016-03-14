@@ -1,5 +1,13 @@
 package aquacoding.model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import aquacoding.utils.DatabaseConnect;
+
 public class Funcionario {
 
 	private int id;
@@ -13,7 +21,6 @@ public class Funcionario {
 	private int numero;
 	private String bairro;
 	private String cidade;
-	private String estado;
 	private double salarioTotal;
 	private double salarioHoras;
 	
@@ -121,16 +128,6 @@ public class Funcionario {
 			throw new RuntimeException("A cidade do endereço do funcionário não pode estar vazio.");
 		this.cidade = cidade;
 	}
-	
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		if(estado == null || estado.equals(""))
-			throw new RuntimeException("O estado do endereço do funcionário não pode estar vazio.");
-		this.estado = estado;
-	}
 
 	public double getSalarioTotal() {
 		return salarioTotal;
@@ -166,7 +163,6 @@ public class Funcionario {
 		setNumero(builder.numero);
 		setBairro(builder.bairro);
 		setCidade(builder.cidade);
-		setEstado(builder.estado);
 		setSalarioTotal(builder.salarioTotal);
 		setSalarioHoras(builder.salarioHoras);
 	}
@@ -186,7 +182,6 @@ public class Funcionario {
 		private int numero;
 		private String bairro;
 		private String cidade;
-		private String estado;
 		private double salarioTotal;
 		private double salarioHoras;
 		
@@ -245,12 +240,7 @@ public class Funcionario {
 			this.cidade = cidade;
 			return this;
 		}
-		
-		public Builder setEstado(String estado) {
-			this.estado = estado;
-			return this;
-		}
-		
+				
 		public Builder setSalarioTotal(double salarioTotal) {
 			this.salarioTotal = salarioTotal;
 			return this;
@@ -264,6 +254,52 @@ public class Funcionario {
 		// Cria a instancia de Funcionario
 		public Funcionario build() {
 			return new Funcionario(this);
+		}
+	}
+	
+	public boolean create() {
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, salarioTotal, salarioHoras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+			// Realiza o bind dos valores
+			statement.setString(1, this.nome);
+			statement.setString(2, this.sobrenome);
+			statement.setString(3, this.rg);
+			statement.setString(4, this.cpf);
+			statement.setString(5, this.ctps);
+			statement.setInt(6, this.telefone);
+			statement.setString(7, this.rua);
+			statement.setInt(8, this.numero);
+			statement.setString(9, this.bairro);
+			statement.setString(10, this.cidade);
+			statement.setDouble(11, this.salarioTotal);
+			statement.setDouble(12, this.salarioHoras);
+			
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+
+			// Retorna resultado
+			if (ret == 1) {
+				// Define o id a classe
+				ResultSet id = statement.getGeneratedKeys();
+				while (id.next())
+					setId(id.getInt(1));
+
+				// Encerra conexao
+				connect.close();
+				return true;
+			} else {
+				// Encerra conexao
+				connect.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu ao criar o Funcionario");
 		}
 	}
 }

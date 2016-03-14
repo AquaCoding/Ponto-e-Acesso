@@ -85,7 +85,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadNovoFuncaoView() {
 		try {
@@ -98,7 +98,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadListaFuncaoView() {
 		try {
@@ -119,14 +119,41 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/SetorEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
-			
+
 			// Obtem o controller da interface e passa o setor a ser editado
 			SetorEditarController controller = loader.getController();
 			controller.setSetor(setor);
-			
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
+
+	// Carrega a view de lista de Funcionario dentro da janela principal
+	public static void loadListaFuncionarioView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Funcionarios");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioLista.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de novo Funcionario dentro da janela principal
+	public static void loadNovoFuncionarioView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Funcionario");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

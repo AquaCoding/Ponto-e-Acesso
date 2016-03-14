@@ -26,3 +26,20 @@ CREATE TABLE Horario (
     almocoTermino		TIME		NOT NULL,
     CONSTRAINT pk_horario PRIMARY KEY (idHorario)
 );
+
+CREATE TABLE Funcionario(
+	idFuncionario	INT			NOT NULL auto_increment,
+    nome			VARCHAR(45)	NOT NULL,
+	sobrenome		VARCHAR(45)	NOT NULL,
+	rg				VARCHAR(9)	NOT NULL,
+    cpf				VARCHAR(11)	NOT NULL,
+    ctps			VARCHAR(45)	NOT NULL,
+    telefone		INT			NOT NULL,
+    rua				VARCHAR(45)	NOT NULL,
+    numero			INT			NOT NULL,
+    bairro			VARCHAR(45)	NOT NULL,
+    cidade			VARCHAR(45)	NOT NULL,
+    salarioTotal	DOUBLE		NOT NULL,
+    salarioHoras	DOUBLE		NOT NULL,
+	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario)
+);
