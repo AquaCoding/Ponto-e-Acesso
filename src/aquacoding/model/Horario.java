@@ -11,59 +11,59 @@ import java.util.ArrayList;
 import aquacoding.utils.DatabaseConnect;
 
 public class Horario {
-	
+
 	private int id;
 	private String nome;
 	private Time inicio;
 	private Time termino;
 	private Time inicioAlmoco;
 	private Time terminoAlmoco;
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
 		if(nome.equals(""))
-			throw new RuntimeException("O nome do horário não pode ser vazio.");
+			throw new RuntimeException("O nome do horÃ¡rio nÃ£o pode ser vazio.");
 		this.nome = nome;
 	}
-	
+
 	public Time getInicio() {
 		return inicio;
 	}
-	
+
 	public void setInicio(Time inicio) {
 		if(inicio == null)
-			throw new RuntimeException("Um horário de inicio deve ser selecionado.");
+			throw new RuntimeException("Um horÃ¡rio de inicio deve ser selecionado.");
 		this.inicio = inicio;
 	}
-	
+
 	public Time getTermino() {
 		return termino;
 	}
-	
+
 	public void setTermino(Time termino) {
 		if(termino == null)
-			throw new RuntimeException("Um horário de termino deve ser selecionado.");
+			throw new RuntimeException("Um horÃ¡rio de termino deve ser selecionado.");
 		this.termino = termino;
 	}
-	
+
 	public Time getInicioAlmoco() {
 		return inicioAlmoco;
 	}
 
 	public void setInicioAlmoco(Time inicioAlmoco) {
 		if(inicioAlmoco == null)
-			throw new RuntimeException("Um horário de inicio ao almoço deve ser selecionado.");
+			throw new RuntimeException("Um horÃ¡rio de inicio ao almoÃ§o deve ser selecionado.");
 		this.inicioAlmoco = inicioAlmoco;
 	}
 
@@ -73,7 +73,7 @@ public class Horario {
 
 	public void setTerminoAlmoco(Time terminoAlmoco) {
 		if(terminoAlmoco == null)
-			throw new RuntimeException("Um horário de inicio ao almoço deve ser selecionado.");
+			throw new RuntimeException("Um horÃ¡rio de inicio ao almoÃ§o deve ser selecionado.");
 		this.terminoAlmoco = terminoAlmoco;
 	}
 
@@ -86,7 +86,7 @@ public class Horario {
 		setInicioAlmoco(inicioAlmoco);
 		setTerminoAlmoco(terminoAlmoco);
 	}
-	
+
 	public Horario(String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco) {
 		setNome(nome);
 		setInicio(inicio);
@@ -98,7 +98,7 @@ public class Horario {
 	// Cria um novo horario no banco de dados
 	public boolean create() {
 		try {
-			// Obtem uma conexão com o banco de dados
+			// Obtem uma conexÃ£o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
@@ -134,11 +134,11 @@ public class Horario {
 			throw new RuntimeException("Um erro ocorreu ao criar o setor");
 		}
 	}
-	
+
 	// Retorna todos os horarios
 	public static ArrayList<Horario> getAll() {
 		try {
-			// Obtem uma conexão com o banco de dados
+			// Obtem uma conexÃ£o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um statement
@@ -154,7 +154,7 @@ public class Horario {
 				Time termino = resultSet.getTime("termino");
 				Time almocoInicio = resultSet.getTime("almocoInicio");
 				Time almocoTermino = resultSet.getTime("almocoTermino");
-				
+
 				Horario c = new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), inicio, termino, almocoInicio, almocoTermino);
 
 				// Adiciona o cliente ao retorno
@@ -165,6 +165,36 @@ public class Horario {
 			return horarios;
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu");
+		}
+	}
+
+	public boolean delete() {
+		try {
+			// Obtem uma conexï¿½o com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("DELETE FROM Horario WHERE idHorario = ?");
+
+			// Realiza o bind dos valores
+			statement.setInt(1, this.id);
+
+			// Executa o SQL
+			int resp = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();
+
+			if(resp == 1) {
+				return true;
+			}else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException("Um erro ocorreu ao deletar o Horario");
 		}
 	}
 }
