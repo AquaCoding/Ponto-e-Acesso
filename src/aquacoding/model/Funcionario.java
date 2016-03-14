@@ -385,4 +385,34 @@ public class Funcionario {
 			throw new RuntimeException("Um erro ocorreu ao atualizar o Funcionario");
 		}
 	}
+	
+	public boolean delete() {
+		try {
+			// Obtem uma conex�o com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("DELETE FROM Funcionario WHERE idFuncionario = ?");
+
+			// Realiza o bind dos valores
+			statement.setInt(1, this.id);
+
+			// Executa o SQL
+			int resp = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();	
+			
+			if(resp == 1) {
+				return true;
+			}else {
+				return false;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException("Um erro ocorreu ao deletar o Funcionario");
+		}
+	}
 }

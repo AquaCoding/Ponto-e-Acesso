@@ -47,10 +47,36 @@ public class FuncionarioListaController implements Initializable {
 
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			// Verifica se um funcionario foi selecionado
-			if(funcionarioListagem.getSelectionModel().getSelectedItem() != null)
-					Main.loadFuncionarioEditarView(funcionarioListagem.getSelectionModel().getSelectedItem());
+			if (funcionarioListagem.getSelectionModel().getSelectedItem() != null)
+				Main.loadFuncionarioEditarView(funcionarioListagem.getSelectionModel().getSelectedItem());
 		});
-			
+
+		// Tenta realizar a remoção
+		remover.setOnMouseClicked((MouseEvent e) -> {
+			try {
+				// Verifica se algum funcionario foi selecionado e pergunta se
+				// ele realmente o que remover
+				if (funcionarioListagem.getSelectionModel().getSelectedItem() != null && CustomAlert.showConfirmationAlert(
+						"Remover funcionario", "Você tem certeza que deseja remover esse funcionario?")) {
+					// Obtem o funcionario selecionado
+					Funcionario f = funcionarioListagem.getSelectionModel().getSelectedItem();
+
+					// Tenta remover o funcionario no BD
+					if (f.delete()) {
+						// funcionario removido com sucesso
+						CustomAlert.showAlert("Remover Funcionario", "Funcionario removido com sucesso",
+								AlertType.WARNING);
+						Main.loadListaSetorView();
+					} else {
+						// Erro ao remover o funcionario
+						CustomAlert.showAlert("Remover Funcionario", "Algo deu errado", AlertType.WARNING);
+					}
+				}
+			} catch (RuntimeException ex) {
+				// Erro de validação
+				CustomAlert.showAlert("Remover Funcionario", ex.getMessage(), AlertType.WARNING);
+			}
+		});
 
 	}
 
