@@ -3,6 +3,7 @@ package aquacoding.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import aquacoding.model.Funcionario;
 import aquacoding.model.Setor;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
@@ -20,9 +21,20 @@ public class FuncionarioEditarController implements Initializable {
 	Button cancelar, alterar;
 
 	@FXML
-	TextField setorNome;
+	TextField funcionarioNome;
+	TextField funcionarioSobreNome;
+	TextField funcionarioRG;
+	TextField funcionarioCPF;
+	TextField funcionarioCTPS;
+	TextField funcionarioTelefone;
+	TextField funcionarioRua;
+	TextField funcionarioNumero;
+	TextField funcionarioBairro;
+	TextField funcionarioCidade;
+	TextField funcionarioSalarioTotal;
+	TextField funcionarioSalarioHoras;
 	
-	private Setor setor;
+	private Funcionario funcionario;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -34,30 +46,30 @@ public class FuncionarioEditarController implements Initializable {
 		// Tenta realizar a edição
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			try {
-				// Atualiza a info do setor
-				setor.setNome(setorNome.getText());
+				// Atualiza a info do funcionario
+				funcionario.setNome(funcionarioNome.getText());
 
-				// Tenta alterar o setor no BD
-				if (setor.update()) {
-					// Setor alterado com sucesso
-					CustomAlert.showAlert("Editar Setor", "Setor alterado com sucesso", AlertType.WARNING);
+				// Tenta alterar o funcionario no BD
+				if (funcionario.update()) {
+					// funcionario alterado com sucesso
+					CustomAlert.showAlert("Editar Funcionario", "Funcionario alterado com sucesso", AlertType.WARNING);
 					Main.loadListaSetorView();
 				} else {
-					// Erro ao cria o setor
-					CustomAlert.showAlert("Editar Setor", "Algo deu errado", AlertType.WARNING);
+					// Erro ao cria o funcionario
+					CustomAlert.showAlert("Editar Funcionario", "Algo deu errado", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
 				// Erro de validação
-				CustomAlert.showAlert("Editar Setor", ex.getMessage(), AlertType.WARNING);
+				CustomAlert.showAlert("Editar Funcionario", ex.getMessage(), AlertType.WARNING);
 			}
 		});
 
 		
 	}
 
-	public void setSetor(Setor setor) {
-		this.setor = setor;
-		setorNome.setText(setor.getNome());
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+		funcionarioNome.setText(funcionario.getNome());
 	}
 
 }

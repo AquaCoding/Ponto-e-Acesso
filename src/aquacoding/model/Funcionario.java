@@ -302,4 +302,87 @@ public class Funcionario {
 			throw new RuntimeException("Um erro ocorreu ao criar o Funcionario");
 		}
 	}
+	
+	public static ArrayList<Funcionario> getAll() {
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um statement
+			Statement statement = connect.createStatement();
+
+			// Executa um SQL
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario");
+
+			ArrayList<Funcionario> funcionarios = new ArrayList<>();
+			while (resultSet.next()) {
+				// Cria um funcionario com os dados do BD
+				Funcionario f = new Funcionario.Builder()
+						.setId(resultSet.getInt("idFuncionario"))
+						.setNome(resultSet.getString("nome"))
+						.setSobrenome(resultSet.getString("sobrenome"))
+						.setRg(resultSet.getString("rg"))
+						.setCpf(resultSet.getString("cpf"))
+						.setCtps(resultSet.getString("ctps"))
+						.setTelefone(resultSet.getInt("telefone"))
+						.setRua(resultSet.getString("rua"))
+						.setNumero(resultSet.getInt("numero"))
+						.setBairro(resultSet.getString("bairro"))
+						.setCidade(resultSet.getString("cidade"))
+						.setSalarioTotal(resultSet.getDouble("salarioTotal"))
+						.setSalarioHoras(resultSet.getDouble("salarioHoras"))
+						.build();
+
+				// Adiciona o funcionario ao retorno
+				funcionarios.add(f);
+			}
+
+			// Retorna os funcionarios
+			return funcionarios;
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu");
+		}
+	}
+	
+	public boolean update() {
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, salarioTotal = ?, salarioHoras = ? WHERE idFuncionario = ?");
+
+			// Realiza o bind dos valores
+			statement.setString(1, this.nome);
+			statement.setString(2, this.sobrenome);
+			statement.setString(3, this.rg);
+			statement.setString(4, this.cpf);
+			statement.setString(5, this.ctps);
+			statement.setInt(6, this.telefone);
+			statement.setString(7, this.rua);
+			statement.setInt(8, this.numero);
+			statement.setString(9, this.bairro);
+			statement.setString(10, this.cidade);
+			statement.setDouble(11, this.salarioTotal);
+			statement.setDouble(12, this.salarioHoras);
+			statement.setDouble(13, this.id);
+
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();
+
+			// Retorna resultado
+			if (ret == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Um erro ocorreu ao atualizar o Funcionario");
+		}
+	}
 }
