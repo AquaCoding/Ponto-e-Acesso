@@ -34,12 +34,12 @@ CREATE TABLE Funcionario(
 	rg				VARCHAR(9)	NOT NULL,
     cpf				VARCHAR(11)	NOT NULL,
     ctps			VARCHAR(45)	NOT NULL,
-    telefone		INT			NOT NULL,
+    telefone		VARCHAR(15)	NOT NULL,
     rua				VARCHAR(45)	NOT NULL,
     numero			INT			NOT NULL,
     bairro			VARCHAR(45)	NOT NULL,
     cidade			VARCHAR(45)	NOT NULL,
-    salarioTotal	DOUBLE		NOT NULL,
+    estado			VARCHAR(45)	NOT NULL,
     salarioHoras	DOUBLE		NOT NULL,
 	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario)
 );

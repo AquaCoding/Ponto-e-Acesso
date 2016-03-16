@@ -13,7 +13,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import aquacoding.model.Funcao;
-import aquacoding.model.Setor;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 
@@ -59,7 +58,7 @@ public class FuncaoListaController implements Initializable {
 					if (f.delete()) {
 						// Funcao removido com sucesso
 						CustomAlert.showAlert("Remover Funcao", "Funcao removido com sucesso", AlertType.WARNING);
-						Main.loadListaSetorView();
+						Main.loadListaFuncaoView();
 					} else {
 						// Erro ao remover o Funcao
 						CustomAlert.showAlert("Remover Funcao", "Algo deu errado", AlertType.WARNING);

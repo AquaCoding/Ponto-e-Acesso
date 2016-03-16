@@ -66,7 +66,7 @@ public class FuncionarioListaController implements Initializable {
 						// funcionario removido com sucesso
 						CustomAlert.showAlert("Remover Funcionario", "Funcionario removido com sucesso",
 								AlertType.WARNING);
-						Main.loadListaSetorView();
+						Main.loadListaFuncionarioView();
 					} else {
 						// Erro ao remover o funcionario
 						CustomAlert.showAlert("Remover Funcionario", "Algo deu errado", AlertType.WARNING);
@@ -97,7 +97,7 @@ public class FuncionarioListaController implements Initializable {
 
 						// Define o nome customizado
 						if (item != null) {
-							setText(item.getNome());
+							setText(item.getNome() + " " + item.getSobrenome() + " ("+ item.getCpf() +")");
 						} else {
 							setText("");
 						}

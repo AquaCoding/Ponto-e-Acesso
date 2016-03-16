@@ -2,10 +2,11 @@ package aquacoding.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import aquacoding.model.Funcionario;
-import aquacoding.model.Funcionario.Builder;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
+import aquacoding.utils.MaskField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,22 +21,17 @@ public class FuncionarioNovoController implements Initializable {
 	Button cancelar, cadastrar;
 	
 	@FXML
-	TextField funcionarioNome;
-	TextField funcionarioSobreNome;
-	TextField funcionarioRG;
-	TextField funcionarioCPF;
-	TextField funcionarioCTPS;
-	TextField funcionarioTelefone;
-	TextField funcionarioRua;
-	TextField funcionarioNumero;
-	TextField funcionarioBairro;
-	TextField funcionarioCidade;
-	TextField funcionarioSalarioTotal;
-	TextField funcionarioSalarioHoras;
-
+	TextField funcionarioNome, funcionarioSobrenome, funcionarioRG, funcionarioCPF, funcionarioCTPS, 
+	funcionarioTelefone, funcionarioRua, funcionarioNumero, funcionarioBairro, 
+	funcionarioCidade, funcionarioEstado, funcionarioSalarioHoras;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		// Adiciona mascaras aos campos
+		MaskField.phoneMask(funcionarioTelefone);
+		MaskField.intMask(funcionarioNumero);
+		MaskField.moneyMask(funcionarioSalarioHoras);
+		
 		// Cancela o cadastro e retorna pra tela inicial
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
@@ -47,16 +43,16 @@ public class FuncionarioNovoController implements Initializable {
 				// Cria um novo objeto do Funcionario
 				Funcionario f = new Funcionario.Builder()
 						.setNome(funcionarioNome.getText())
-						.setSobrenome(funcionarioSobreNome.getText())
+						.setSobrenome(funcionarioSobrenome.getText())
 						.setRg(funcionarioRG.getText())
 						.setCpf(funcionarioCPF.getText())
 						.setCtps(funcionarioCTPS.getText())
-						.setTelefone(Integer.parseInt(funcionarioTelefone.getText()))
+						.setTelefone(funcionarioTelefone.getText())
 						.setRua(funcionarioRua.getText())
 						.setNumero(Integer.parseInt(funcionarioNumero.getText()))
 						.setBairro(funcionarioBairro.getText())
 						.setCidade(funcionarioCidade.getText())
-						.setSalarioTotal(Double.parseDouble(funcionarioSalarioTotal.getText()))
+						.setEstado(funcionarioEstado.getText())
 						.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
 						.build();
 				
@@ -70,8 +66,18 @@ public class FuncionarioNovoController implements Initializable {
 					CustomAlert.showAlert("Novo Funcionario", "Algo deu errado", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
-				// Erro de validação
-				CustomAlert.showAlert("Novo Funcionario", ex.getMessage(), AlertType.WARNING);
+				String message = "";
+				if(ex.getMessage() == "empty String") {
+					message = "Pagamento hora precisa ser um número";
+				} else if(ex.getMessage().matches("^For input string: \"[\\S ]{0,}\"$")) {
+					message = "Número precisa ser um número inteiro";
+				} else {
+					message = ex.getMessage();
+				}
+					
+				CustomAlert.showAlert("Novo Funcionario", message, AlertType.WARNING);
+			} catch (Exception ex) {
+				
 			}
 		});
 	}

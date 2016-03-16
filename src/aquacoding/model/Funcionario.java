@@ -16,12 +16,12 @@ public class Funcionario {
 	private String rg;
 	private String cpf;
 	private String ctps;
-	private int telefone;
+	private String telefone;
 	private String rua;
 	private int numero;
 	private String bairro;
 	private String cidade;
-	private double salarioTotal;
+	private String estado;
 	private double salarioHoras;
 	
 	// Setters e Getters
@@ -83,11 +83,13 @@ public class Funcionario {
 		this.ctps = ctps;
 	}
 
-	public int getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
 
-	public void setTelefone(int telefone) {
+	public void setTelefone(String telefone) {
+		if(telefone == null || telefone.equals(""))
+			throw new RuntimeException("O telefone do funcionário não pode estar vazio.");
 		this.telefone = telefone;
 	}
 
@@ -129,14 +131,14 @@ public class Funcionario {
 		this.cidade = cidade;
 	}
 
-	public double getSalarioTotal() {
-		return salarioTotal;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setSalarioTotal(double salarioTotal) {
-		if(salarioTotal <= 0)
-			throw new RuntimeException("O sálario total do funcionário precisa ser maior que 0.");
-		this.salarioTotal = salarioTotal;
+	public void setEstado(String estado) {
+		if(estado == null || estado.equals(""))
+			throw new RuntimeException("O estado do endereço do funcionário não pode estar vazio.");
+		this.estado = estado;
 	}
 
 	public double getSalarioHoras() {
@@ -163,7 +165,7 @@ public class Funcionario {
 		setNumero(builder.numero);
 		setBairro(builder.bairro);
 		setCidade(builder.cidade);
-		setSalarioTotal(builder.salarioTotal);
+		setEstado(builder.estado);
 		setSalarioHoras(builder.salarioHoras);
 	}
 
@@ -177,12 +179,12 @@ public class Funcionario {
 		private String rg;
 		private String cpf;
 		private String ctps;
-		private int telefone;
+		private String telefone;
 		private String rua;
 		private int numero;
 		private String bairro;
 		private String cidade;
-		private double salarioTotal;
+		private String estado;
 		private double salarioHoras;
 		
 		// Sets do Builder
@@ -216,7 +218,7 @@ public class Funcionario {
 			return this;
 		}
 		
-		public Builder setTelefone(int telefone) {
+		public Builder setTelefone(String telefone) {
 			this.telefone = telefone;
 			return this;
 		}
@@ -241,8 +243,8 @@ public class Funcionario {
 			return this;
 		}
 				
-		public Builder setSalarioTotal(double salarioTotal) {
-			this.salarioTotal = salarioTotal;
+		public Builder setEstado(String estado) {
+			this.estado = estado;
 			return this;
 		}
 		
@@ -264,7 +266,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, salarioTotal, salarioHoras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					.prepareStatement("INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -272,12 +274,12 @@ public class Funcionario {
 			statement.setString(3, this.rg);
 			statement.setString(4, this.cpf);
 			statement.setString(5, this.ctps);
-			statement.setInt(6, this.telefone);
+			statement.setString(6, this.telefone);
 			statement.setString(7, this.rua);
 			statement.setInt(8, this.numero);
 			statement.setString(9, this.bairro);
 			statement.setString(10, this.cidade);
-			statement.setDouble(11, this.salarioTotal);
+			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
 			
 			// Executa o SQL
@@ -299,6 +301,7 @@ public class Funcionario {
 				return false;
 			}
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			throw new RuntimeException("Um erro ocorreu ao criar o Funcionario");
 		}
 	}
@@ -324,12 +327,12 @@ public class Funcionario {
 						.setRg(resultSet.getString("rg"))
 						.setCpf(resultSet.getString("cpf"))
 						.setCtps(resultSet.getString("ctps"))
-						.setTelefone(resultSet.getInt("telefone"))
+						.setTelefone(resultSet.getString("telefone"))
 						.setRua(resultSet.getString("rua"))
 						.setNumero(resultSet.getInt("numero"))
 						.setBairro(resultSet.getString("bairro"))
 						.setCidade(resultSet.getString("cidade"))
-						.setSalarioTotal(resultSet.getDouble("salarioTotal"))
+						.setEstado(resultSet.getString("estado"))
 						.setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.build();
 
@@ -351,7 +354,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, salarioTotal = ?, salarioHoras = ? WHERE idFuncionario = ?");
+					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ? WHERE idFuncionario = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -359,12 +362,12 @@ public class Funcionario {
 			statement.setString(3, this.rg);
 			statement.setString(4, this.cpf);
 			statement.setString(5, this.ctps);
-			statement.setInt(6, this.telefone);
+			statement.setString(6, this.telefone);
 			statement.setString(7, this.rua);
 			statement.setInt(8, this.numero);
 			statement.setString(9, this.bairro);
 			statement.setString(10, this.cidade);
-			statement.setDouble(11, this.salarioTotal);
+			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
 			statement.setDouble(13, this.id);
 
