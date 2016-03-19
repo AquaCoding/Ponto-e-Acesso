@@ -8,49 +8,54 @@ import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 
 public class UsuarioNovoController implements Initializable {
+	private boolean closeAfterCreate = false;
+	@FXML
+	TextField usuarioNome;
 
 	@FXML
 	PasswordField usuarioPassword, usuarioConPassword;
 
 	@FXML
-	TextField usuarionome;
-
-	@FXML
-	Button cancelar, cadastrar;
+	Button cadastrar, cancelar;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		// Define evento no bot„o cancelar
-				cancelar.setOnMouseClicked((MouseEvent e) -> {
-					Main.loadMainView();
-				});
+		cancelar.setOnMouseClicked((MouseEvent e) -> {
+			Main.loadMainView();
+		});
 
-				// Define o evento do bot„o cadastrar
-				cadastrar.setOnMouseClicked((MouseEvent e) -> {
+		cadastrar.setOnMouseClicked((MouseEvent e) -> {
+			if (usuarioPassword.getText().equals("") || usuarioConPassword.getText().equals("")
+					|| usuarioNome.getText().equals("")) {
+				CustomAlert.showAlert("Usuario - Cadastro", "Todos os campos s√£o obrigat√≥rios", AlertType.INFORMATION);
+			} else {
+				if (usuarioPassword.getText().equals(usuarioConPassword.getText())) {
 					try {
-
-						// Cria um novo Usu·rio
-						Usuario u = new Usuario(usuarionome.getText(), usuarioPassword.getText());
-
-						// Registra nova funÁ„o no BD
-						if(u.create()) {
-							CustomAlert.showAlert("Novo Usu·rio", "Novo usu·rio cadastrada com sucesso.", AlertType.WARNING);
-							Main.loadListaFuncaoView();
-						} else {
-							CustomAlert.showAlert("Novo Usu·rio", "Um erro ocorreu.", AlertType.WARNING);
+						Usuario u = new Usuario(usuarioNome.getText(), usuarioPassword.getText());
+						if (u.create()) {
+							CustomAlert.showAlert("Usuario - Cadastro", "Um usu√°rio foi criado com sucesso",
+									AlertType.INFORMATION);
+							Main.loadListaUsuarioView();
+							;
 						}
-
-					} catch (RuntimeException ex) {
-						CustomAlert.showAlert("Novo Usu·rio", ex.getMessage(), AlertType.WARNING);
+					} catch (RuntimeException h) {
+						CustomAlert.showAlert("Usuario - Cadastro", h.getMessage(), AlertType.INFORMATION);
 					}
-				});
+				} else {
+					CustomAlert.showAlert("Usuario - Cadastro", "As senhas informadas n√£o batem", AlertType.INFORMATION);
+				}
 			}
+		});
+
+	}
+
+
 
 }

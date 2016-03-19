@@ -197,7 +197,7 @@ public class Main extends Application {
 			try {
 				primaryStage.setTitle(pageTitle + " - Usuários");
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuariosLista.fxml"));
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioLista.fxml"));
 				AnchorPane personOverview = (AnchorPane) loader.load();
 				rootLayout.setCenter(personOverview);
 			} catch (IOException e) {
@@ -205,21 +205,5 @@ public class Main extends Application {
 			}
 		}
 
-		// Carrega a view de edição do usuario dentro da janela principal
-		public static void loadUsuarioEditarView(Usuario usuario) {
-			try {
-				primaryStage.setTitle(pageTitle + " - Editar Usuário");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioEditar.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
 
-				// Obtem o controller da interface e passa o setor a ser editado
-				UsuarioEditarController controller = loader.getController();
-				controller.setUsuario(usuario);
-
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 }

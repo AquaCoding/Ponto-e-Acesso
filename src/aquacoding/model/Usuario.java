@@ -1,6 +1,7 @@
 package aquacoding.model;
 
 import java.sql.Connection;
+import aquacoding.utils.BCrypt;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class Usuario {
 		return senha;
 	}
 	public void setSenha(String senha) {
-		if (!senha.matches("[\\S ]{8,}"))
+		if (!senha.matches("[\\S ]{6,}"))
 			throw new RuntimeException("O valor de senha é inválido");
 
 		if(senha.equals(""))
@@ -55,7 +56,10 @@ public class Usuario {
 
 	public boolean create() {
 		try {
-			// Obtem uma conexão com o banco de dados
+			// Realiza o hash da senha
+			this.senha = BCrypt.hashpw(this.senha, BCrypt.gensalt(12));
+
+			// Obtem uma conexăo com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
@@ -75,7 +79,6 @@ public class Usuario {
 				ResultSet id = statement.getGeneratedKeys();
 				while(id.next())
 					setId(id.getInt(1));
-
 				// Encerra conexao
 				connect.close();
 				return true;
@@ -85,7 +88,7 @@ public class Usuario {
 				return false;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar a usuário");
+			throw new RuntimeException("Um erro ocorreu ao criar o usuário");
 		}
 	}
 
@@ -142,6 +145,15 @@ public class Usuario {
 		}
 	}
 
+	public static boolean isValidSenha(String nome, String senha) {
+		try {
+			Usuario u = Usuario.getByNome(nome);
+			return BCrypt.checkpw(senha, u.getSenha());
+		} catch (RuntimeException e) {
+			return false;
+		}
+	}
+
 	public boolean update() {
 		try {
 			// Obtem uma conexão com o banco de dados
@@ -195,7 +207,7 @@ public class Usuario {
 
 	public boolean delete() {
 		try {
-			// Obtem uma conex�o com o banco de dados
+			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
@@ -222,6 +234,38 @@ public class Usuario {
 			throw new RuntimeException("Um erro ocorreu ao deletar o Usuário");
 		}
 	}
+
+	// Obtem um usuario pelo nome
+		public static Usuario getByNome(String nome) {
+			// Result set get the result of the SQL query
+			try {
+				// Obtem uma conexăo com o banco de dados
+				Connection connect = DatabaseConnect.getInstance();
+
+				// Cria um prepared statement
+				PreparedStatement statement = (PreparedStatement) connect
+						.prepareStatement("SELECT idUsuario, nome, senha FROM Usuario WHERE nome = ?");
+
+				// Realiza o bind dos valores
+				statement.setString(1, nome);
+
+				// Executa o SQL
+				ResultSet resultSet = statement.executeQuery();
+
+				// Percorre pelo resultado
+				if (resultSet.next()) {
+					Usuario u = new Usuario(resultSet.getInt("idUsuario"),
+							resultSet.getString("nome"),
+							resultSet.getString("senha"));
+					return u;
+				} else {
+					throw new RuntimeException("O usuário năo existe");
+				}
+			} catch (SQLException e) {
+				System.out.println(e.getMessage());
+				throw new RuntimeException("Um erro ocorreu ao buscar o usuário");
+			}
+		}
 
 	}
 
