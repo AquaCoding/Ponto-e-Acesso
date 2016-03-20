@@ -205,5 +205,23 @@ public class Main extends Application {
 			}
 		}
 
+		// Carrega a view de edição do usuário dentro da janela principal
+		public static void loadEditarUsuarioView(Usuario usuario) {
+			try {
+				primaryStage.setTitle(pageTitle + " - Editar Usuário");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioEditar.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+
+				// Obtem o controller da interface e passa o usuário a ser editado
+				UsuarioEditarController controller = loader.getController();
+				controller.setUsuario(usuario);
+
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
 
 }

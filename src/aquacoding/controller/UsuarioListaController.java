@@ -3,8 +3,6 @@ package aquacoding.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import aquacoding.model.Funcao;
-import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
@@ -19,7 +17,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
-public class UsuarioController implements Initializable {
+public class UsuarioListaController implements Initializable {
 
 	@FXML
 	ListView<Usuario> usuariosLista;
@@ -50,7 +48,7 @@ public class UsuarioController implements Initializable {
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 		// Verifica se um usuário foi selecionado
 					if(usuariosLista.getSelectionModel().getSelectedItem() != null)
-							Main.loadListaUsuarioView();
+							Main.loadEditarUsuarioView(usuariosLista.getSelectionModel().getSelectedItem());
 				});
 
 				// Tenta realizar a remoção

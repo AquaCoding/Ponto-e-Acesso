@@ -15,7 +15,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 public class UsuarioNovoController implements Initializable {
-	private boolean closeAfterCreate = false;
 	@FXML
 	TextField usuarioNome;
 

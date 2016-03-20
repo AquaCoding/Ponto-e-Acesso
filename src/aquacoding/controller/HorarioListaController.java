@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import aquacoding.model.Horario;
-import aquacoding.model.Setor;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import javafx.collections.FXCollections;
