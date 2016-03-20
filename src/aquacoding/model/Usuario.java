@@ -126,7 +126,7 @@ public class Usuario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("SELECT * FROM Setor WHERE idUsuario = ?", Statement.RETURN_GENERATED_KEYS);
+					.prepareStatement("SELECT * FROM Usuario WHERE idUsuario = ?", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setInt(1, id);
@@ -158,6 +158,12 @@ public class Usuario {
 		try {
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
+
+			// Realiza o hash da senha se necessario
+			Usuario c = Usuario.getByID(this.id);
+			if(!c.getSenha().equals(this.senha)) {
+			this.senha = BCrypt.hashpw(this.senha, BCrypt.gensalt(12));
+			}
 
 			// Cria um prepared statement
 			String sql = "UPDATE Usuario SET ";
