@@ -1,11 +1,12 @@
 package aquacoding.pontoacesso;
 
 import java.io.IOException;
-
 import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
 import aquacoding.model.Funcao;
+import aquacoding.controller.FuncionarioEditarController;
+import aquacoding.model.Funcionario;
 import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
 import javafx.application.Application;
@@ -33,7 +34,7 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	// Realiza a inicialização da janela princpal
+	// Realiza a inicializaï¿½ï¿½o da janela princpal
 	public static void initRootLayout() {
 		try {
 			// Carrega o root layout do arquivo fxml.
@@ -94,7 +95,7 @@ public class Main extends Application {
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadNovoFuncaoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Nova Função");
+			primaryStage.setTitle(pageTitle + " - Nova Funï¿½ï¿½o");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -107,7 +108,7 @@ public class Main extends Application {
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadListaFuncaoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Funções");
+			primaryStage.setTitle(pageTitle + " - Funï¿½ï¿½es");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoLista.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -117,7 +118,7 @@ public class Main extends Application {
 		}
 	}
 
-	// Carrega a view de edição do setor dentro da janela principal
+	// Carrega a view de ediï¿½ï¿½o do setor dentro da janela principal
 	public static void loadSetorEditarView(Setor setor) {
 		try {
 			primaryStage.setTitle(pageTitle + " - Editar Setor");
@@ -138,7 +139,7 @@ public class Main extends Application {
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadNovoHorarioView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Novo Horário");
+			primaryStage.setTitle(pageTitle + " - Novo Horï¿½rio");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -151,7 +152,7 @@ public class Main extends Application {
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadListaHorarioView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Novo Horário");
+			primaryStage.setTitle(pageTitle + " - Novo Horï¿½rio");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioLista.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -160,68 +161,110 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-
-	// Carrega a view de edição da função dentro da janela principal
-		public static void loadFuncaoEditarView(Funcao funcao) {
-			try {
-				primaryStage.setTitle(pageTitle + " - Editar Setor");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoEditar.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
-
-				// Obtem o controller da interface e passa o setor a ser editado
-				FuncaoEditarController controller = loader.getController();
-				controller.setFuncao(funcao);
-
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	
+	// Carrega a view de lista de Funcionario dentro da janela principal
+	public static void loadListaFuncionarioView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Funcionarios");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioLista.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
-		// Carrega a view de novo usuario dentro da janela principal
-		public static void loadUsuarioNovoView() {
-			try {
-				primaryStage.setTitle(pageTitle + " - Novo Usuário");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	// Carrega a view de ediï¿½ï¿½o da funï¿½ï¿½o dentro da janela principal
+	public static void loadFuncaoEditarView(Funcao funcao) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Setor");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoEditar.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface e passa o setor a ser editado
+			FuncaoEditarController controller = loader.getController();
+			controller.setFuncao(funcao);
+
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
-		// Carrega a view de listagem de usuário dentro da janela principal
-		public static void loadListaUsuarioView() {
-			try {
-				primaryStage.setTitle(pageTitle + " - Usuários");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioLista.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	// Carrega a view de novo usuario dentro da janela principal
+	public static void loadUsuarioNovoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Novo Usuï¿½rio");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
-		// Carrega a view de edição do usuário dentro da janela principal
-		public static void loadEditarUsuarioView(Usuario usuario) {
-			try {
-				primaryStage.setTitle(pageTitle + " - Editar Usuário");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioEditar.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
-
-				// Obtem o controller da interface e passa o usuário a ser editado
-				UsuarioEditarController controller = loader.getController();
-				controller.setUsuario(usuario);
-
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	// Carrega a view de listagem de usuï¿½rio dentro da janela principal
+	public static void loadListaUsuarioView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Usuï¿½rios");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioLista.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
+	// Carrega a view de ediï¿½ï¿½o do usuï¿½rio dentro da janela principal
+	public static void loadEditarUsuarioView(Usuario usuario) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Usuï¿½rio");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioEditar.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
 
+			// Obtem o controller da interface e passa o usuï¿½rio a ser editado
+			UsuarioEditarController controller = loader.getController();
+			controller.setUsuario(usuario);
+			
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Carrega a view de novo Funcionario dentro da janela principal
+	public static void loadNovoFuncionarioView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Funcionario");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Carrega a view de ediï¿½ï¿½o do setor dentro da janela principal
+	public static void loadFuncionarioEditarView(Funcionario funcionario) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Funcionario");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioEditar.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface e passa o funcionario a ser editado
+			FuncionarioEditarController controller = loader.getController();
+			controller.setFuncionario(funcionario);
+
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

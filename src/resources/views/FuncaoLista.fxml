@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncaoListaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncaoListaController">
    <children>
       <Label layoutX="24.0" layoutY="24.0" text="Funções" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -15,5 +15,6 @@
       <ListView fx:id="funcaoListagem" layoutX="15.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0" />
       <Button fx:id="cancelar" layoutX="15.0" layoutY="254.0" mnemonicParsing="false" text="Cancelar" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="254.0" />
       <Button fx:id="alterar" layoutX="25.0" layoutY="264.0" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="254.0" />
+      <Button fx:id="remover" layoutX="521.0" layoutY="254.0" mnemonicParsing="false" text="Remover" />
    </children>
 </AnchorPane>

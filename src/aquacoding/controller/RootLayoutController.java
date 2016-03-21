@@ -18,6 +18,9 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	MenuItem menuBarFuncaoNovo, menuBarFuncaoLista;
+	
+	@FXML
+	MenuItem menuBarFuncionarioNovo, menuBarFuncionarioLista;
 
 	@FXML
 	MenuItem menuBarHorarioNovo, menuBarHorarioLista;
@@ -60,6 +63,14 @@ public class RootLayoutController implements Initializable {
 		// Cria o evento de click no botão Usuário > Ver todos
 		menuBarUsuarioLista.setOnAction((ActionEvent e) -> {
 			Main.loadListaUsuarioView();
+		});
+		
+		menuBarFuncionarioNovo.setOnAction((ActionEvent e) -> {
+			Main.loadNovoFuncionarioView();
+		});
+		
+		menuBarFuncionarioLista.setOnAction((ActionEvent e) -> {
+			Main.loadListaFuncionarioView();
 		});
 	}
 
