@@ -15,6 +15,6 @@
       <TextField fx:id="setorNome" layoutX="15.0" layoutY="62.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="58.0" />
       <Label layoutX="15.0" layoutY="45.0" text="Nome" AnchorPane.topAnchor="40.0" />
       <Button fx:id="cadastrar" layoutX="152.0" layoutY="114.0" mnemonicParsing="false" text="Cadastrar" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0" />
-      <Button fx:id="cancelar" layoutX="14.0" layoutY="90.0" mnemonicParsing="false" text="Cancelar" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="90.0" />
+      <Button fx:id="cancelar" layoutX="14.0" layoutY="90.0" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="90.0" />
    </children>
 </AnchorPane>

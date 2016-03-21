@@ -34,12 +34,12 @@ public class FuncionarioEditarController implements Initializable {
 		MaskField.intMask(funcionarioNumero);
 		MaskField.moneyMask(funcionarioSalarioHoras);
 				
-		// Cancela a edição e retorna pra tela inicial
+		// Cancela a ediï¿½ï¿½o e retorna pra tela inicial
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadListaFuncionarioView();
 		});
 
-		// Tenta realizar a edição
+		// Tenta realizar a ediï¿½ï¿½o
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Atualiza a info do funcionario
@@ -69,9 +69,9 @@ public class FuncionarioEditarController implements Initializable {
 			} catch (RuntimeException ex) {
 				String message = "";
 				if(ex.getMessage() == "empty String") {
-					message = "Pagamento hora precisa ser um número";
+					message = "Pagamento hora precisa ser um nï¿½mero";
 				} else if(ex.getMessage().matches("^For input string: \"[\\S ]{0,}\"$")) {
-					message = "Número precisa ser um número inteiro";
+					message = "Nï¿½mero precisa ser um nï¿½mero inteiro";
 				} else {
 					message = ex.getMessage();
 				}

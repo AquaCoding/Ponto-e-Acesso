@@ -5,8 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.SetorEditarController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.SetorEditarController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Editar Setor" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -16,6 +15,6 @@
       <TextField fx:id="setorNome" layoutX="15.0" layoutY="62.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="58.0" />
       <Label layoutX="15.0" layoutY="45.0" text="Nome" AnchorPane.topAnchor="40.0" />
       <Button fx:id="alterar" layoutX="152.0" layoutY="114.0" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="90.0" />
-      <Button fx:id="cancelar" layoutX="14.0" layoutY="90.0" mnemonicParsing="false" text="Cancelar" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="90.0" />
+      <Button fx:id="cancelar" layoutX="14.0" layoutY="90.0" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="90.0" />
    </children>
 </AnchorPane>

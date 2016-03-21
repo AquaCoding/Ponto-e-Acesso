@@ -44,6 +44,7 @@ public class Main extends Application {
 
 			// Mostra a scene contendo o root layout.
 			Scene scene = new Scene(rootLayout);
+			scene.getStylesheets().add(""+Main.class.getResource("application.css"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
 
@@ -257,7 +258,7 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
-
+			
 			// Obtem o controller da interface e passa o funcionario a ser editado
 			FuncionarioEditarController controller = loader.getController();
 			controller.setFuncionario(funcionario);

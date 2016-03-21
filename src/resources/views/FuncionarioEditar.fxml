@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -7,40 +8,107 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioEditarController">
    <children>
-      <Label layoutX="14.0" layoutY="14.0" text="Novo Funcionario" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="44.0">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblFuncionarioNome" text="Nome">
+                     <padding>
+                        <Insets bottom="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioNome" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioSobrenome" text="Sobrenome">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioSobrenome" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioRG" text="RG">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioRG" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioCPF" text="CPF">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioCPF" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioCTPS" text="CPTS">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioCTPS" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioSalarioHoras" text="Salario Horas">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioSalarioHoras" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label fx:id="lblFuncionarioTelefone" text="Telefone">
+                     <padding>
+                        <Insets bottom="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioTelefone" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioRua" text="Rua">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioRua" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioNumero" text="Número">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioNumero" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioBairro" text="Bairro">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioBairro" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioEstado" text="Estado">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioEstado" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblFuncionarioCidade" text="Cidade">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                  </Label>
+                  <TextField fx:id="funcionarioCidade" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="alterar" focusTraversable="false" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label layoutX="14.0" layoutY="14.0" text="Editar Funcionário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      
-      <Label fx:id="lblFuncionarioNome" layoutX="15.0" layoutY="45.0" text="Nome" AnchorPane.topAnchor="40.0" />
-      <Label fx:id="lblFuncionarioRua" layoutX="18.0" layoutY="182.0" text="Rua" />
-      <Label fx:id="lblFuncionarioNumero" layoutX="276.0" layoutY="182.0" text="Número" />
-      <Label fx:id="lblFuncionarioBairro" layoutX="18.0" layoutY="225.0" text="Bairro" />
-      <Label fx:id="lblFuncionarioCidade" layoutX="276.0" layoutY="225.0" text="Cidade" />
-      <Label fx:id="lblFuncionarioSalarioHoras" layoutX="276.0" layoutY="278.0" text="Salario Horas" />
-      <Label fx:id="lblFuncionarioEstado" layoutX="18.0" layoutY="278.0" text="Estado" />
-      <Label fx:id="lblFuncionarioSobrenome" layoutX="279.0" layoutY="40.0" text="Sobrenome" />
-      <Label fx:id="lblFuncionarioRG" layoutX="18.0" layoutY="90.0" text="RG" />
-      <Label fx:id="lblFuncionarioCPF" layoutX="279.0" layoutY="90.0" text="CPF" />
-      <Label fx:id="lblFuncionarioCTPS" layoutX="18.0" layoutY="140.0" text="CPTS" />
-      <Label fx:id="lblFuncionarioTelefone" layoutX="276.0" layoutY="140.0" text="Telefone" />
-      
-      
-      <TextField fx:id="funcionarioNome" layoutX="15.0" layoutY="62.0" prefHeight="25.0" prefWidth="212.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="373.0" AnchorPane.topAnchor="58.0" /> 
-      <TextField fx:id="funcionarioSobrenome" layoutX="279.0" layoutY="58.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioRG" layoutX="14.0" layoutY="107.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioCPF" layoutX="279.0" layoutY="107.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioCTPS" layoutX="14.0" layoutY="157.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioTelefone" layoutX="279.0" layoutY="157.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioRua" layoutX="15.0" layoutY="200.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioNumero" layoutX="279.0" layoutY="200.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioBairro" layoutX="15.0" layoutY="247.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioCidade" layoutX="279.0" layoutY="247.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioSalarioHoras" layoutX="279.0" layoutY="300.0" prefHeight="25.0" prefWidth="212.0" />
-      <TextField fx:id="funcionarioEstado" layoutX="15.0" layoutY="300.0" prefHeight="25.0" prefWidth="212.0" />
-      
-      <Button fx:id="alterar" layoutX="518.0" layoutY="355.0" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="355.0" />
-      <Button fx:id="cancelar" layoutX="7.0" layoutY="355.0" mnemonicParsing="false" text="Cancelar" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="355.0" />
    </children>
 </AnchorPane>

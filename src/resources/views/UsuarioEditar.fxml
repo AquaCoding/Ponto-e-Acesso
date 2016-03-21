@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.UsuarioEditarController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.UsuarioEditarController">
    <children>
       <Label layoutX="44.0" layoutY="44.0" text="Editar Usuário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -38,7 +38,7 @@
             <AnchorPane prefWidth="200.0">
                <children>
                   <Button fx:id="alterar" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="cancelar" mnemonicParsing="false" text="Cancelar" AnchorPane.leftAnchor="0.0" />
+                  <Button fx:id="cancelar" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>

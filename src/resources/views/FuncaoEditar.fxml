@@ -7,7 +7,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncaoEditarController">
    <children>
-      <Label layoutX="24.0" layoutY="24.0" text="Nova Função" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <Label layoutX="24.0" layoutY="24.0" text="Editar Função" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -25,7 +25,7 @@
             <AnchorPane prefWidth="200.0">
                <children>
                   <Button fx:id="editar" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="cancelar" mnemonicParsing="false" text="Cancelar" AnchorPane.leftAnchor="0.0" />
+                  <Button fx:id="cancelar" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="0.0" />
                </children>
             </AnchorPane>
          </children>
