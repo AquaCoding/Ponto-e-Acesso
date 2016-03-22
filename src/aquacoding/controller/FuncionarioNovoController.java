@@ -1,29 +1,37 @@
 package aquacoding.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import aquacoding.utils.MaskField;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 
 public class FuncionarioNovoController implements Initializable {
 	
 	// Obtem os elementos FXML
 	@FXML
-	Button cancelar, cadastrar;
+	Button cancelar, cadastrar, btnImage;
 	
 	@FXML
 	TextField funcionarioNome, funcionarioSobrenome, funcionarioRG, funcionarioCPF, funcionarioCTPS, 
 	funcionarioTelefone, funcionarioRua, funcionarioNumero, funcionarioBairro, 
 	funcionarioCidade, funcionarioEstado, funcionarioSalarioHoras;
+	
+	@FXML
+	Label lblImagePath;
+	
+	private File selectedFile;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -56,6 +64,10 @@ public class FuncionarioNovoController implements Initializable {
 						.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
 						.build();
 				
+				// Adiciona a imagem ao objeto do funcionario
+				if(selectedFile != null)
+					f.setImageURL(selectedFile);
+				
 				// Tenta registar o Funcionario no BD
 				if(f.create()) {
 					// Funcionario criado com sucesso
@@ -80,6 +92,16 @@ public class FuncionarioNovoController implements Initializable {
 				
 			}
 		});
+		
+		btnImage.setOnMouseClicked((MouseEvent e) -> {
+			FileChooser fileC = new FileChooser();
+			fileC.setTitle("Selecione a imagem do funcionário");
+			fileC.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+			selectedFile = fileC.showOpenDialog(Main.primaryStage);
+			
+			if(selectedFile != null) {
+				lblImagePath.setText(selectedFile.getName());
+			}
+		});
 	}
-
 }

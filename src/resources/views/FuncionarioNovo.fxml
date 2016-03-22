@@ -102,5 +102,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
+      <Button fx:id="btnImage" focusTraversable="false" layoutX="445.0" layoutY="19.0" mnemonicParsing="false" text="Selecionar imagem de perfil" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="19.0" />
+      <Label fx:id="lblImagePath" alignment="CENTER_RIGHT" layoutX="179.0" layoutY="17.0" prefHeight="17.0" prefWidth="183.0" text="Nenhuma imagem selecionada" AnchorPane.rightAnchor="183.0" AnchorPane.topAnchor="23.0" />
    </children>
 </AnchorPane>

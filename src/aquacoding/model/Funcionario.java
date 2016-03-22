@@ -1,12 +1,15 @@
 package aquacoding.model;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import aquacoding.utils.DatabaseConnect;
+import aquacoding.utils.Image;
 
 public class Funcionario {
 
@@ -23,6 +26,7 @@ public class Funcionario {
 	private String cidade;
 	private String estado;
 	private double salarioHoras;
+	private File profileImage;
 	
 	// Setters e Getters
 	public int getId() {
@@ -149,6 +153,16 @@ public class Funcionario {
 		if(salarioHoras <= 0)
 			throw new RuntimeException("O sálario por hora do funcionário precisa ser maior que 0.");
 		this.salarioHoras = salarioHoras;
+	}
+	
+	public File getProfileImage() {
+		return profileImage;
+	}
+	
+	public void setImageURL(File profileImage) {
+		if(profileImage == null)
+			throw new RuntimeException("URL inválida");
+		this.profileImage = profileImage;
 	}
 	
 	// Construtor de Funcionario
@@ -294,6 +308,12 @@ public class Funcionario {
 
 				// Encerra conexao
 				connect.close();
+				
+				// Salva a imagem
+				if(profileImage != null) {
+					Image.copyImage(profileImage, "img/profile/"+this.id);
+				}
+				
 				return true;
 			} else {
 				// Encerra conexao

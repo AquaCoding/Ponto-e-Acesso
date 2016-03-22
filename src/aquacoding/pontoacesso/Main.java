@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 // Extends javafx.application.Application para user JavaFX
 public class Main extends Application {
 
-	private static Stage primaryStage;
+	public static Stage primaryStage;
 	private static BorderPane rootLayout;
 	private static String pageTitle = "Controle de Ponto e Acesso";
 
