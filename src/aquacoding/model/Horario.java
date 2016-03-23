@@ -33,7 +33,7 @@ public class Horario {
 
 	public void setNome(String nome) {
 		if(nome.equals(""))
-			throw new RuntimeException("O nome do hor√°rio n√£o pode ser vazio.");
+			throw new RuntimeException("O nome do hor·rio n„o pode ser vazio.");
 		this.nome = nome;
 	}
 
@@ -195,6 +195,41 @@ public class Horario {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException("Um erro ocorreu ao deletar o Horario");
+		}
+	}
+
+	public boolean update() {
+		try {
+			// Obtem uma conex„o com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"UPDATE Horario SET nome = ?, inicio = ?, termino = ?, almocoInicio = ?, almocoTermino = ? WHERE idHorario = ?");
+
+			// Realiza o bind dos valores
+			statement.setString(1, this.nome);
+			statement.setTime(2, this.inicio);
+			statement.setTime(3, this.termino);
+			statement.setTime(4, this.inicioAlmoco);
+			statement.setTime(5, this.terminoAlmoco);
+			statement.setInt(6, this.id);
+
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();
+
+			// Retorna resultado
+			if (ret == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Um erro ocorreu ao atualizar o Setor");
 		}
 	}
 }

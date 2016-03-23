@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioEditarController">
+   <children>
+      <Label layoutX="24.0" layoutY="24.0" text="Editar Horário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <Label text="Nome" />
+            <TextField fx:id="horarioNome" VBox.vgrow="ALWAYS" />
+            <Label text="Inicio" />
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="horarioInicioHora" prefWidth="150.0" promptText="Hora" />
+                  <ComboBox fx:id="horarioInicioMinuto" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
+               </children>
+            </AnchorPane>
+            <Label text="Termino" />
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="horarioTerminoHora" prefWidth="150.0" promptText="Hora" />
+                  <ComboBox fx:id="horarioTerminoMinuto" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
+               </children>
+            </AnchorPane>
+            <Label text="Almoço inicio" />
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="almocoInicioHora" prefWidth="150.0" promptText="Hora" />
+                  <ComboBox fx:id="almocoInicioMinuto" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
+               </children>
+            </AnchorPane>
+            <Label text="Almoço termino" />
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="almocoTerminoHora" prefWidth="150.0" promptText="Hora" />
+                  <ComboBox fx:id="almocoTerminoMinuto" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
+               </children>
+            </AnchorPane>
+            <AnchorPane>
+               <children>
+                  <Button fx:id="editar" mnemonicParsing="false" text="Editar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="cancelar" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
