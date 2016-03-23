@@ -8,6 +8,9 @@ import javax.imageio.ImageIO;
 
 public class Image {
 	
+	public static final String PROFILE_IMAGE_PATH = "img/profile/";
+	public static final String PROFILE_IMAGE_EXTENSION = ".png";
+	
 	// Copia uma imagem para um novo path, convertendo para png
 	public static boolean copyImage(File file, String newPath) {
 		try {

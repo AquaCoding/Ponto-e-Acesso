@@ -1,7 +1,9 @@
 package aquacoding.pontoacesso;
 
 import java.io.IOException;
+
 import aquacoding.controller.FuncaoEditarController;
+import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
 import aquacoding.model.Funcao;
@@ -261,6 +263,24 @@ public class Main extends Application {
 			
 			// Obtem o controller da interface e passa o funcionario a ser editado
 			FuncionarioEditarController controller = loader.getController();
+			controller.setFuncionario(funcionario);
+
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Carrega a view de visualizar funcionario
+	public static void loadFuncionarioVerView(Funcionario funcionario) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Funcionario");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioVer.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			
+			// Obtem o controller da interface e passa o funcionario a ser editado
+			FuncionarioVerController controller = loader.getController();
 			controller.setFuncionario(funcionario);
 
 			rootLayout.setCenter(personOverview);

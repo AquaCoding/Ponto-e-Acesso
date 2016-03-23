@@ -355,6 +355,9 @@ public class Funcionario {
 						.setEstado(resultSet.getString("estado"))
 						.setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.build();
+				
+				// Obtem a imagem do perfil
+				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
 
 				// Adiciona o funcionario ao retorno
 				funcionarios.add(f);

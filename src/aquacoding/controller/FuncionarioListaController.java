@@ -77,7 +77,12 @@ public class FuncionarioListaController implements Initializable {
 				CustomAlert.showAlert("Remover Funcionario", ex.getMessage(), AlertType.WARNING);
 			}
 		});
-
+		
+		funcionarioListagem.setOnMouseClicked((MouseEvent e) -> {
+			if(e.getClickCount() >= 2) {
+				Main.loadFuncionarioVerView(funcionarioListagem.getSelectionModel().getSelectedItem());
+			}
+		});
 	}
 
 	private void setFuncionarioListagemCellFactory() {
