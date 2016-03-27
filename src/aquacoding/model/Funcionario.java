@@ -27,7 +27,8 @@ public class Funcionario {
 	private String estado;
 	private double salarioHoras;
 	private File profileImage;
-	
+	private Horario horario;
+
 	// Setters e Getters
 	public int getId() {
 		return id;
@@ -154,17 +155,27 @@ public class Funcionario {
 			throw new RuntimeException("O sálario por hora do funcionário precisa ser maior que 0.");
 		this.salarioHoras = salarioHoras;
 	}
-	
+
 	public File getProfileImage() {
 		return profileImage;
 	}
-	
+
 	public void setImageURL(File profileImage) {
 		if(profileImage == null)
 			throw new RuntimeException("URL inválida");
 		this.profileImage = profileImage;
 	}
-	
+
+	public Horario getHorario() {
+		if(horario == null)
+			throw new RuntimeException("Um Funcionário precisa ter um Horário.");
+		return horario;
+	}
+
+	public void setHorario(Horario horario) {
+		this.horario = horario;
+	}
+
 	// Construtor de Funcionario
 	// Só pode ser chamado pelo método build() da classe Builder
 	protected Funcionario(Builder builder) {
@@ -181,11 +192,12 @@ public class Funcionario {
 		setCidade(builder.cidade);
 		setEstado(builder.estado);
 		setSalarioHoras(builder.salarioHoras);
+		setHorario(builder.horario);
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
 	public static class Builder {
-		
+
 		// Atributos
 		private int id;
 		private String nome;
@@ -200,79 +212,85 @@ public class Funcionario {
 		private String cidade;
 		private String estado;
 		private double salarioHoras;
-		
+		private Horario horario;
+
 		// Sets do Builder
 		public Builder setId(int id) {
 			this.id = id;
 			return this;
 		}
-		
+
 		public Builder setNome(String nome) {
 			this.nome = nome;
 			return this;
 		}
-		
+
 		public Builder setSobrenome(String sobrenome) {
 			this.sobrenome = sobrenome;
 			return this;
 		}
-		
+
 		public Builder setRg(String rg) {
 			this.rg = rg;
 			return this;
 		}
-		
+
 		public Builder setCpf(String cpf) {
 			this.cpf = cpf;
 			return this;
 		}
-		
+
 		public Builder setCtps(String ctps) {
 			this.ctps = ctps;
 			return this;
 		}
-		
+
 		public Builder setTelefone(String telefone) {
 			this.telefone = telefone;
 			return this;
 		}
-		
+
 		public Builder setRua(String rua) {
 			this.rua = rua;
 			return this;
 		}
-		
+
 		public Builder setNumero(int numero) {
 			this.numero = numero;
 			return this;
 		}
-		
+
 		public Builder setBairro(String bairro) {
 			this.bairro = bairro;
 			return this;
 		}
-		
+
 		public Builder setCidade(String cidade) {
 			this.cidade = cidade;
 			return this;
 		}
-				
+
 		public Builder setEstado(String estado) {
 			this.estado = estado;
 			return this;
 		}
-		
+
 		public Builder setSalarioHoras(double salarioHoras) {
 			this.salarioHoras = salarioHoras;
 			return this;
 		}
-		
+
+		public Builder setHorario(Horario horario){
+			this.horario = horario;
+			return this;
+		}
+
 		// Cria a instancia de Funcionario
 		public Funcionario build() {
 			return new Funcionario(this);
 		}
 	}
-	
+
 	public boolean create() {
 		try {
 			// Obtem uma conexão com o banco de dados
@@ -280,7 +298,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					.prepareStatement("INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras, idHorario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -295,7 +313,8 @@ public class Funcionario {
 			statement.setString(10, this.cidade);
 			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
-			
+			statement.setInt(13, this.horario.getId());
+
 			// Executa o SQL
 			int ret = statement.executeUpdate();
 
@@ -308,12 +327,12 @@ public class Funcionario {
 
 				// Encerra conexao
 				connect.close();
-				
+
 				// Salva a imagem
 				if(profileImage != null) {
 					Image.copyImage(profileImage, "img/profile/"+this.id);
 				}
-				
+
 				return true;
 			} else {
 				// Encerra conexao
@@ -325,7 +344,7 @@ public class Funcionario {
 			throw new RuntimeException("Um erro ocorreu ao criar o Funcionario");
 		}
 	}
-	
+
 	public static ArrayList<Funcionario> getAll() {
 		try {
 			// Obtem uma conexão com o banco de dados
@@ -355,7 +374,7 @@ public class Funcionario {
 						.setEstado(resultSet.getString("estado"))
 						.setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.build();
-				
+
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
 
@@ -369,7 +388,7 @@ public class Funcionario {
 			throw new RuntimeException("Um erro ocorreu");
 		}
 	}
-	
+
 	public boolean update() {
 		try {
 			// Obtem uma conexão com o banco de dados
@@ -411,7 +430,7 @@ public class Funcionario {
 			throw new RuntimeException("Um erro ocorreu ao atualizar o Funcionario");
 		}
 	}
-	
+
 	public boolean delete() {
 		try {
 			// Obtem uma conex�o com o banco de dados
@@ -428,17 +447,18 @@ public class Funcionario {
 			int resp = statement.executeUpdate();
 
 			// Encerra conexao
-			connect.close();	
-			
+			connect.close();
+
 			if(resp == 1) {
 				return true;
 			}else {
 				return false;
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException("Um erro ocorreu ao deletar o Funcionario");
 		}
 	}
+
 }

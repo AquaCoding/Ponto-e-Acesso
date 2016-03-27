@@ -232,4 +232,30 @@ public class Horario {
 			throw new RuntimeException("Um erro ocorreu ao atualizar o Setor");
 		}
 	}
+
+	public static Horario getByID(int id) {
+		try{
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("SELECT * FROM Horario WHERE idHorario = ?", Statement.RETURN_GENERATED_KEYS);
+
+			// Realiza o bind dos valores
+			statement.setInt(1, id);
+
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();
+
+			// Obtem o primeiro resultado e o retorna
+			if(resultSet.next())
+				return new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), resultSet.getTime("inicio"), resultSet.getTime("termino"), resultSet.getTime("almocoInicio"), resultSet.getTime("almocoTermino"));
+
+			// Se nada for achado, retorna nulo
+			return null;
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu");
+		}
+	}
 }

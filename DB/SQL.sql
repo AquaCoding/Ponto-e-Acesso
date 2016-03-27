@@ -48,5 +48,8 @@ CREATE TABLE Funcionario(
     cidade			VARCHAR(45)	NOT NULL,
     estado			VARCHAR(45)	NOT NULL,
     salarioHoras	DOUBLE		NOT NULL,
-	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario)
+	idHorario		INT			NOT NULL,
+	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario),
+	CONSTRAINT fk_funcionario_horario FOREIGN KEY (idHorario)
+		REFERENCES Horario(idHorario)
 );
