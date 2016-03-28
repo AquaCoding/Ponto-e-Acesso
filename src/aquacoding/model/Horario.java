@@ -258,4 +258,8 @@ public class Horario {
 			throw new RuntimeException("Um erro ocorreu");
 		}
 	}
+	
+	public String toString(){
+		return " " + nome;
+	}
 }

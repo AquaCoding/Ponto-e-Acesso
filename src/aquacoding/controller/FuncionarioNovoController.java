@@ -43,6 +43,9 @@ public class FuncionarioNovoController implements Initializable {
 
 	private File selectedFile;
 
+	/* (non-Javadoc)
+	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Adiciona mascaras aos campos
@@ -55,10 +58,11 @@ public class FuncionarioNovoController implements Initializable {
 			Main.loadMainView();
 		});
 
-		// Preenche o campo de seleção de setores
+		// Preenche o campo de seleção do horario
 		horarioSelect.setItems(FXCollections.observableArrayList(Horario.getAll()));
-		setSetoresSelectFactory();
-
+		
+		setHorarioSelectFactory();
+		
 		// Tenta realizar o cadastro
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
@@ -116,7 +120,7 @@ public class FuncionarioNovoController implements Initializable {
 		});
 	}
 
-	private void setSetoresSelectFactory() {
+	private void setHorarioSelectFactory() {
 		// Define um novo cell factory
 		horarioSelect.setCellFactory(new Callback<ListView<Horario>, ListCell<Horario>>() {
 			// Realiza o override do método padrão
@@ -133,7 +137,7 @@ public class FuncionarioNovoController implements Initializable {
 
 						// Define o nome customizado
 						if (item != null) {
-							setText(item.getNome());
+							setText(item.toString());
 						} else {
 							setText("");
 						}
