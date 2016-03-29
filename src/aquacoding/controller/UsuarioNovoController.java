@@ -33,13 +33,13 @@ public class UsuarioNovoController implements Initializable {
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			if (usuarioPassword.getText().equals("") || usuarioConPassword.getText().equals("")
 					|| usuarioNome.getText().equals("")) {
-				CustomAlert.showAlert("Usuario - Cadastro", "Todos os campos s√£o obrigat√≥rios", AlertType.INFORMATION);
+				CustomAlert.showAlert("Usu·rio - Cadastro", "Todos os campos s„o obrigat·rios", AlertType.INFORMATION);
 			} else {
 				if (usuarioPassword.getText().equals(usuarioConPassword.getText())) {
 					try {
 						Usuario u = new Usuario(usuarioNome.getText(), usuarioPassword.getText());
 						if (u.create()) {
-							CustomAlert.showAlert("Usuario - Cadastro", "Um usu√°rio foi criado com sucesso",
+							CustomAlert.showAlert("Usu·rio - Cadastro", "O usu·rio foi criado com sucesso",
 									AlertType.INFORMATION);
 							Main.loadListaUsuarioView();
 							;
@@ -48,7 +48,7 @@ public class UsuarioNovoController implements Initializable {
 						CustomAlert.showAlert("Usuario - Cadastro", h.getMessage(), AlertType.INFORMATION);
 					}
 				} else {
-					CustomAlert.showAlert("Usuario - Cadastro", "As senhas informadas n√£o batem", AlertType.INFORMATION);
+					CustomAlert.showAlert("Usu·rio - Cadastro", "As senhas informadas n„o s„o iguais", AlertType.INFORMATION);
 				}
 			}
 		});

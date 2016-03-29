@@ -26,7 +26,7 @@ public class Usuario {
 	}
 	public void setNome(String nome) {
 		if(nome.equals(""))
-			throw new RuntimeException("O nome da usu√°rio n√£o pode ser vazio.");
+			throw new RuntimeException("O nome da usu·rio n„o pode ser vazio.");
 		this.nome = nome;
 	}
 	public String getSenha() {
@@ -34,10 +34,10 @@ public class Usuario {
 	}
 	public void setSenha(String senha) {
 		if (!senha.matches("[\\S ]{6,}"))
-			throw new RuntimeException("O valor de senha √© inv√°lido");
+			throw new RuntimeException("O valor de senha È inv·lido");
 
 		if(senha.equals(""))
-			throw new RuntimeException("O nome da usu√°rio n√£o pode ser vazio.");
+			throw new RuntimeException("A senha n„o pode ser vazio.");
 
 		this.senha = senha;
 	}
@@ -59,7 +59,7 @@ public class Usuario {
 			// Realiza o hash da senha
 			this.senha = BCrypt.hashpw(this.senha, BCrypt.gensalt(12));
 
-			// Obtem uma conexƒÉo com o banco de dados
+			// Obtem uma conex„o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
@@ -83,18 +83,18 @@ public class Usuario {
 				connect.close();
 				return true;
 			} else {
-				// Encerra conexao
+				// Encerra conex„o
 				connect.close();
 				return false;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar o usu√°rio");
+			throw new RuntimeException("Um erro ocorreu ao criar o usu·rio");
 		}
 	}
 
 	public static ArrayList<Usuario> getAll() {
 		try {
-			// Obtem uma conex√£o com o banco de dados
+			// Obtem uma conex„o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um statement
@@ -121,7 +121,7 @@ public class Usuario {
 
 	public static Usuario getByID(int id) {
 		try{
-			// Obtem uma conex√£o com o banco de dados
+			// Obtem uma conex„o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
@@ -156,7 +156,7 @@ public class Usuario {
 
 	public boolean update() {
 		try {
-			// Obtem uma conex√£o com o banco de dados
+			// Obtem uma conex„o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Realiza o hash da senha se necessario
@@ -207,13 +207,13 @@ public class Usuario {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o Usu√°rio");
+			throw new RuntimeException("Um erro ocorreu ao atualizar o usu·rio");
 		}
 	}
 
 	public boolean delete() {
 		try {
-			// Obtem uma conex√£o com o banco de dados
+			// Obtem uma conex„o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
@@ -237,7 +237,7 @@ public class Usuario {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao deletar o Usu√°rio");
+			throw new RuntimeException("Um erro ocorreu ao deletar o usu·rio");
 		}
 	}
 
@@ -245,7 +245,7 @@ public class Usuario {
 		public static Usuario getByNome(String nome) {
 			// Result set get the result of the SQL query
 			try {
-				// Obtem uma conexƒÉo com o banco de dados
+				// Obtem uma conex„o com o banco de dados
 				Connection connect = DatabaseConnect.getInstance();
 
 				// Cria um prepared statement
@@ -265,11 +265,11 @@ public class Usuario {
 							resultSet.getString("senha"));
 					return u;
 				} else {
-					throw new RuntimeException("O usu√°rio nƒÉo existe");
+					throw new RuntimeException("O usu·rio n„o existe");
 				}
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
-				throw new RuntimeException("Um erro ocorreu ao buscar o usu√°rio");
+				throw new RuntimeException("Um erro ocorreu ao buscar o usu·rio");
 			}
 		}
 

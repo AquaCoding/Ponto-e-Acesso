@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioListaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioListaController">
    <children>
       <Label layoutX="24.0" layoutY="24.0" text="Horários" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -16,7 +16,7 @@
         <columns>
           <TableColumn fx:id="horarioNome" prefWidth="75.0" text="Nome" />
           <TableColumn fx:id="horarioTurnoInicio" prefWidth="75.0" text="Turno inicio" />
-            <TableColumn fx:id="horarioTurnoTermino" prefWidth="75.0" text="Teruno termino" />
+            <TableColumn fx:id="horarioTurnoTermino" prefWidth="75.0" text="Turno termino" />
             <TableColumn fx:id="horarioAlmocoInicio" prefWidth="75.0" text="Almoço inicio" />
             <TableColumn fx:id="horarioAlmocoTermino" prefWidth="75.0" text="Almoço termino" />
         </columns>
