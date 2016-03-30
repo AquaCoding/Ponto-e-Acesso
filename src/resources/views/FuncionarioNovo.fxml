@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioNovoController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioNovoController">
    <children>
       <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="44.0">
          <children>
@@ -45,6 +45,8 @@
                         <Insets bottom="2.0" top="2.0" />
                      </padding></Label>
                   <TextField fx:id="funcionarioSalarioHoras" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="Horario" />
+                  <ComboBox fx:id="horarioSelect" />
                   <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar">
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -87,12 +89,12 @@
                         <Insets bottom="2.0" top="2.0" />
                      </padding></Label>
                   <TextField fx:id="funcionarioCidade" prefHeight="25.0" prefWidth="212.0" />
-                  <Label text="Horario" />
-                  <ComboBox fx:id="horarioSelect" prefWidth="212.0" />
+                  <Label fx:id="lblImagePath" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="183.0" text="Nenhuma imagem selecionada" />
+                  <Button fx:id="btnImage" focusTraversable="false" mnemonicParsing="false" text="Selecionar imagem de perfil" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         
-                                                <Button fx:id="cadastrar" focusTraversable="false" mnemonicParsing="false" text="Cadastrar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                                                <Button fx:id="cadastrar" focusTraversable="false" mnemonicParsing="false" text="Cadastrar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="11.0" />
                      </children>
                   </AnchorPane>
                </children>
@@ -104,7 +106,5 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnImage" focusTraversable="false" layoutX="445.0" layoutY="19.0" mnemonicParsing="false" text="Selecionar imagem de perfil" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="19.0" />
-      <Label fx:id="lblImagePath" alignment="CENTER_RIGHT" layoutX="179.0" layoutY="17.0" prefHeight="17.0" prefWidth="183.0" text="Nenhuma imagem selecionada" AnchorPane.rightAnchor="183.0" AnchorPane.topAnchor="23.0" />
    </children>
 </AnchorPane>

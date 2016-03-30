@@ -33,6 +33,8 @@ public class FuncionarioEditarController implements Initializable {
 		MaskField.phoneMask(funcionarioTelefone);
 		MaskField.intMask(funcionarioNumero);
 		MaskField.moneyMask(funcionarioSalarioHoras);
+		MaskField.cpfMaks(funcionarioCPF);
+		MaskField.rgMaks(funcionarioRG);
 				
 		// Cancela a edi��o e retorna pra tela inicial
 		cancelar.setOnMouseClicked((MouseEvent e) -> {

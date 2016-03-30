@@ -41,6 +41,52 @@ public class MaskField {
 		});
 	}
 	
+	public static void cpfMaks(TextField field) {
+		field.setOnKeyTyped(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {				
+				if(event.getCharacter().matches("\\d")) {
+					TextField tf = (TextField) event.getSource();
+					String newValue = tf.getText() + event.getCharacter();
+					
+					if(newValue.length() <= 11) {
+						event.consume();
+						tf.setText(newValue);
+					} else {
+						event.consume();
+					}
+					
+					tf.positionCaret(tf.getText().length());
+				} else {
+					event.consume();
+				}
+			}
+		});
+	}
+	
+	public static void rgMaks(TextField field) {
+		field.setOnKeyTyped(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {				
+				if(event.getCharacter().matches("\\d")) {
+					TextField tf = (TextField) event.getSource();
+					String newValue = tf.getText() + event.getCharacter();
+					
+					if(newValue.length() <= 9) {
+						event.consume();
+						tf.setText(newValue);
+					} else {
+						event.consume();
+					}
+					
+					tf.positionCaret(tf.getText().length());
+				} else {
+					event.consume();
+				}
+			}
+		});
+	}
+	
 	public static void phoneMask(TextField field) {
 		field.setOnKeyTyped(new EventHandler<KeyEvent>() {
 			@Override

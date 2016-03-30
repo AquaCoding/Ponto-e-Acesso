@@ -52,6 +52,8 @@ public class FuncionarioNovoController implements Initializable {
 		MaskField.phoneMask(funcionarioTelefone);
 		MaskField.intMask(funcionarioNumero);
 		MaskField.moneyMask(funcionarioSalarioHoras);
+		MaskField.cpfMaks(funcionarioCPF);
+		MaskField.rgMaks(funcionarioRG);
 
 		// Cancela o cadastro e retorna pra tela inicial
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
