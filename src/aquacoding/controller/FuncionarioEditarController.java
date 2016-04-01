@@ -1,31 +1,45 @@
 package aquacoding.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import aquacoding.model.Funcionario;
+import aquacoding.model.Horario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import aquacoding.utils.MaskField;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class FuncionarioEditarController implements Initializable {
 
 	// Obtem os elementos FXML
 	@FXML
-	Button cancelar, alterar;
+	Button cancelar, alterar, btnImage;
 
 	@FXML
-	TextField funcionarioNome, funcionarioSobrenome, funcionarioRG, funcionarioCPF, funcionarioCTPS, 
-	funcionarioTelefone, funcionarioRua, funcionarioNumero, funcionarioBairro, 
+	Label lblImagePath;
+
+	@FXML
+	TextField funcionarioNome, funcionarioSobrenome, funcionarioRG, funcionarioCPF, funcionarioCTPS,
+	funcionarioTelefone, funcionarioRua, funcionarioNumero, funcionarioBairro,
 	funcionarioCidade, funcionarioEstado, funcionarioSalarioHoras;
-	
+
+	@FXML
+	ComboBox<Horario> horarioSelect;
+
 	private Funcionario funcionario;
+	private File selectedFile;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -35,13 +49,16 @@ public class FuncionarioEditarController implements Initializable {
 		MaskField.moneyMask(funcionarioSalarioHoras);
 		MaskField.cpfMaks(funcionarioCPF);
 		MaskField.rgMaks(funcionarioRG);
-				
-		// Cancela a ediï¿½ï¿½o e retorna pra tela inicial
+
+		// Cancela a edição e retorna pra tela inicial
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadListaFuncionarioView();
 		});
 
-		// Tenta realizar a ediï¿½ï¿½o
+		// Preenche o campo de seleção do horario
+				horarioSelect.setItems(FXCollections.observableArrayList(Horario.getAll()));
+
+		// Tenta realizar a edição
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Atualiza a info do funcionario
@@ -59,26 +76,45 @@ public class FuncionarioEditarController implements Initializable {
 				funcionario.setEstado(funcionarioEstado.getText());
 				funcionario.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()));
 
+				if(horarioSelect != null){
+					funcionario.setHorario(horarioSelect.getSelectionModel().getSelectedItem());
+				}
+
+				// Adiciona a imagem ao objeto do funcionario
+				if (selectedFile != null)
+					funcionario.setImageURL(selectedFile);
+
 				// Tenta alterar o funcionario no BD
 				if (funcionario.update()) {
 					// funcionario alterado com sucesso
-					CustomAlert.showAlert("Editar Funcionario", "Funcionario alterado com sucesso", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Funcionário", "Funcionário alterado com sucesso", AlertType.WARNING);
 					Main.loadListaFuncionarioView();
 				} else {
 					// Erro ao cria o funcionario
-					CustomAlert.showAlert("Editar Funcionario", "Algo deu errado", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Funcionário", "Algo deu errado", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
 				String message = "";
 				if(ex.getMessage() == "empty String") {
-					message = "Pagamento hora precisa ser um nï¿½mero";
+					message = "Pagamento hora precisa ser um número";
 				} else if(ex.getMessage().matches("^For input string: \"[\\S ]{0,}\"$")) {
-					message = "Nï¿½mero precisa ser um nï¿½mero inteiro";
+					message = "Número precisa ser um número inteiro";
 				} else {
 					message = ex.getMessage();
 				}
-					
-				CustomAlert.showAlert("Novo Funcionario", message, AlertType.WARNING);
+
+				CustomAlert.showAlert("Novo Funcionário", message, AlertType.WARNING);
+			}
+		});
+
+		btnImage.setOnMouseClicked((MouseEvent e) -> {
+			FileChooser fileC = new FileChooser();
+			fileC.setTitle("Selecione a imagem do funcionário");
+			fileC.getExtensionFilters().add(new ExtensionFilter("Image Files", "*.png", "*.jpg"));
+			selectedFile = fileC.showOpenDialog(Main.primaryStage);
+
+			if (selectedFile != null) {
+				lblImagePath.setText(selectedFile.getName());
 			}
 		});
 	}

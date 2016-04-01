@@ -62,9 +62,9 @@ public class FuncionarioNovoController implements Initializable {
 
 		// Preenche o campo de seleção do horario
 		horarioSelect.setItems(FXCollections.observableArrayList(Horario.getAll()));
-		
+
 		setHorarioSelectFactory();
-		
+
 		// Tenta realizar o cadastro
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
@@ -87,7 +87,7 @@ public class FuncionarioNovoController implements Initializable {
 				// Tenta registar o Funcionario no BD
 				if (f.create()) {
 					// Funcionario criado com sucesso
-					CustomAlert.showAlert("Novo Funcionario", "Novo Funcionario cadastrado com sucesso",
+					CustomAlert.showAlert("Novo Funcionário", "Novo Funcionário cadastrado com sucesso",
 							AlertType.WARNING);
 					Main.loadListaFuncionarioView();
 				} else {

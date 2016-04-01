@@ -167,12 +167,12 @@ public class Funcionario {
 	}
 
 	public Horario getHorario() {
-		if(horario == null)
-			throw new RuntimeException("Um Funcionário precisa ter um Horário.");
 		return horario;
 	}
 
 	public void setHorario(Horario horario) {
+		if(horario == null)
+			throw new RuntimeException("Um Funcionário precisa ter um Horário.");
 		this.horario = horario;
 	}
 
@@ -396,7 +396,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ? WHERE idFuncionario = ?");
+					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ?, idHorario = ? WHERE idFuncionario = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -411,13 +411,19 @@ public class Funcionario {
 			statement.setString(10, this.cidade);
 			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
-			statement.setDouble(13, this.id);
+			statement.setInt(13, this.horario.getId());
+			statement.setDouble(14, this.id);
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
 
 			// Encerra conexao
 			connect.close();
+
+			// Salva a imagem
+			if(profileImage != null) {
+				Image.copyImage(profileImage, "img/profile/"+this.id);
+			}
 
 			// Retorna resultado
 			if (ret == 1) {

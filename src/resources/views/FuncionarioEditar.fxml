@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioEditarController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioEditarController">
    <children>
       <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="44.0">
          <children>
@@ -48,6 +48,8 @@
                      </padding>
                   </Label>
                   <TextField fx:id="funcionarioSalarioHoras" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="Horario" />
+                  <ComboBox fx:id="horarioSelect" />
                   <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar">
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -96,6 +98,8 @@
                      </padding>
                   </Label>
                   <TextField fx:id="funcionarioCidade" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblImagePath" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="183.0" text="Editar imagem" />
+                  <Button fx:id="btnImage" focusTraversable="false" mnemonicParsing="false" text="Selecionar imagem de perfil" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="alterar" focusTraversable="false" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
