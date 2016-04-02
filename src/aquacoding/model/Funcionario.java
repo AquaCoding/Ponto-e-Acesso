@@ -373,6 +373,7 @@ public class Funcionario {
 						.setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado"))
 						.setSalarioHoras(resultSet.getDouble("salarioHoras"))
+						.setHorario(Horario.getByID(resultSet.getInt("idHorario")))
 						.build();
 
 				// Obtem a imagem do perfil

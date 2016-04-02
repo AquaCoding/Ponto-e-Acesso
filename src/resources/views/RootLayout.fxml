@@ -4,10 +4,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.RootLayoutController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
+            <Menu mnemonicParsing="false" text="Empresa">
+               <items>
+                  <MenuItem fx:id="menuBarEmpresaVer" mnemonicParsing="false" text="Ver" />
+                  <MenuItem fx:id="menuBarEmpresaNovoEditar" mnemonicParsing="false" text="Cadastrar/Editar" />
+               </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Setor">
             <items>
                   <MenuItem fx:id="menuBarSetorLista" mnemonicParsing="false" text="Ver todos" />

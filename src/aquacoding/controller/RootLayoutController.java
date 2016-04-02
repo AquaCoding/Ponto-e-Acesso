@@ -5,6 +5,8 @@ import java.util.ResourceBundle;
 
 
 
+
+import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +15,9 @@ import javafx.scene.control.MenuItem;
 
 public class RootLayoutController implements Initializable {
 
+	@FXML
+	MenuItem menuBarEmpresaNovoEditar, menuBarEmpresaVer;
+	
 	@FXML
 	MenuItem menuBarSetorNovo, menuBarSetorLista;
 
@@ -71,6 +76,20 @@ public class RootLayoutController implements Initializable {
 		
 		menuBarFuncionarioLista.setOnAction((ActionEvent e) -> {
 			Main.loadListaFuncionarioView();
+		});
+		
+		menuBarEmpresaNovoEditar.setOnAction((ActionEvent e) -> {
+			if(Empresa.getAll().size() == 0) {
+				// Abre cadastro
+				Main.loadEmpresaNovoView();
+			} else {
+				// Abre editar
+				
+			}
+		});
+		
+		menuBarEmpresaVer.setOnAction((ActionEvent e) -> {
+			Main.loadEmpresaVer();
 		});
 	}
 

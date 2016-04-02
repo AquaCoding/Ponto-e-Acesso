@@ -53,3 +53,16 @@ CREATE TABLE Funcionario(
 	CONSTRAINT fk_funcionario_horario FOREIGN KEY (idHorario)
 		REFERENCES Horario(idHorario)
 );
+
+CREATE TABLE Empresa(
+	idEmpresa		INT			NOT NULL auto_increment,
+    nome			VARCHAR(45)	NOT NULL,
+    razaoSocial		VARCHAR(60)	NOT NULL,
+    cnpj			VARCHAR(14)	NOT NULL,
+    rua				VARCHAR(45)	NOT NULL,
+    numero			INT			NOT NULL,
+    bairro			VARCHAR(45)	NOT NULL,
+    cidade			VARCHAR(45)	NOT NULL,
+    estado			VARCHAR(45)	NOT NULL,
+    CONSTRAINT pk_empresa PRIMARY KEY (idEmpresa)
+);

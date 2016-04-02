@@ -308,4 +308,30 @@ public class Main extends Application {
 				e.printStackTrace();
 			}
 		}
+		
+		// Carrega a view de editar um horario
+		public static void loadEmpresaNovoView() {
+			try {
+				primaryStage.setTitle(pageTitle + " - Nova Empresa");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaNovo.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// Carrega a view de editar um horario
+		public static void loadEmpresaVer() {
+			try {
+				primaryStage.setTitle(pageTitle + " - Empresa");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaVer.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 }
