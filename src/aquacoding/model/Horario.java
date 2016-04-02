@@ -14,8 +14,10 @@ public class Horario {
 
 	private int id;
 	private String nome;
-	private Time inicio;
-	private Time termino;
+	private Time inicioTurno1;
+	private Time terminoTurno1;
+	private Time inicioTurno2;
+	private Time terminoTurno2;
 	private Time inicioAlmoco;
 	private Time terminoAlmoco;
 
@@ -37,24 +39,44 @@ public class Horario {
 		this.nome = nome;
 	}
 
-	public Time getInicio() {
-		return inicio;
+	public Time getInicioTurno1() {
+		return inicioTurno1;
 	}
 
-	public void setInicio(Time inicio) {
-		if(inicio == null)
+	public void setInicioTurno1(Time inicioTurno1) {
+		if(inicioTurno1 == null)
 			throw new RuntimeException("Um horário de inicio deve ser selecionado.");
-		this.inicio = inicio;
+		this.inicioTurno1 = inicioTurno1;
 	}
 
-	public Time getTermino() {
-		return termino;
+	public Time getTerminoTurno1() {
+		return terminoTurno1;
 	}
 
-	public void setTermino(Time termino) {
-		if(termino == null)
+	public void setTerminoTurno1(Time terminoTurno1) {
+		if(terminoTurno1 == null)
 			throw new RuntimeException("Um horário de termino deve ser selecionado.");
-		this.termino = termino;
+		this.terminoTurno1 = terminoTurno1;
+	}
+	
+	public Time getInicioTurno2() {
+		return inicioTurno2;
+	}
+
+	public void setInicioTurno2(Time inicioTurno2) {
+		if(inicioTurno2 == null)
+			throw new RuntimeException("Um horário de inicio deve ser selecionado.");
+		this.inicioTurno2 = inicioTurno2;
+	}
+
+	public Time getTerminoTurno2() {
+		return terminoTurno2;
+	}
+
+	public void setTerminoTurno2(Time terminoTurno2) {
+		if(terminoTurno2 == null)
+			throw new RuntimeException("Um horário de termino deve ser selecionado.");
+		this.terminoTurno2 = terminoTurno2;
 	}
 
 	public Time getInicioAlmoco() {
@@ -78,19 +100,23 @@ public class Horario {
 	}
 
 	// CONSTRUTORES
-	public Horario(int id, String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco) {
+	public Horario(int id, String nome, Time inicioTurno1, Time terminoTurno1, Time inicioTurno2, Time terminoTurno2, Time inicioAlmoco, Time terminoAlmoco) {
 		setId(id);
 		setNome(nome);
-		setInicio(inicio);
-		setTermino(termino);
+		setInicioTurno1(inicioTurno1);
+		setTerminoTurno1(terminoTurno1);
+		setInicioTurno2(inicioTurno2);
+		setTerminoTurno2(terminoTurno2);
 		setInicioAlmoco(inicioAlmoco);
 		setTerminoAlmoco(terminoAlmoco);
 	}
 
-	public Horario(String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco) {
+	public Horario(String nome, Time inicioTurno1, Time terminoTurno1, Time inicioTurno2, Time terminoTurno2, Time inicioAlmoco, Time terminoAlmoco) {
 		setNome(nome);
-		setInicio(inicio);
-		setTermino(termino);
+		setInicioTurno1(inicioTurno1);
+		setTerminoTurno1(terminoTurno1);
+		setInicioTurno2(inicioTurno2);
+		setTerminoTurno2(terminoTurno2);
 		setInicioAlmoco(inicioAlmoco);
 		setTerminoAlmoco(terminoAlmoco);
 	}
@@ -103,14 +129,16 @@ public class Horario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("INSERT INTO Horario (nome, inicio, termino, almocoInicio, almocoTermino) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					.prepareStatement("INSERT INTO Horario (nome, inicioTurno1, terminoTurno1, inicioTurno2, terminoTurno2, almocoInicio, almocoTermino) VALUES (?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
-			statement.setTime(2, this.inicio);
-			statement.setTime(3, this.termino);
-			statement.setTime(4, this.inicioAlmoco);
-			statement.setTime(5, this.terminoAlmoco);
+			statement.setTime(2, this.inicioTurno1);
+			statement.setTime(3, this.terminoTurno1);
+			statement.setTime(4, this.inicioTurno2);
+			statement.setTime(5, this.terminoTurno2);
+			statement.setTime(6, this.inicioAlmoco);
+			statement.setTime(7, this.terminoAlmoco);
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -131,7 +159,7 @@ public class Horario {
 				return false;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar o setor");
+			throw new RuntimeException("Um erro ocorreu ao criar o Hor�rio");
 		}
 	}
 
@@ -150,12 +178,14 @@ public class Horario {
 			ArrayList<Horario> horarios = new ArrayList<Horario>();
 			while (resultSet.next()) {
 				// Cria um cliente com os dados do BD
-				Time inicio = resultSet.getTime("inicio");
-				Time termino = resultSet.getTime("termino");
+				Time inicioTurno1 = resultSet.getTime("inicioTurno1");
+				Time terminoTurno1 = resultSet.getTime("terminoTurno1");
+				Time inicioTurno2 = resultSet.getTime("inicioTurno2");
+				Time terminoTurno2 = resultSet.getTime("terminoTurno2");
 				Time almocoInicio = resultSet.getTime("almocoInicio");
 				Time almocoTermino = resultSet.getTime("almocoTermino");
 
-				Horario c = new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), inicio, termino, almocoInicio, almocoTermino);
+				Horario c = new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), inicioTurno1, terminoTurno1, inicioTurno2, terminoTurno2, almocoInicio, almocoTermino);
 
 				// Adiciona o cliente ao retorno
 				horarios.add(c);
@@ -205,12 +235,14 @@ public class Horario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Horario SET nome = ?, inicio = ?, termino = ?, almocoInicio = ?, almocoTermino = ? WHERE idHorario = ?");
+					"UPDATE Horario SET nome = ?, inicioTurno1 = ?, terminoTurno1 = ?, inicioTurno2 = ?, terminoTurno2 = ?, almocoInicio = ?, almocoTermino = ? WHERE idHorario = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
-			statement.setTime(2, this.inicio);
-			statement.setTime(3, this.termino);
+			statement.setTime(2, this.inicioTurno1);
+			statement.setTime(3, this.terminoTurno1);
+			statement.setTime(2, this.inicioTurno2);
+			statement.setTime(3, this.terminoTurno2);
 			statement.setTime(4, this.inicioAlmoco);
 			statement.setTime(5, this.terminoAlmoco);
 			statement.setInt(6, this.id);
@@ -229,7 +261,7 @@ public class Horario {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o Setor");
+			throw new RuntimeException("Um erro ocorreu ao atualizar o Hor�rio");
 		}
 	}
 
@@ -250,7 +282,7 @@ public class Horario {
 
 			// Obtem o primeiro resultado e o retorna
 			if(resultSet.next())
-				return new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), resultSet.getTime("inicio"), resultSet.getTime("termino"), resultSet.getTime("almocoInicio"), resultSet.getTime("almocoTermino"));
+				return new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), resultSet.getTime("inicioTurno1"), resultSet.getTime("terminoTurno1"), resultSet.getTime("inicioTurno2"), resultSet.getTime("terminoTurno2"), resultSet.getTime("almocoInicio"), resultSet.getTime("almocoTermino"));
 
 			// Se nada for achado, retorna nulo
 			return null;
