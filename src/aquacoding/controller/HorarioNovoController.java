@@ -26,7 +26,8 @@ public class HorarioNovoController implements Initializable {
 	TextField horarioNome;
 	
 	@FXML
-	ComboBox<String> horarioInicioHora, horarioInicioMinuto, horarioTerminoHora, horarioTerminoMinuto;
+	ComboBox<String> horarioInicioHoraTurno1, horarioInicioMinutoTurno1, horarioTerminoHoraTurno1, horarioTerminoMinutoTurno1,
+	horarioInicioHoraTurno2, horarioInicioMinutoTurno2, horarioTerminoHoraTurno2, horarioTerminoMinutoTurno2;
 	
 	@FXML
 	ComboBox<String> almocoInicioHora, almocoInicioMinuto, almocoTerminoHora, almocoTerminoMinuto;
@@ -38,8 +39,10 @@ public class HorarioNovoController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Configura as horas e minutos dos combo box
-		defineTime(horarioInicioHora, horarioInicioMinuto);
-		defineTime(horarioTerminoHora, horarioTerminoMinuto);
+		defineTime(horarioInicioHoraTurno1, horarioInicioMinutoTurno1);
+		defineTime(horarioTerminoHoraTurno1, horarioTerminoMinutoTurno1);
+		defineTime(horarioInicioHoraTurno2, horarioInicioMinutoTurno2);
+		defineTime(horarioTerminoHoraTurno2, horarioTerminoMinutoTurno2);
 		defineTime(almocoInicioHora, almocoInicioMinuto);
 		defineTime(almocoTerminoHora, almocoTerminoMinuto);
 		
@@ -50,15 +53,17 @@ public class HorarioNovoController implements Initializable {
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Horario de inicio e fim do turno
-				Time inicio = new Time(Integer.parseInt(horarioInicioHora.getSelectionModel().getSelectedItem()), Integer.parseInt(horarioInicioMinuto.getSelectionModel().getSelectedItem()), 0);
-				Time termino = new Time(Integer.parseInt(horarioTerminoHora.getSelectionModel().getSelectedItem()), Integer.parseInt(horarioTerminoMinuto.getSelectionModel().getSelectedItem()), 0);
+				Time inicioTurno1 = new Time(Integer.parseInt(horarioInicioHoraTurno1.getSelectionModel().getSelectedItem()), Integer.parseInt(horarioInicioMinutoTurno1.getSelectionModel().getSelectedItem()), 0);
+				Time terminoTurno1 = new Time(Integer.parseInt(horarioTerminoHoraTurno1.getSelectionModel().getSelectedItem()), Integer.parseInt(horarioTerminoMinutoTurno1.getSelectionModel().getSelectedItem()), 0);
+				Time inicioTurno2 = new Time(Integer.parseInt(horarioInicioHoraTurno2.getSelectionModel().getSelectedItem()), Integer.parseInt(horarioInicioMinutoTurno2.getSelectionModel().getSelectedItem()), 0);
+				Time terminoTurno2 = new Time(Integer.parseInt(horarioTerminoHoraTurno2.getSelectionModel().getSelectedItem()), Integer.parseInt(horarioTerminoMinutoTurno2.getSelectionModel().getSelectedItem()), 0);
 				
 				// Horario de inicio e fim do almoço
 				Time inicioAlmoco = new Time(Integer.parseInt(almocoInicioHora.getSelectionModel().getSelectedItem()), Integer.parseInt(almocoInicioMinuto.getSelectionModel().getSelectedItem()), 0);
 				Time terminoAlmoco = new Time(Integer.parseInt(almocoTerminoHora.getSelectionModel().getSelectedItem()), Integer.parseInt(almocoTerminoMinuto.getSelectionModel().getSelectedItem()), 0);
 				
 				// Cria novo horario
-				Horario h = new Horario(horarioNome.getText(), inicio , termino, inicioAlmoco, terminoAlmoco);
+				Horario h = new Horario(horarioNome.getText(), inicioTurno1 , terminoTurno1, inicioTurno2, terminoTurno2, inicioAlmoco, terminoAlmoco);
 				
 				// Salva novo horario no BD
 				if(h.create()) {
