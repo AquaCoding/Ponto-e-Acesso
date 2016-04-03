@@ -39,7 +39,7 @@ public class FuncionarioNovoController implements Initializable {
 	Label lblImagePath;
 
 	@FXML
-	ComboBox<Horario> horarioSelect;
+	ComboBox<Horario> horarioSelect, horarioSelect2;
 
 	private File selectedFile;
 
@@ -62,7 +62,8 @@ public class FuncionarioNovoController implements Initializable {
 
 		// Preenche o campo de seleção do horario
 		horarioSelect.setItems(FXCollections.observableArrayList(Horario.getAll()));
-
+		horarioSelect2.setItems(FXCollections.observableArrayList(Horario.getAll()));
+		
 		setHorarioSelectFactory();
 
 		// Tenta realizar o cadastro
@@ -76,7 +77,8 @@ public class FuncionarioNovoController implements Initializable {
 						.setNumero(Integer.parseInt(funcionarioNumero.getText())).setBairro(funcionarioBairro.getText())
 						.setCidade(funcionarioCidade.getText()).setEstado(funcionarioEstado.getText())
 						.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
-						.setHorario(horarioSelect.getSelectionModel().getSelectedItem()).build();
+						.setHorario(horarioSelect.getSelectionModel().getSelectedItem())
+						.build();
 
 
 
