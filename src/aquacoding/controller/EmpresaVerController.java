@@ -1,5 +1,6 @@
 package aquacoding.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -12,9 +13,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class EmpresaVerController implements Initializable{
+	
+	@FXML
+	ImageView profileImage;
 
 	@FXML
 	Label empresaNome, empresaRazaoSocial, empresaCNPJ, empresaRua, empresaNumero, empresaBairro, empresaCidade, empresaEstado;
@@ -54,6 +60,13 @@ public class EmpresaVerController implements Initializable{
 			empresaBairro.setText(e.getBairro());
 			empresaCidade.setText(e.getCidade());
 			empresaEstado.setText(e.getEstado());
+			
+			File f = e.getProfileImage();
+			if(f.exists()) {
+				Image i = new Image(f.toURI().toString(), 200, 200, false, true);
+				profileImage.setImage(i);
+			}
+			
 		} else {
 			CustomAlert.showAlert("Empresa não cadastrada", "É preciso cadastrar uma empresa antes.", AlertType.WARNING);
 			Main.loadEmpresaNovoView();

@@ -1,5 +1,6 @@
 package aquacoding.model;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import aquacoding.utils.DatabaseConnect;
+import aquacoding.utils.Image;
 
 public class Empresa {
 	
@@ -19,6 +21,7 @@ public class Empresa {
 	private String bairro;
 	private String cidade;
 	private String estado;
+	private File profileImage;
 	
 	// GETTERS and SETTERS
 	public int getIdEmpresa() {
@@ -107,6 +110,16 @@ public class Empresa {
 		if(estado == null || estado.equals(""))
 			throw new RuntimeException("O estado da empresa não pode estar vazio.");
 		this.estado = estado;
+	}
+	
+	public File getProfileImage() {
+		return profileImage;
+	}
+
+	public void setImageURL(File profileImage) {
+		if(profileImage == null)
+			throw new RuntimeException("URL inválida");
+		this.profileImage = profileImage;
 	}
 	
 	// CONSTRUCTOR
@@ -216,6 +229,11 @@ public class Empresa {
 
 				// Encerra conexao
 				connect.close();
+				
+				// Salva a imagem
+				if(profileImage != null) {
+					Image.copyImage(profileImage, "img/profile/"+this.idEmpresa);
+				}
 
 				return true;
 			} else {
@@ -255,6 +273,9 @@ public class Empresa {
 						.setEstado(resultSet.getString("estado"))
 						.build();
 
+				// Obtem a imagem do perfil
+				e.setImageURL(new File(Image.PROFILE_IMAGE_PATH + e.getIdEmpresa() + Image.PROFILE_IMAGE_EXTENSION));
+				
 				// Adiciona o funcionario ao retorno
 				empresa.add(e);
 			}
