@@ -20,10 +20,8 @@ CREATE TABLE Funcao(
 CREATE TABLE Horario (
 	idHorario			INT			NOT NULL	auto_increment,
 	nome				VARCHAR(45)	NOT NULL,
-    inicioTurno1		TIME		NOT NULL,
-    terminoTurno1		TIME		NOT NULL,
-    inicioTurno2		TIME		NOT NULL,
-    terminoTurno2		TIME		NOT NULL,
+    inicio				TIME		NOT NULL,
+    termino				TIME		NOT NULL,
 	almocoInicio		TIME		NOT NULL,
     almocoTermino		TIME		NOT NULL,
     CONSTRAINT pk_horario PRIMARY KEY (idHorario)
