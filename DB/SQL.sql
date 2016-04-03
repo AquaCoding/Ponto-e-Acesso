@@ -49,9 +49,18 @@ CREATE TABLE Funcionario(
     estado			VARCHAR(45)	NOT NULL,
     salarioHoras	DOUBLE		NOT NULL,
 	idHorario		INT			NOT NULL,
-	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario),
-	CONSTRAINT fk_funcionario_horario FOREIGN KEY (idHorario)
-		REFERENCES Horario(idHorario)
+	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario)
+);
+
+CREATE TABLE HorarioFuncionario (
+	idHorarioFuncionario		INT			NOT NULL	auto_increment,
+    idHorario					INT			NOT NULL,
+    idFuncionario				INT			NOT NULL,
+	CONSTRAINT pk_horario_funcionario PRIMARY KEY (idHorarioFuncionario),
+    CONSTRAINT fk_horario FOREIGN KEY (idHorario)
+		REFERENCES Horario(idHorario),
+    CONSTRAINT fk_funcionario FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario)
 );
 
 CREATE TABLE Empresa(
