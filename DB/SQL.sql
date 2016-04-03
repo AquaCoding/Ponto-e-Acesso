@@ -66,3 +66,22 @@ CREATE TABLE Empresa(
     estado			VARCHAR(45)	NOT NULL,
     CONSTRAINT pk_empresa PRIMARY KEY (idEmpresa)
 );
+
+CREATE TABLE Ferias(
+	idFerias		INT			NOT NULL auto_increment,
+	nome		VARCHAR(45)	NOT NULL,
+	inicio			DATE		NOT NULL,
+	termino		DATE		NOT NULL,
+	CONSTRAINT pk_ferias PRIMARY KEY (idFerias)
+);
+
+CREATE TABLE Funcionario_Ferias(
+	idFerias_funcionario		INT 		NOT NULL auto_increment,
+    idFuncionario					INT		NOT NULL,
+    idFerias							INT 		NOT NULL,
+    CONSTRAINT pk_funcionario_ferias PRIMARY KEY (idFerias_funcionario),
+    CONSTRAINT fk_funcionario FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario),
+	CONSTRAINT fk_ferias FOREIGN KEY (idFerias)
+		REFERENCES Ferias(idFerias)
+);

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FeriasListaController">
+   <children>
+      <Label layoutX="34.0" layoutY="34.0" text="Férias" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <TableView fx:id="feriasTable" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn fx:id="feriasNome" prefWidth="75.0" text="Nome" />
+            <TableColumn fx:id="feriasInicio" prefWidth="75.0" text="Início" />
+            <TableColumn fx:id="feriasTermino" prefWidth="75.0" text="Termino" />
+         </columns>
+      </TableView>
+      <Button fx:id="remover" layoutX="531.0" layoutY="277.0" mnemonicParsing="false" text="Remover" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="254.0" />
+      <Button fx:id="alterar" layoutX="502.0" layoutY="294.0" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="254.0" />
+      <Button fx:id="cancelar" layoutX="25.0" layoutY="264.0" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="254.0" />
+   </children>
+</AnchorPane>

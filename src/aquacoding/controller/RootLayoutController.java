@@ -17,13 +17,13 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	MenuItem menuBarEmpresaNovoEditar, menuBarEmpresaVer;
-	
+
 	@FXML
 	MenuItem menuBarSetorNovo, menuBarSetorLista;
 
 	@FXML
 	MenuItem menuBarFuncaoNovo, menuBarFuncaoLista;
-	
+
 	@FXML
 	MenuItem menuBarFuncionarioNovo, menuBarFuncionarioLista;
 
@@ -32,6 +32,9 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	MenuItem menuBarUsuarioLista, menuBarUsuarioNovo;
+
+	@FXML
+	MenuItem menuBarFeriasLista, menuBarFeriasNova;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -69,28 +72,37 @@ public class RootLayoutController implements Initializable {
 		menuBarUsuarioLista.setOnAction((ActionEvent e) -> {
 			Main.loadListaUsuarioView();
 		});
-		
+
 		menuBarFuncionarioNovo.setOnAction((ActionEvent e) -> {
 			Main.loadNovoFuncionarioView();
 		});
-		
+
 		menuBarFuncionarioLista.setOnAction((ActionEvent e) -> {
 			Main.loadListaFuncionarioView();
 		});
-		
+
 		menuBarEmpresaNovoEditar.setOnAction((ActionEvent e) -> {
 			if(Empresa.getAll().size() == 0) {
 				// Abre cadastro
 				Main.loadEmpresaNovoView();
 			} else {
 				// Abre editar
-				
+
 			}
 		});
-		
+
 		menuBarEmpresaVer.setOnAction((ActionEvent e) -> {
 			Main.loadEmpresaVer();
 		});
+
+		menuBarFeriasLista.setOnAction((ActionEvent e) -> {
+			Main.loadListaFeriasView();
+		});
+
+		menuBarFeriasNova.setOnAction((ActionEvent e) -> {
+			Main.loadFeriasNovoView();
+		});
+
 	}
 
 }

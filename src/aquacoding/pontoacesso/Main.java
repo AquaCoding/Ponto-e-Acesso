@@ -166,7 +166,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de lista de Funcionario
 	public static void loadListaFuncionarioView() {
 		try {
@@ -235,13 +235,13 @@ public class Main extends Application {
 			// Obtem o controller da interface e passa o usuï¿½rio a ser editado
 			UsuarioEditarController controller = loader.getController();
 			controller.setUsuario(usuario);
-			
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de novo Funcionario
 	public static void loadNovoFuncionarioView() {
 		try {
@@ -254,7 +254,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de editar funcionpario
 	public static void loadFuncionarioEditarView(Funcionario funcionario) {
 		try {
@@ -262,7 +262,7 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
-			
+
 			// Obtem o controller da interface e passa o funcionario a ser editado
 			FuncionarioEditarController controller = loader.getController();
 			controller.setFuncionario(funcionario);
@@ -272,7 +272,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de visualizar funcionario
 		public static void loadFuncionarioVerView(Funcionario funcionario) {
 			try {
@@ -280,7 +280,7 @@ public class Main extends Application {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioVer.fxml"));
 				AnchorPane personOverview = (AnchorPane) loader.load();
-				
+
 				// Obtem o controller da interface
 				FuncionarioVerController controller = loader.getController();
 				controller.setFuncionario(funcionario);
@@ -290,7 +290,7 @@ public class Main extends Application {
 				e.printStackTrace();
 			}
 		}
-		
+
 		// Carrega a view de editar um horario
 		public static void loadHorarioEditarView(Horario horario) {
 			try {
@@ -298,7 +298,7 @@ public class Main extends Application {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioEditar.fxml"));
 				AnchorPane personOverview = (AnchorPane) loader.load();
-				
+
 				// Obtem o controller da interface
 				HorarioEditarController controller = loader.getController();
 				controller.setHorario(horario);
@@ -308,7 +308,7 @@ public class Main extends Application {
 				e.printStackTrace();
 			}
 		}
-		
+
 		// Carrega a view de editar um horario
 		public static void loadEmpresaNovoView() {
 			try {
@@ -321,13 +321,39 @@ public class Main extends Application {
 				e.printStackTrace();
 			}
 		}
-		
+
 		// Carrega a view de editar um horario
 		public static void loadEmpresaVer() {
 			try {
 				primaryStage.setTitle(pageTitle + " - Empresa");
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaVer.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Carrega a view de listagem de ferias
+		public static void loadListaFeriasView() {
+			try {
+				primaryStage.setTitle(pageTitle + " - Férias");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasLista.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Carrega a view de na Férias
+		public static void loadFeriasNovoView() {
+			try {
+				primaryStage.setTitle(pageTitle + " - Nova Férias");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasNovo.fxml"));
 				AnchorPane personOverview = (AnchorPane) loader.load();
 				rootLayout.setCenter(personOverview);
 			} catch (IOException e) {
