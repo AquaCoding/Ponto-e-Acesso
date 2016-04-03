@@ -232,7 +232,7 @@ public class Empresa {
 				
 				// Salva a imagem
 				if(profileImage != null) {
-					Image.copyImage(profileImage, "img/profile/"+this.idEmpresa);
+					Image.copyImage(profileImage, "img/empresa/"+this.idEmpresa);
 				}
 
 				return true;
