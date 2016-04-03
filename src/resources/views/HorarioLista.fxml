@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="787.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioListaController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioListaController">
    <children>
       <Label layoutX="24.0" layoutY="24.0" text="Horários" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -15,10 +15,8 @@
       <TableView fx:id="horarioTable" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
         <columns>
           <TableColumn fx:id="horarioNome" prefWidth="75.0" text="Nome" />
-          <TableColumn fx:id="horarioTurno1Inicio" prefWidth="75.0" text="Turno inicio" />
-            <TableColumn fx:id="horarioTurno1Termino" prefWidth="75.0" text="Turno termino" />
-            <TableColumn fx:id="horarioTurno2Inicio" prefWidth="75.0" text="Turno inicio" />
-            <TableColumn fx:id="horarioTurno2Termino" prefWidth="75.0" text="Turno termino" />
+          <TableColumn fx:id="horarioTurnoInicio" prefWidth="75.0" text="Turno inicio" />
+            <TableColumn fx:id="horarioTurnoTermino" prefWidth="75.0" text="Turno termino" />
             <TableColumn fx:id="horarioAlmocoInicio" prefWidth="75.0" text="Almoço inicio" />
             <TableColumn fx:id="horarioAlmocoTermino" prefWidth="75.0" text="Almoço termino" />
         </columns>

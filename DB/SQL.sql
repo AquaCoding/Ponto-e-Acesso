@@ -20,10 +20,8 @@ CREATE TABLE Funcao(
 CREATE TABLE Horario (
 	idHorario			INT			NOT NULL	auto_increment,
 	nome				VARCHAR(45)	NOT NULL,
-    inicioTurno1		TIME		NOT NULL,
-    terminoTurno1		TIME		NOT NULL,
-    inicioTurno2		TIME		NOT NULL,
-    terminoTurno2		TIME		NOT NULL,
+    inicio				TIME		NOT NULL,
+    termino				TIME		NOT NULL,
 	almocoInicio		TIME		NOT NULL,
     almocoTermino		TIME		NOT NULL,
     CONSTRAINT pk_horario PRIMARY KEY (idHorario)
@@ -54,4 +52,17 @@ CREATE TABLE Funcionario(
 	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario),
 	CONSTRAINT fk_funcionario_horario FOREIGN KEY (idHorario)
 		REFERENCES Horario(idHorario)
+);
+
+CREATE TABLE Empresa(
+	idEmpresa		INT			NOT NULL auto_increment,
+    nome			VARCHAR(45)	NOT NULL,
+    razaoSocial		VARCHAR(60)	NOT NULL,
+    cnpj			VARCHAR(14)	NOT NULL,
+    rua				VARCHAR(45)	NOT NULL,
+    numero			INT			NOT NULL,
+    bairro			VARCHAR(45)	NOT NULL,
+    cidade			VARCHAR(45)	NOT NULL,
+    estado			VARCHAR(45)	NOT NULL,
+    CONSTRAINT pk_empresa PRIMARY KEY (idEmpresa)
 );

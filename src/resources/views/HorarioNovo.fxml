@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="469.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioNovoController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioNovoController">
    <children>
       <Label layoutX="24.0" layoutY="24.0" text="Novo Horário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -13,41 +13,23 @@
          </font>
       </Label>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
-      
          <children>
             <Label text="Nome" />
             <TextField fx:id="horarioNome" VBox.vgrow="ALWAYS" />
-            
-            <Label text="Inicio Turno 1" />
+            <Label text="Inicio" />
             <AnchorPane prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="horarioInicioHoraTurno1" prefWidth="150.0" promptText="Hora" />
-                  <ComboBox fx:id="horarioInicioMinutoTurno1" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
+                  <ComboBox fx:id="horarioInicioHora" prefWidth="150.0" promptText="Hora" />
+                  <ComboBox fx:id="horarioInicioMinuto" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
                </children>
             </AnchorPane>
-            <Label text="Termino Turno 1" />
+            <Label text="Termino" />
             <AnchorPane prefWidth="200.0">
                <children>
-                  <ComboBox fx:id="horarioTerminoHoraTurno1" prefWidth="150.0" promptText="Hora" />
-                  <ComboBox fx:id="horarioTerminoMinutoTurno1" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
+                  <ComboBox fx:id="horarioTerminoHora" prefWidth="150.0" promptText="Hora" />
+                  <ComboBox fx:id="horarioTerminoMinuto" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
                </children>
             </AnchorPane>
-            
-            <Label text="Inicio Turno 2" />
-            <AnchorPane prefWidth="200.0">
-               <children>
-                  <ComboBox fx:id="horarioInicioHoraTurno2" prefWidth="150.0" promptText="Hora" />
-                  <ComboBox fx:id="horarioInicioMinutoTurno2" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
-               </children>
-            </AnchorPane>
-            <Label text="Termino Turno 2" />
-            <AnchorPane prefWidth="200.0">
-               <children>
-                  <ComboBox fx:id="horarioTerminoHoraTurno2" prefWidth="150.0" promptText="Hora" />
-                  <ComboBox fx:id="horarioTerminoMinutoTurno2" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
-               </children>
-            </AnchorPane>
-            
             <Label text="Almoço inicio" />
             <AnchorPane prefWidth="200.0">
                <children>

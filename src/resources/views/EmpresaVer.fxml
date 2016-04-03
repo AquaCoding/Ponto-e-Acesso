@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.EmpresaVerController">
+   <children>
+      <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="44.0">
+         <children>
+          <ImageView fx:id="profileImage" fitHeight="225.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </ImageView>         
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  
+                        <Label text="Nome">
+                     <padding>
+                        <Insets bottom="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="empresaNome" text="Label" />
+                  <Label text="Razao Social">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="empresaRazaoSocial" text="Label" />
+                  <Label text="CNPJ">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="empresaCNPJ" text="Label" />
+                  <Label text="Rua">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="empresaRua" text="Label" />
+               </children>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Número">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="empresaNumero" text="Label" />
+                  <Label text="Cidade">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="empresaCidade" text="Label" />
+                  <Label text="Bairro">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="empresaBairro" text="Label" />
+                  <Label text="Estado">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
+                  <Label fx:id="empresaEstado" text="Label" />
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        
+                                                <Button fx:id="editar" focusTraversable="false" mnemonicParsing="false" text="Editar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0" />
+                        <Button fx:id="cancelar" focusTraversable="false" layoutX="5.0" layoutY="4.0" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label layoutX="14.0" layoutY="14.0" text="Empresa cadastrada" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

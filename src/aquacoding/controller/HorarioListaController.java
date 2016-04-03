@@ -21,7 +21,7 @@ public class HorarioListaController implements Initializable {
 	TableView<Horario> horarioTable;
 
 	@FXML
-	TableColumn<Horario, String> horarioNome, horarioTurno1Inicio, horarioTurno1Termino, horarioTurno2Inicio, horarioTurno2Termino, horarioAlmocoInicio, horarioAlmocoTermino;
+	TableColumn<Horario, String> horarioNome, horarioTurnoInicio, horarioTurnoTermino, horarioAlmocoInicio, horarioAlmocoTermino;
 
 	@FXML
 	Button cancelar, alterar, remover;
@@ -74,10 +74,8 @@ public class HorarioListaController implements Initializable {
 
 	private void setTable() {
 		horarioNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-		horarioTurno1Inicio.setCellValueFactory(new PropertyValueFactory<>("inicioTurno1"));
-		horarioTurno1Termino.setCellValueFactory(new PropertyValueFactory<>("terminoTurno1"));
-		horarioTurno2Inicio.setCellValueFactory(new PropertyValueFactory<>("inicioTurno2"));
-		horarioTurno2Termino.setCellValueFactory(new PropertyValueFactory<>("terminoTurno2"));
+		horarioTurnoInicio.setCellValueFactory(new PropertyValueFactory<>("inicio"));
+		horarioTurnoTermino.setCellValueFactory(new PropertyValueFactory<>("termino"));
 		horarioAlmocoInicio.setCellValueFactory(new PropertyValueFactory<>("inicioAlmoco"));
 		horarioAlmocoTermino.setCellValueFactory(new PropertyValueFactory<>("terminoAlmoco"));
 	}
