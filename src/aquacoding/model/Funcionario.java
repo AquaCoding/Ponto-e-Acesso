@@ -373,14 +373,6 @@ public class Funcionario {
 			// Executa um SQL
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario");
 
-			PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM HorarioFuncionario WHERE idFuncionario = ?");
-			
-			statement2.setInt(1, this.id);
-
-			// Executa o SQL
-			ResultSet resultSet2 = statement2.executeQuery();
-
-			
 			ArrayList<Funcionario> funcionarios = new ArrayList<>();
 			while (resultSet.next()) {
 				// Cria um funcionario com os dados do BD
@@ -393,6 +385,13 @@ public class Funcionario {
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.build();
 
+				PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM HorarioFuncionario WHERE idFuncionario = ?");
+			
+				statement2.setInt(1, f.getId());
+
+				// Executa o SQL
+				ResultSet resultSet2 = statement2.executeQuery();		
+						
 				if(!resultSet2.equals("")) {
 					while (resultSet2.next()) {
 						f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
