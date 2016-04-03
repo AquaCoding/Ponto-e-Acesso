@@ -36,7 +36,7 @@ public class FuncionarioEditarController implements Initializable {
 	funcionarioCidade, funcionarioEstado, funcionarioSalarioHoras;
 
 	@FXML
-	ComboBox<Horario> horarioSelect;
+	ComboBox<Horario> horarioSelect, horarioSelect2;
 
 	private Funcionario funcionario;
 	private File selectedFile;
@@ -57,7 +57,8 @@ public class FuncionarioEditarController implements Initializable {
 
 		// Preenche o campo de seleção do horario
 				horarioSelect.setItems(FXCollections.observableArrayList(Horario.getAll()));
-
+				horarioSelect2.setItems(FXCollections.observableArrayList(Horario.getAll()));
+				
 		// Tenta realizar a edição
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			try {
@@ -78,6 +79,10 @@ public class FuncionarioEditarController implements Initializable {
 
 				if(horarioSelect != null){
 					funcionario.setHorario(horarioSelect.getSelectionModel().getSelectedItem());
+				}
+				
+				if(horarioSelect2 != null){
+					funcionario.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
 				}
 
 				// Adiciona a imagem ao objeto do funcionario

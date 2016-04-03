@@ -27,7 +27,7 @@ public class Funcionario {
 	private String estado;
 	private double salarioHoras;
 	private File profileImage;
-	private Horario horario;
+	private ArrayList<Horario> horario = new ArrayList<Horario>();
 
 	// Setters e Getters
 	public int getId() {
@@ -43,7 +43,7 @@ public class Funcionario {
 	}
 
 	public void setNome(String nome) {
-		if(nome == null || nome.equals(""))
+		if (nome == null || nome.equals(""))
 			throw new RuntimeException("O nome do funcionário não pode estar vazio.");
 		this.nome = nome;
 	}
@@ -53,7 +53,7 @@ public class Funcionario {
 	}
 
 	public void setSobrenome(String sobrenome) {
-		if(sobrenome == null || sobrenome.equals(""))
+		if (sobrenome == null || sobrenome.equals(""))
 			throw new RuntimeException("O sobrenome do funcionário não pode estar vazio.");
 		this.sobrenome = sobrenome;
 	}
@@ -63,7 +63,7 @@ public class Funcionario {
 	}
 
 	public void setRg(String rg) {
-		if(rg == null || rg.equals(""))
+		if (rg == null || rg.equals(""))
 			throw new RuntimeException("O RG do funcionário não pode estar vazio.");
 		this.rg = rg;
 	}
@@ -73,7 +73,7 @@ public class Funcionario {
 	}
 
 	public void setCpf(String cpf) {
-		if(cpf == null || cpf.equals(""))
+		if (cpf == null || cpf.equals(""))
 			throw new RuntimeException("O CPF do funcionário não pode estar vazio.");
 		this.cpf = cpf;
 	}
@@ -83,7 +83,7 @@ public class Funcionario {
 	}
 
 	public void setCtps(String ctps) {
-		if(ctps == null || ctps.equals(""))
+		if (ctps == null || ctps.equals(""))
 			throw new RuntimeException("O CTPS do funcionário não pode estar vazio.");
 		this.ctps = ctps;
 	}
@@ -93,7 +93,7 @@ public class Funcionario {
 	}
 
 	public void setTelefone(String telefone) {
-		if(telefone == null || telefone.equals(""))
+		if (telefone == null || telefone.equals(""))
 			throw new RuntimeException("O telefone do funcionário não pode estar vazio.");
 		this.telefone = telefone;
 	}
@@ -103,7 +103,7 @@ public class Funcionario {
 	}
 
 	public void setRua(String rua) {
-		if(rua == null || rua.equals(""))
+		if (rua == null || rua.equals(""))
 			throw new RuntimeException("A rua do endereço do funcionário não pode estar vazio.");
 		this.rua = rua;
 	}
@@ -121,7 +121,7 @@ public class Funcionario {
 	}
 
 	public void setBairro(String bairro) {
-		if(bairro == null || bairro.equals(""))
+		if (bairro == null || bairro.equals(""))
 			throw new RuntimeException("O bairro do endereço do funcionário não pode estar vazio.");
 		this.bairro = bairro;
 	}
@@ -131,7 +131,7 @@ public class Funcionario {
 	}
 
 	public void setCidade(String cidade) {
-		if(cidade == null || cidade.equals(""))
+		if (cidade == null || cidade.equals(""))
 			throw new RuntimeException("A cidade do endereço do funcionário não pode estar vazio.");
 		this.cidade = cidade;
 	}
@@ -141,7 +141,7 @@ public class Funcionario {
 	}
 
 	public void setEstado(String estado) {
-		if(estado == null || estado.equals(""))
+		if (estado == null || estado.equals(""))
 			throw new RuntimeException("O estado do endereço do funcionário não pode estar vazio.");
 		this.estado = estado;
 	}
@@ -151,7 +151,7 @@ public class Funcionario {
 	}
 
 	public void setSalarioHoras(double salarioHoras) {
-		if(salarioHoras <= 0)
+		if (salarioHoras <= 0)
 			throw new RuntimeException("O sálario por hora do funcionário precisa ser maior que 0.");
 		this.salarioHoras = salarioHoras;
 	}
@@ -161,19 +161,20 @@ public class Funcionario {
 	}
 
 	public void setImageURL(File profileImage) {
-		if(profileImage == null)
+		if (profileImage == null)
 			throw new RuntimeException("URL inválida");
 		this.profileImage = profileImage;
 	}
 
-	public Horario getHorario() {
-		return horario;
+	public ArrayList<Horario> getHorario() {
+	     return horario;
 	}
 
 	public void setHorario(Horario horario) {
-		if(horario == null)
+		if (horario == null)
 			throw new RuntimeException("Um Funcionário precisa ter um Horário.");
-		this.horario = horario;
+		this.horario.add(horario);
+
 	}
 
 	// Construtor de Funcionario
@@ -192,7 +193,9 @@ public class Funcionario {
 		setCidade(builder.cidade);
 		setEstado(builder.estado);
 		setSalarioHoras(builder.salarioHoras);
-		setHorario(builder.horario);
+		this.horario = builder.horario;
+	
+		
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
@@ -212,7 +215,9 @@ public class Funcionario {
 		private String cidade;
 		private String estado;
 		private double salarioHoras;
-		private Horario horario;
+		
+		
+		private ArrayList<Horario> horario = new ArrayList<Horario>();
 
 		// Sets do Builder
 		public Builder setId(int id) {
@@ -280,8 +285,8 @@ public class Funcionario {
 			return this;
 		}
 
-		public Builder setHorario(Horario horario){
-			this.horario = horario;
+		public Builder setHorario(Horario horario) {
+			this.horario.add(horario);
 			return this;
 		}
 
@@ -297,8 +302,9 @@ public class Funcionario {
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras, idHorario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -313,7 +319,6 @@ public class Funcionario {
 			statement.setString(10, this.cidade);
 			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
-			statement.setInt(13, this.horario.getId());
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -325,12 +330,24 @@ public class Funcionario {
 				while (id.next())
 					setId(id.getInt(1));
 
+				for(int i = 0; i < horario.size(); i++) {
+					// Cria um prepared statement
+					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
+							"INSERT INTO HorarioFuncionario (idHorario, idFuncionario) VALUES (?, ?)",
+							Statement.RETURN_GENERATED_KEYS);
+					
+					statement2.setInt(1, horario.get(i).getId());
+					statement2.setInt(2, this.id);
+					
+				}
+				
+				
 				// Encerra conexao
 				connect.close();
 
 				// Salva a imagem
-				if(profileImage != null) {
-					Image.copyImage(profileImage, "img/profile/"+this.id);
+				if (profileImage != null) {
+					Image.copyImage(profileImage, "img/profile/" + this.id);
 				}
 
 				return true;
@@ -356,26 +373,33 @@ public class Funcionario {
 			// Executa um SQL
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario");
 
+			PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM HorarioFuncionario WHERE idFuncionario = ?");
+			
+			statement2.setInt(1, this.id);
+
+			// Executa o SQL
+			ResultSet resultSet2 = statement2.executeQuery();
+
+			
 			ArrayList<Funcionario> funcionarios = new ArrayList<>();
 			while (resultSet.next()) {
 				// Cria um funcionario com os dados do BD
-				Funcionario f = new Funcionario.Builder()
-						.setId(resultSet.getInt("idFuncionario"))
-						.setNome(resultSet.getString("nome"))
-						.setSobrenome(resultSet.getString("sobrenome"))
-						.setRg(resultSet.getString("rg"))
-						.setCpf(resultSet.getString("cpf"))
-						.setCtps(resultSet.getString("ctps"))
-						.setTelefone(resultSet.getString("telefone"))
-						.setRua(resultSet.getString("rua"))
-						.setNumero(resultSet.getInt("numero"))
-						.setBairro(resultSet.getString("bairro"))
-						.setCidade(resultSet.getString("cidade"))
-						.setEstado(resultSet.getString("estado"))
-						.setSalarioHoras(resultSet.getDouble("salarioHoras"))
-						.setHorario(Horario.getByID(resultSet.getInt("idHorario")))
+				Funcionario f = new Funcionario.Builder().setId(resultSet.getInt("idFuncionario"))
+						.setNome(resultSet.getString("nome")).setSobrenome(resultSet.getString("sobrenome"))
+						.setRg(resultSet.getString("rg")).setCpf(resultSet.getString("cpf"))
+						.setCtps(resultSet.getString("ctps")).setTelefone(resultSet.getString("telefone"))
+						.setRua(resultSet.getString("rua")).setNumero(resultSet.getInt("numero"))
+						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
+						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.build();
 
+				if(!resultSet2.equals("")) {
+					while (resultSet2.next()) {
+						f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
+					}
+				}
+				
+				
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
 
@@ -397,7 +421,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ?, idHorario = ? WHERE idFuncionario = ?");
+					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ? WHERE idFuncionario = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -412,8 +436,7 @@ public class Funcionario {
 			statement.setString(10, this.cidade);
 			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
-			statement.setInt(13, this.horario.getId());
-			statement.setDouble(14, this.id);
+			statement.setDouble(13, this.id);
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -422,8 +445,8 @@ public class Funcionario {
 			connect.close();
 
 			// Salva a imagem
-			if(profileImage != null) {
-				Image.copyImage(profileImage, "img/profile/"+this.id);
+			if (profileImage != null) {
+				Image.copyImage(profileImage, "img/profile/" + this.id);
 			}
 
 			// Retorna resultado
@@ -456,9 +479,9 @@ public class Funcionario {
 			// Encerra conexao
 			connect.close();
 
-			if(resp == 1) {
+			if (resp == 1) {
 				return true;
-			}else {
+			} else {
 				return false;
 			}
 
