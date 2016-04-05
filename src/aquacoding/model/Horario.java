@@ -18,6 +18,13 @@ public class Horario {
 	private Time termino;
 	private Time inicioAlmoco;
 	private Time terminoAlmoco;
+	private Boolean segunda;
+	private Boolean terca;
+	private Boolean quarta;
+	private Boolean quinta;
+	private Boolean sexta;
+	private Boolean sabado;
+	private Boolean domingo;
 
 	public int getId() {
 		return id;
@@ -76,23 +83,65 @@ public class Horario {
 			throw new RuntimeException("Um hor√°rio de inicio ao almo√ßo deve ser selecionado.");
 		this.terminoAlmoco = terminoAlmoco;
 	}
+	
+	public void setSegunda(Boolean segunda) {
+		this.segunda = segunda;
+	}
+
+	public void setTerca(Boolean terca) {
+		this.terca = terca;
+	}
+
+	public void setQuarta(Boolean quarta) {
+		this.quarta = quarta;
+	}
+
+	public void setQuinta(Boolean quinta) {
+		this.quinta = quinta;
+	}
+
+	public void setSexta(Boolean sexta) {
+		this.sexta = sexta;
+	}
+
+	public void setSabado(Boolean sabado) {
+		this.sabado = sabado;
+	}
+
+	public void setDomingo(Boolean domingo) {
+		this.domingo = domingo;
+	}
 
 	// CONSTRUTORES
-	public Horario(int id, String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco) {
+	public Horario(int id, String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco, Boolean segunda, Boolean terca, Boolean quarta, Boolean quinta, Boolean sexta, Boolean sabado, Boolean domingo) {
 		setId(id);
 		setNome(nome);
 		setInicio(inicio);
 		setTermino(termino);
 		setInicioAlmoco(inicioAlmoco);
 		setTerminoAlmoco(terminoAlmoco);
+		setSegunda(segunda);
+		setTerca(terca);
+		setQuarta(quarta);
+		setQuinta(quinta);
+		setSexta(sexta);
+		setSabado(sabado);
+		setDomingo(domingo);
 	}
 
-	public Horario(String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco) {
+	public Horario(String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco, Boolean segunda, Boolean terca, Boolean quarta, Boolean quinta, Boolean sexta, Boolean sabado, Boolean domingo) {
 		setNome(nome);
 		setInicio(inicio);
 		setTermino(termino);
 		setInicioAlmoco(inicioAlmoco);
 		setTerminoAlmoco(terminoAlmoco);
+		setSegunda(segunda);
+		setTerca(terca);
+		setQuarta(quarta);
+		setQuinta(quinta);
+		setSexta(sexta);
+		setSabado(sabado);
+		setDomingo(domingo);
 	}
 
 	// Cria um novo horario no banco de dados
@@ -103,7 +152,7 @@ public class Horario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("INSERT INTO Horario (nome, inicio, termino, almocoInicio, almocoTermino) VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					.prepareStatement("INSERT INTO Horario (nome, inicio, termino, almocoInicio, almocoTermino, segunda, terca, quarta, quinta, sexta, sabado, domingo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -111,6 +160,13 @@ public class Horario {
 			statement.setTime(3, this.termino);
 			statement.setTime(4, this.inicioAlmoco);
 			statement.setTime(5, this.terminoAlmoco);
+			statement.setBoolean(6, this.segunda);
+			statement.setBoolean(7, this.terca);
+			statement.setBoolean(8, this.quarta);
+			statement.setBoolean(9, this.quinta);
+			statement.setBoolean(10, this.sexta);
+			statement.setBoolean(11, this.sabado);
+			statement.setBoolean(12, this.domingo);
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -131,7 +187,7 @@ public class Horario {
 				return false;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar o setor");
+			throw new RuntimeException("Um erro ocorreu ao criar o Hor·rio");
 		}
 	}
 
@@ -154,8 +210,15 @@ public class Horario {
 				Time termino = resultSet.getTime("termino");
 				Time almocoInicio = resultSet.getTime("almocoInicio");
 				Time almocoTermino = resultSet.getTime("almocoTermino");
+				Boolean segunda = resultSet.getBoolean("segunda");
+				Boolean terca = resultSet.getBoolean("terca");
+				Boolean quarta = resultSet.getBoolean("quarta");
+				Boolean quinta = resultSet.getBoolean("quinta");
+				Boolean sexta = resultSet.getBoolean("sexta");
+				Boolean sabado = resultSet.getBoolean("sabado");
+				Boolean domingo = resultSet.getBoolean("domingo");
 
-				Horario c = new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), inicio, termino, almocoInicio, almocoTermino);
+				Horario c = new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), inicio, termino, almocoInicio, almocoTermino, segunda, terca, quarta, quinta, sexta, sabado, domingo);
 
 				// Adiciona o cliente ao retorno
 				horarios.add(c);
@@ -229,7 +292,7 @@ public class Horario {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o Setor");
+			throw new RuntimeException("Um erro ocorreu ao atualizar o Hor·rio");
 		}
 	}
 
@@ -250,7 +313,7 @@ public class Horario {
 
 			// Obtem o primeiro resultado e o retorna
 			if(resultSet.next())
-				return new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), resultSet.getTime("inicio"), resultSet.getTime("termino"), resultSet.getTime("almocoInicio"), resultSet.getTime("almocoTermino"));
+				return new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), resultSet.getTime("inicio"), resultSet.getTime("termino"), resultSet.getTime("almocoInicio"), resultSet.getTime("almocoTermino"), resultSet.getBoolean("segunda"), resultSet.getBoolean("terca"), resultSet.getBoolean("quarta"), resultSet.getBoolean("quinta"), resultSet.getBoolean("sexta"), resultSet.getBoolean("sabado"), resultSet.getBoolean("domingo"));
 
 			// Se nada for achado, retorna nulo
 			return null;

@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -30,6 +31,9 @@ public class HorarioNovoController implements Initializable {
 	
 	@FXML
 	ComboBox<String> almocoInicioHora, almocoInicioMinuto, almocoTerminoHora, almocoTerminoMinuto;
+	
+	@FXML
+	CheckBox segundaD, tercaD, quartaD, quintaD, sextaD, sabadoD, domingoD;
 	
 	@FXML
 	Button cancelar, cadastrar;
@@ -57,8 +61,17 @@ public class HorarioNovoController implements Initializable {
 				Time inicioAlmoco = new Time(Integer.parseInt(almocoInicioHora.getSelectionModel().getSelectedItem()), Integer.parseInt(almocoInicioMinuto.getSelectionModel().getSelectedItem()), 0);
 				Time terminoAlmoco = new Time(Integer.parseInt(almocoTerminoHora.getSelectionModel().getSelectedItem()), Integer.parseInt(almocoTerminoMinuto.getSelectionModel().getSelectedItem()), 0);
 				
+				//Dias
+				Boolean segunda = segundaD.isSelected();
+				Boolean terca = tercaD.isSelected();
+				Boolean quarta = quartaD.isSelected();
+				Boolean quinta = quintaD.isSelected();
+				Boolean sexta = sextaD.isSelected();
+				Boolean sabado = sabadoD.isSelected();
+				Boolean domingo = domingoD.isSelected();
+				
 				// Cria novo horario
-				Horario h = new Horario(horarioNome.getText(), inicio , termino, inicioAlmoco, terminoAlmoco);
+				Horario h = new Horario(horarioNome.getText(), inicio , termino, inicioAlmoco, terminoAlmoco, segunda, terca, quarta, quinta, sexta, sabado, domingo);
 				
 				// Salva novo horario no BD
 				if(h.create()) {

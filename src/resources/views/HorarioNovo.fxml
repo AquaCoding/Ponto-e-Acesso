@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioNovoController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioNovoController">
    <children>
       <Label layoutX="24.0" layoutY="24.0" text="Novo Horário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -43,7 +43,19 @@
                   <ComboBox fx:id="almocoTerminoHora" prefWidth="150.0" promptText="Hora" />
                   <ComboBox fx:id="almocoTerminoMinuto" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
                </children>
-            </AnchorPane>
+            </AnchorPane> 
+            <Label text="Dias de Trabalho" />
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <CheckBox fx:id="segundaD"  text="Segunda" />
+                  <CheckBox fx:id="tercaD"  text="Terca" />
+                  <CheckBox fx:id="quartaD"  text="Quarta" />
+                  <CheckBox fx:id="quintaD" text="Quinta" />
+                  <CheckBox fx:id="sextaD"  text="Sexta" />
+                  <CheckBox fx:id="sabadoD"  text="Sábado" />
+                  <CheckBox fx:id="domingoD"  text="Domingo" />
+               </children>
+            </AnchorPane>         
             <AnchorPane>
                <children>
                   <Button fx:id="cadastrar" mnemonicParsing="false" text="Cadastar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
