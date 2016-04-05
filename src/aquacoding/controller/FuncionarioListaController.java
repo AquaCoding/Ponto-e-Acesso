@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
@@ -25,6 +27,9 @@ public class FuncionarioListaController implements Initializable {
 
 	@FXML
 	Button cancelar, alterar, remover;
+	
+	@FXML
+	TextField buscar;
 
 	// Atributos
 	ObservableList<Funcionario> items;
@@ -78,10 +83,16 @@ public class FuncionarioListaController implements Initializable {
 			}
 		});
 		
+		// Abre a exibição de funcionario ao dar dois click no funcionario
 		funcionarioListagem.setOnMouseClicked((MouseEvent e) -> {
 			if(e.getClickCount() >= 2) {
 				Main.loadFuncionarioVerView(funcionarioListagem.getSelectionModel().getSelectedItem());
 			}
+		});
+		
+		buscar.setOnKeyReleased((KeyEvent e) -> {
+			items = FXCollections.observableArrayList(Funcionario.getAll(buscar.getText()));
+			funcionarioListagem.setItems(items);
 		});
 	}
 

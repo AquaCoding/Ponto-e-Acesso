@@ -412,6 +412,61 @@ public class Funcionario {
 			throw new RuntimeException("Um erro ocorreu");
 		}
 	}
+	
+	public static ArrayList<Funcionario> getAll(String filter) {
+		try {
+			// Define o filtro pra buscar no meio das strings
+			filter = "%" + filter + "%";
+			
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM Funcionario WHERE nome LIKE ? OR sobrenome LIKE ? OR cpf LIKE ?");
+			statement.setString(1, filter);
+			statement.setString(2, filter);
+			statement.setString(3, filter);
+			
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();
+			//ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario WHERE nome = ? OR cpf = ?");
+
+			ArrayList<Funcionario> funcionarios = new ArrayList<>();
+			while (resultSet.next()) {
+				// Cria um funcionario com os dados do BD
+				Funcionario f = new Funcionario.Builder().setId(resultSet.getInt("idFuncionario"))
+						.setNome(resultSet.getString("nome")).setSobrenome(resultSet.getString("sobrenome"))
+						.setRg(resultSet.getString("rg")).setCpf(resultSet.getString("cpf"))
+						.setCtps(resultSet.getString("ctps")).setTelefone(resultSet.getString("telefone"))
+						.setRua(resultSet.getString("rua")).setNumero(resultSet.getInt("numero"))
+						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
+						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
+						.build();
+
+				// Obtem os horarios desse funcionario
+				PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM HorarioFuncionario WHERE idFuncionario = ?");
+				statement2.setInt(1, f.getId());
+
+				// Executa o SQL
+				ResultSet resultSet2 = statement2.executeQuery();		
+				
+				// Se exitir horario, adiciona ao funcionario
+				while (resultSet2.next())
+					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
+				
+				// Obtem a imagem do perfil
+				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
+
+				// Adiciona o funcionario ao retorno
+				funcionarios.add(f);
+			}
+
+			// Retorna os funcionarios
+			return funcionarios;
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu");
+		}
+	}
 
 	public boolean update() {
 		try {
