@@ -23,6 +23,8 @@ public class UsuarioNovoController implements Initializable {
 
 	@FXML
 	Button cadastrar, cancelar;
+	
+	private boolean closeAfterCreate = false;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -41,8 +43,13 @@ public class UsuarioNovoController implements Initializable {
 						if (u.create()) {
 							CustomAlert.showAlert("Usuário - Cadastro", "O usuário foi criado com sucesso",
 									AlertType.INFORMATION);
-							Main.loadListaUsuarioView();
-							;
+							
+							if(closeAfterCreate) {
+								Main.endLoginLayout();
+								Main.initLoginLayout();
+							} else {
+								Main.loadListaUsuarioView();
+							}
 						}
 					} catch (RuntimeException h) {
 						CustomAlert.showAlert("Usuario - Cadastro", h.getMessage(), AlertType.INFORMATION);
@@ -53,6 +60,11 @@ public class UsuarioNovoController implements Initializable {
 			}
 		});
 
+	}
+
+	// Informa se apos cadastrar um usuario, precisa iniciar o login
+	public void setCloseAfterCreate(boolean b) {
+		this.closeAfterCreate = b;
 	}
 
 

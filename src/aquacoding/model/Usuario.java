@@ -272,6 +272,14 @@ public class Usuario {
 				throw new RuntimeException("Um erro ocorreu ao buscar o usuário");
 			}
 		}
+		
+		// Verifica a existencia de um usuario cadastrado
+		public static boolean haveUsuario() {
+			if(Usuario.getAll().size() == 0)
+				return false;
+			
+			return true;
+		}
 
 	}
 

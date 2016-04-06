@@ -7,17 +7,22 @@ import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.HorarioEditarController;
 import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
+import aquacoding.controller.UsuarioNovoController;
 import aquacoding.model.Funcao;
 import aquacoding.controller.FuncionarioEditarController;
 import aquacoding.model.Funcionario;
 import aquacoding.model.Horario;
 import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
+import aquacoding.utils.CustomAlert;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 // Extends javafx.application.Application para user JavaFX
@@ -25,18 +30,81 @@ public class Main extends Application {
 
 	public static Stage primaryStage;
 	private static BorderPane rootLayout;
+	private static Stage loginStage = new Stage();
 	private static String pageTitle = "Controle de Ponto e Acesso";
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Inicia a janela principal (Main.fxml)
 		primaryStage = stage;
-		initRootLayout();
+		//initRootLayout();
+		initLoginLayout();
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	// Realiza a inicialização da janela de login
+		public static void initLoginLayout() {
+			try {
+				if(loginStage == null) {
+					loginStage.setResizable(false);
+					loginStage.initModality(Modality.APPLICATION_MODAL);
+					loginStage.setAlwaysOnTop(true);
+				}
+				
+				if(!Usuario.haveUsuario()) {
+					CustomAlert.showAlert("Primeiro acesso", "É preciso criar um usuário", AlertType.INFORMATION);
+		            initPrimeiroAcesso();
+				} else {
+					// Inicia a tela de login
+					FXMLLoader loader = new FXMLLoader();
+					loader.setLocation(ClassLoader.getSystemResource("resources/views/Login.fxml"));
+					Parent root = (AnchorPane) loader.load();
+					
+					// Configura a tela de login
+					Scene scene = new Scene(root);
+					scene.getStylesheets().add(""+Main.class.getResource("application.css"));
+					loginStage.setResizable(false);
+					loginStage.setTitle(pageTitle + " - Entrar");
+					loginStage.setScene(scene);
+					loginStage.show();
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Fecha a janela de login
+		public static void endLoginLayout() {
+			loginStage.close();
+		}
+		
+		// Realiza a inicialização da janela princpal
+		public static void initPrimeiroAcesso() {
+			try {
+				// Carrega o layout de cadastro de usuario
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
+				Parent root = (AnchorPane) loader.load();
+				
+				// Obtem o controller da view e informa para fechar e abrir o login apos o criar
+				UsuarioNovoController controller = loader.getController();
+				controller.setCloseAfterCreate(true);
+				
+				// Inicia o layout
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add(""+Main.class.getResource("application.css"));
+				loginStage.setResizable(false);
+				loginStage.setTitle(pageTitle + " - Criando primeiro usuario");
+				loginStage.setScene(scene);
+				loginStage.show();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 	// Realiza a inicialização da janela princpal
 	public static void initRootLayout() {
