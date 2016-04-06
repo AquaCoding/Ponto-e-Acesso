@@ -232,7 +232,7 @@ public class Empresa {
 				
 				// Salva a imagem
 				if(profileImage != null) {
-					Image.copyImage(profileImage, "img/empresa/"+this.idEmpresa);
+					Image.copyImage(profileImage, Image.EMPRESA_IMAGE_PATH+this.idEmpresa);
 				}
 
 				return true;
@@ -274,7 +274,7 @@ public class Empresa {
 						.build();
 
 				// Obtem a imagem do perfil
-				e.setImageURL(new File(Image.PROFILE_IMAGE_PATH + e.getIdEmpresa() + Image.PROFILE_IMAGE_EXTENSION));
+				e.setImageURL(new File(Image.EMPRESA_IMAGE_PATH + e.getIdEmpresa() + Image.EMPRESA_IMAGE_EXTENSION));
 				
 				// Adiciona o funcionario ao retorno
 				empresa.add(e);

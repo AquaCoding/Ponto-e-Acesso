@@ -347,7 +347,7 @@ public class Funcionario {
 
 				// Salva a imagem
 				if (profileImage != null) {
-					Image.copyImage(profileImage, "img/profile/" + this.id);
+					Image.copyImage(profileImage, Image.PROFILE_IMAGE_PATH + this.id);
 				}
 
 				return true;
