@@ -28,6 +28,7 @@ public class Funcionario {
 	private double salarioHoras;
 	private File profileImage;
 	private ArrayList<Horario> horario = new ArrayList<Horario>();
+	private ArrayList<Ferias> ferias = new ArrayList<Ferias>();
 
 	// Setters e Getters
 	public int getId() {
@@ -177,6 +178,15 @@ public class Funcionario {
 
 	}
 
+	public ArrayList<Ferias> getFerias() {
+	     return ferias;
+	}
+
+	public void setFerias(Ferias ferias) {
+		this.ferias.add(ferias);
+
+	}
+
 	// Construtor de Funcionario
 	// Só pode ser chamado pelo método build() da classe Builder
 	protected Funcionario(Builder builder) {
@@ -194,8 +204,9 @@ public class Funcionario {
 		setEstado(builder.estado);
 		setSalarioHoras(builder.salarioHoras);
 		this.horario = builder.horario;
-	
-		
+		this.ferias = builder.ferias;
+
+
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
@@ -215,9 +226,10 @@ public class Funcionario {
 		private String cidade;
 		private String estado;
 		private double salarioHoras;
-		
-		
+
+
 		private ArrayList<Horario> horario = new ArrayList<Horario>();
+		private ArrayList<Ferias> ferias = new ArrayList<Ferias>();
 
 		// Sets do Builder
 		public Builder setId(int id) {
@@ -290,6 +302,11 @@ public class Funcionario {
 			return this;
 		}
 
+		public Builder setFerias(Ferias ferias) {
+			this.ferias.add(ferias);
+			return this;
+		}
+
 		// Cria a instancia de Funcionario
 		public Funcionario build() {
 			return new Funcionario(this);
@@ -335,13 +352,23 @@ public class Funcionario {
 					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
 							"INSERT INTO HorarioFuncionario (idHorario, idFuncionario) VALUES (?, ?)",
 							Statement.RETURN_GENERATED_KEYS);
-					
+
 					statement2.setInt(1, horario.get(i).getId());
 					statement2.setInt(2, this.id);
-					
+
 				}
-				
-				
+
+				for(int i = 0; i < ferias.size(); i++) {
+					// Cria um prepared statement
+					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
+							"INSERT INTO Funcionario_Ferias (idFuncionario, idFerias) VALUES (?, ?)",
+							Statement.RETURN_GENERATED_KEYS);
+
+					statement2.setInt(1, this.id);
+					statement2.setInt(2, ferias.get(i).getId());
+
+				}
+
 				// Encerra conexao
 				connect.close();
 
@@ -390,13 +417,13 @@ public class Funcionario {
 				statement2.setInt(1, f.getId());
 
 				// Executa o SQL
-				ResultSet resultSet2 = statement2.executeQuery();		
-				
+				ResultSet resultSet2 = statement2.executeQuery();
+
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-				
-				
+
+
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
 
@@ -410,12 +437,12 @@ public class Funcionario {
 			throw new RuntimeException("Um erro ocorreu");
 		}
 	}
-	
+
 	public static ArrayList<Funcionario> getAll(String filter) {
 		try {
 			// Define o filtro pra buscar no meio das strings
 			filter = "%" + filter + "%";
-			
+
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
@@ -424,7 +451,7 @@ public class Funcionario {
 			statement.setString(1, filter);
 			statement.setString(2, filter);
 			statement.setString(3, filter);
-			
+
 			// Executa o SQL
 			ResultSet resultSet = statement.executeQuery();
 			//ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario WHERE nome = ? OR cpf = ?");
@@ -446,12 +473,12 @@ public class Funcionario {
 				statement2.setInt(1, f.getId());
 
 				// Executa o SQL
-				ResultSet resultSet2 = statement2.executeQuery();		
-				
+				ResultSet resultSet2 = statement2.executeQuery();
+
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-				
+
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
 

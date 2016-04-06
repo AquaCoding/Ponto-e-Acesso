@@ -18,6 +18,7 @@ public class Ferias {
 	private String nome;
 	private java.sql.Date inicio;
 	private java.sql.Date termino;
+	private ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 	public int getId() {
 		return id;
@@ -49,6 +50,15 @@ public class Ferias {
 
 	public void setTermino(java.sql.Date termino) {
 		this.termino = termino;
+	}
+
+	public ArrayList<Funcionario> getFuncionario() {
+	     return funcionarios;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionarios.add(funcionario);
+
 	}
 
 
@@ -92,6 +102,17 @@ public class Ferias {
 					while (id.next())
 						setId(id.getInt(1));
 
+					for(int i = 0; i < funcionarios.size(); i++) {
+						// Cria um prepared statement
+						PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
+								"INSERT INTO Funcionario_Ferias (idFuncionario, idFerias) VALUES (?, ?)",
+								Statement.RETURN_GENERATED_KEYS);
+
+						statement2.setInt(1, funcionarios.get(i).getId());
+						statement2.setInt(2, this.id);
+
+					}
+
 					// Encerra conexao
 					connect.close();
 					return true;
@@ -119,8 +140,10 @@ public class Ferias {
 
 				ArrayList<Ferias> Ferias = new ArrayList<Ferias>();
 				while (resultSet.next()) {
+
 					// Cria uma ferias com os dados do BD
 					java.sql.Date inicio = resultSet.getDate("inicio");
+
 					java.sql.Date termino = resultSet.getDate("termino");
 
 					Ferias c = new Ferias(resultSet.getInt("idFerias"), resultSet.getString("nome"), inicio, termino);

@@ -2,7 +2,6 @@ package aquacoding.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import aquacoding.model.Ferias;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;

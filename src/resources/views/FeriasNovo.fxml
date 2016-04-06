@@ -29,6 +29,8 @@
                   <DatePicker fx:id="feriasTermino" />
                </children>
             </AnchorPane>
+            <Label text="Funcionários" />
+            <ListView fx:id="listFuncionaios" prefHeight="200.0" prefWidth="200.0" />
             <AnchorPane>
                <children>
                   <Button fx:id="cadastrar" mnemonicParsing="false" text="Cadastar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
