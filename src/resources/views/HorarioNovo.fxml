@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioNovoController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.HorarioNovoController">
    <children>
       <Label layoutX="24.0" layoutY="24.0" text="Novo Horário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -47,13 +48,48 @@
             <Label text="Dias de Trabalho" />
             <AnchorPane prefWidth="200.0">
                <children>
-                  <CheckBox fx:id="segundaD"  text="Segunda" />
-                  <CheckBox fx:id="tercaD"  text="Terca" />
-                  <CheckBox fx:id="quartaD"  text="Quarta" />
-                  <CheckBox fx:id="quintaD" text="Quinta" />
-                  <CheckBox fx:id="sextaD"  text="Sexta" />
-                  <CheckBox fx:id="sabadoD"  text="Sábado" />
-                  <CheckBox fx:id="domingoD"  text="Domingo" />
+                  <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <CheckBox fx:id="segundaD" text="Segunda">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="tercaD" text="Terca">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="quartaD" text="Quarta">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="quintaD" text="Quinta">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="sextaD" text="Sexta">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="sabadoD" text="Sábado">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="domingoD" text="Domingo">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
                </children>
             </AnchorPane>         
             <AnchorPane>

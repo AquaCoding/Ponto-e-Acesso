@@ -385,18 +385,16 @@ public class Funcionario {
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.build();
 
+				// Obtem os horarios desse funcionario
 				PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM HorarioFuncionario WHERE idFuncionario = ?");
-			
 				statement2.setInt(1, f.getId());
 
 				// Executa o SQL
 				ResultSet resultSet2 = statement2.executeQuery();		
-						
-				if(!resultSet2.equals("")) {
-					while (resultSet2.next()) {
-						f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-					}
-				}
+				
+				// Se exitir horario, adiciona ao funcionario
+				while (resultSet2.next())
+					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
 				
 				
 				// Obtem a imagem do perfil

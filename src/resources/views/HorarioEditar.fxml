@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -42,6 +43,53 @@
                <children>
                   <ComboBox fx:id="almocoTerminoHora" prefWidth="150.0" promptText="Hora" />
                   <ComboBox fx:id="almocoTerminoMinuto" layoutX="158.0" prefWidth="150.0" promptText="Minuto" />
+               </children>
+            </AnchorPane>
+            <Label text="Dias de Trabalho" />
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <HBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <CheckBox fx:id="segundaD" text="Segunda">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="tercaD" text="Terca">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="quartaD" text="Quarta">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="quintaD" text="Quinta">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="sextaD" text="Sexta">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="sabadoD" text="Sábado">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                        <CheckBox fx:id="domingoD" text="Domingo">
+                           <padding>
+                              <Insets right="15.0" />
+                           </padding>
+                        </CheckBox>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
                </children>
             </AnchorPane>
             <AnchorPane>
