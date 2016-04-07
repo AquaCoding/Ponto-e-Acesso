@@ -100,3 +100,25 @@ CREATE TABLE Funcionario_Ferias(
 	CONSTRAINT fk_ferias FOREIGN KEY (idFerias)
 		REFERENCES Ferias(idFerias)
 );
+
+CREATE TABLE FuncionarioTag(
+	idFuncionarioTag		INT				NOT NULL auto_increment,
+    codigo					VARCHAR(20)		NOT NULL,
+    ativo					BOOLEAN			NOT NULL,
+    idFuncionario			INT				NOT NULL,
+    CONSTRAINT pk_funcionario_tag PRIMARY KEY (idFuncionarioTag),
+    CONSTRAINT fk_funcionario_funcionario_tag FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario)
+);
+
+CREATE TABLE Ponto(
+	idPonto				INT			NOT NULL	auto_increment,
+    horario				DATETIME	NOT NULL,
+    idFuncionario		INT			NOT NULL,
+    idFuncionarioTag	INT			NOT NULL,
+	CONSTRAINT pk_ponto PRIMARY KEY (idPonto),
+    CONSTRAINT fk_funcionario_ponto FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario),
+	CONSTRAINT fk_ponto_tag FOREIGN KEY (idFuncionarioTag)
+		REFERENCES FuncionarioTag(idFuncionarioTag)
+);

@@ -14,6 +14,7 @@ import aquacoding.model.Funcionario;
 import aquacoding.model.Horario;
 import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
+import aquacoding.utils.Serial;
 import aquacoding.utils.CustomAlert;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -38,7 +39,17 @@ public class Main extends Application {
 		// Inicia a janela principal (Main.fxml)
 		primaryStage = stage;
 		//initRootLayout();
+		Serial serial = new Serial();
 		initLoginLayout();
+		Thread t = new Thread(() -> {
+			try {
+				serial.SerialLeitura();
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				System.out.println("Erro Serial: " + e.getMessage());
+			}
+		});
+		t.start();
 	}
 
 	public static void main(String[] args) {
