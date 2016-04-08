@@ -78,6 +78,7 @@ public class FuncionarioNovoController implements Initializable {
 						.setCidade(funcionarioCidade.getText()).setEstado(funcionarioEstado.getText())
 						.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
 						.setHorario(horarioSelect.getSelectionModel().getSelectedItem())
+						.setHorario(horarioSelect2.getSelectionModel().getSelectedItem())
 						.build();
 
 
