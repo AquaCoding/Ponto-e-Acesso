@@ -6,11 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import aquacoding.utils.DatabaseConnect;
-
 
 public class Ferias {
 
@@ -36,16 +35,18 @@ public class Ferias {
 		this.nome = nome;
 	}
 
-	public Date getInicio() {
-		return inicio;
+	public String getInicio() {
+		SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy");
+		return format.format(inicio);
 	}
 
 	public void setInicio(java.sql.Date inicio) {
 		this.inicio = inicio;
 	}
 
-	public Date getTermino() {
-		return termino;
+	public String getTermino() {
+		SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy");
+		return format.format(termino);
 	}
 
 	public void setTermino(java.sql.Date termino) {
@@ -57,7 +58,7 @@ public class Ferias {
 	}
 
 	public void setFuncionario(Funcionario funcionario) {
-		this.funcionarios.add(funcionario);
+		funcionarios.add(funcionario);
 
 	}
 
@@ -91,7 +92,6 @@ public class Ferias {
 				statement.setDate(2, this.inicio);
 				statement.setDate(3, this.termino);
 
-
 				// Executa o SQL
 				int ret = statement.executeUpdate();
 
@@ -102,14 +102,15 @@ public class Ferias {
 					while (id.next())
 						setId(id.getInt(1));
 
+
 					for(int i = 0; i < funcionarios.size(); i++) {
 						// Cria um prepared statement
 						PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
 								"INSERT INTO FuncionarioFerias (idFuncionario, idFerias) VALUES (?, ?)",
 								Statement.RETURN_GENERATED_KEYS);
-
 						statement2.setInt(1, funcionarios.get(i).getId());
 						statement2.setInt(2, this.id);
+						statement2.executeUpdate();
 
 					}
 
@@ -197,6 +198,7 @@ public class Ferias {
 				// Cria um prepared statement
 				PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
 						"UPDATE Ferias SET nome = ?, inicio = ?, termino = ? WHERE idFerias = ?");
+
 
 				// Realiza o bind dos valores
 				statement.setString(1, this.nome);

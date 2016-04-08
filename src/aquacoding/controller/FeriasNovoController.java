@@ -64,6 +64,12 @@ public class FeriasNovoController implements Initializable {
 				// Cria novo horario
 				Ferias f = new Ferias(feriasNome.getText(), inicio, termino);
 
+				ObservableList<Funcionario> fun;
+				fun = FXCollections.observableArrayList(listFuncionaios.getSelectionModel().getSelectedItems());
+
+				for(int i = 0; i < fun.size(); i++){
+					f.setFuncionario(fun.get(i));
+					}
 
 				// Salva novo horario no BD
 				if(f.create()) {

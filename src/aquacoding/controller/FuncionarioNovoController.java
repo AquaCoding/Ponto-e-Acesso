@@ -63,7 +63,7 @@ public class FuncionarioNovoController implements Initializable {
 		// Preenche o campo de seleção do horario
 		horarioSelect.setItems(FXCollections.observableArrayList(Horario.getAll()));
 		horarioSelect2.setItems(FXCollections.observableArrayList(Horario.getAll()));
-		
+
 		setHorarioSelectFactory();
 
 		// Tenta realizar o cadastro
@@ -78,6 +78,7 @@ public class FuncionarioNovoController implements Initializable {
 						.setCidade(funcionarioCidade.getText()).setEstado(funcionarioEstado.getText())
 						.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
 						.setHorario(horarioSelect.getSelectionModel().getSelectedItem())
+						.setHorario(horarioSelect2.getSelectionModel().getSelectedItem())
 						.build();
 
 
