@@ -105,7 +105,7 @@ public class Ferias {
 					for(int i = 0; i < funcionarios.size(); i++) {
 						// Cria um prepared statement
 						PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
-								"INSERT INTO Funcionario_Ferias (idFuncionario, idFerias) VALUES (?, ?)",
+								"INSERT INTO FuncionarioFerias (idFuncionario, idFerias) VALUES (?, ?)",
 								Statement.RETURN_GENERATED_KEYS);
 
 						statement2.setInt(1, funcionarios.get(i).getId());

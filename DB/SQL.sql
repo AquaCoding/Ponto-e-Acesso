@@ -91,11 +91,11 @@ CREATE TABLE Ferias(
 	CONSTRAINT pk_ferias PRIMARY KEY (idFerias)
 );
 
-CREATE TABLE Funcionario_Ferias(
-	idFerias_funcionario		INT 		NOT NULL auto_increment,
+CREATE TABLE FuncionarioFerias(
+	idFeriasfuncionario		INT 		NOT NULL auto_increment,
     idFuncionario				INT		NOT NULL,
     idFerias					INT 		NOT NULL,
-    CONSTRAINT pk_funcionario_ferias PRIMARY KEY (idFerias_funcionario),
+    CONSTRAINT pk_funcionario_ferias PRIMARY KEY (idFeriasfuncionario),
     CONSTRAINT fk_funcionario_ferias FOREIGN KEY (idFuncionario)
 		REFERENCES Funcionario(idFuncionario),
 	CONSTRAINT fk_ferias FOREIGN KEY (idFerias)
