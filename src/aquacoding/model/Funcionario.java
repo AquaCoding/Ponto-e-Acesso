@@ -339,6 +339,8 @@ public class Funcionario {
 					statement2.setInt(1, horario.get(i).getId());
 					statement2.setInt(2, this.id);
 					
+					statement2.executeUpdate();
+					
 				}
 				
 				
