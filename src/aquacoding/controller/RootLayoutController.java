@@ -102,7 +102,10 @@ public class RootLayoutController implements Initializable {
 		menuBarFeriasNova.setOnAction((ActionEvent e) -> {
 			Main.loadFeriasNovoView();
 		});
+		
+		// Oculta o ver da empresa, caso nenhuma empresa esteja cadastrada
+		if(Empresa.getAll().size() == 0)
+			menuBarEmpresaVer.setVisible(false);
 
 	}
-
 }

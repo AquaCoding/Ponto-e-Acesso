@@ -2,6 +2,7 @@ package aquacoding.pontoacesso;
 
 import java.io.IOException;
 
+import aquacoding.controller.EmpresaVerController;
 import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.HorarioEditarController;
@@ -383,7 +384,7 @@ public class Main extends Application {
 				primaryStage.setTitle(pageTitle + " - Nova Empresa");
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaNovo.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
+				AnchorPane personOverview = (AnchorPane) loader.load();				
 				rootLayout.setCenter(personOverview);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -397,6 +398,11 @@ public class Main extends Application {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaVer.fxml"));
 				AnchorPane personOverview = (AnchorPane) loader.load();
+				
+				// Obtem o controller da interface
+				EmpresaVerController controller = loader.getController();
+				controller.loadEmpresaInfo();
+				
 				rootLayout.setCenter(personOverview);
 			} catch (IOException e) {
 				e.printStackTrace();

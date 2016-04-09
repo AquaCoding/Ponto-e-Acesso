@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
@@ -39,11 +38,9 @@ public class EmpresaVerController implements Initializable{
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			
 		});
-		
-		loadEmpresaInfo();
 	}
 	
-	private void loadEmpresaInfo() {
+	public void loadEmpresaInfo() {
 		// Obtem a empresa
 		ArrayList<Empresa> empresas = Empresa.getAll();
 		
@@ -65,8 +62,7 @@ public class EmpresaVerController implements Initializable{
 			if(f.exists()) {
 				Image i = new Image(f.toURI().toString(), 200, 200, false, true);
 				profileImage.setImage(i);
-			}
-			
+			}	
 		} else {
 			CustomAlert.showAlert("Empresa não cadastrada", "É preciso cadastrar uma empresa antes.", AlertType.WARNING);
 			Main.loadEmpresaNovoView();

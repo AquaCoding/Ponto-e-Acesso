@@ -37,23 +37,23 @@ public class HorarioListaController implements Initializable {
 		remover.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Verifica se algum horario foi selecionado e pergunta se ele realmente o que remover
-				if(horarioTable.getSelectionModel().getSelectedItem() != null && CustomAlert.showConfirmationAlert("Remover Horario", "Você tem certeza que deseja remover esse Horario?")) {
+				if(horarioTable.getSelectionModel().getSelectedItem() != null && CustomAlert.showConfirmationAlert("Remover Turno", "Você tem certeza que deseja remover esse turno?")) {
 					// Obtem o horario selecionado
 					Horario h = horarioTable.getSelectionModel().getSelectedItem();
 
 					// Tenta remover o Horario no BD
 					if (h.delete()) {
 						// horario removido com sucesso
-						CustomAlert.showAlert("Remover Horario", "Horario removido com sucesso", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Turno", "Turno removido com sucesso", AlertType.WARNING);
 						Main.loadListaHorarioView();
 					} else {
 						// Erro ao remover o horario
-						CustomAlert.showAlert("Remover Horario", "Algo deu errado", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Turno", "Algo deu errado", AlertType.WARNING);
 					}
 				}
 			} catch (RuntimeException ex) {
 				// Erro de validação
-				CustomAlert.showAlert("Remover Horario", ex.getMessage(), AlertType.WARNING);
+				CustomAlert.showAlert("Remover Turno", ex.getMessage(), AlertType.WARNING);
 			}
 		});
 		

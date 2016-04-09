@@ -75,13 +75,13 @@ public class HorarioNovoController implements Initializable {
 				
 				// Salva novo horario no BD
 				if(h.create()) {
-					CustomAlert.showAlert("Novo Horário", "Novo horário cadastrado com sucesso.", AlertType.WARNING);
+					CustomAlert.showAlert("Novo Turno", "Novo turno cadastrado com sucesso.", AlertType.WARNING);
 					Main.loadListaHorarioView();
 				} else {
-					CustomAlert.showAlert("Novo Horário", "Algo de errado aconteceu.", AlertType.WARNING);
+					CustomAlert.showAlert("Novo Turno", "Algo de errado aconteceu.", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
-				CustomAlert.showAlert("Novo Horário", ex.getMessage(), AlertType.WARNING);
+				CustomAlert.showAlert("Novo Turno", ex.getMessage(), AlertType.WARNING);
 			}
 		});
 	}

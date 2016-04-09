@@ -112,6 +112,34 @@ public class Horario {
 		this.domingo = domingo;
 	}
 
+	public Boolean getSegunda() {
+		return segunda;
+	}
+
+	public Boolean getTerca() {
+		return terca;
+	}
+
+	public Boolean getQuarta() {
+		return quarta;
+	}
+
+	public Boolean getQuinta() {
+		return quinta;
+	}
+
+	public Boolean getSexta() {
+		return sexta;
+	}
+
+	public Boolean getSabado() {
+		return sabado;
+	}
+
+	public Boolean getDomingo() {
+		return domingo;
+	}
+
 	// CONSTRUTORES
 	public Horario(int id, String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco, Boolean segunda, Boolean terca, Boolean quarta, Boolean quinta, Boolean sexta, Boolean sabado, Boolean domingo) {
 		setId(id);
@@ -268,7 +296,7 @@ public class Horario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Horario SET nome = ?, inicio = ?, termino = ?, almocoInicio = ?, almocoTermino = ? WHERE idHorario = ?");
+					"UPDATE Horario SET nome = ?, inicio = ?, termino = ?, almocoInicio = ?, almocoTermino = ?, segunda = ?, terca = ?, quarta = ?, quinta = ?, sexta = ?, sabado = ?, domingo = ? WHERE idHorario = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -276,7 +304,14 @@ public class Horario {
 			statement.setTime(3, this.termino);
 			statement.setTime(4, this.inicioAlmoco);
 			statement.setTime(5, this.terminoAlmoco);
-			statement.setInt(6, this.id);
+			statement.setBoolean(6, this.segunda);
+			statement.setBoolean(7, this.terca);
+			statement.setBoolean(8, this.quarta);
+			statement.setBoolean(9, this.quinta);
+			statement.setBoolean(10, this.sexta);
+			statement.setBoolean(11, this.sabado);
+			statement.setBoolean(12, this.domingo);
+			statement.setInt(13, this.id);
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();

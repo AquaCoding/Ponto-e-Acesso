@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
 
 
 
+
+
 import aquacoding.model.Horario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
@@ -19,6 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -34,6 +37,9 @@ public class HorarioEditarController implements Initializable {
 	
 	@FXML
 	ComboBox<String> almocoInicioHora, almocoInicioMinuto, almocoTerminoHora, almocoTerminoMinuto;
+	
+	@FXML
+	CheckBox segundaD, tercaD, quartaD, quintaD, sextaD, sabadoD, domingoD;
 	
 	@FXML
 	Button cancelar, editar;
@@ -70,17 +76,26 @@ public class HorarioEditarController implements Initializable {
 				h.setInicioAlmoco(inicioAlmoco);
 				h.setTerminoAlmoco(terminoAlmoco);
 				
+				// Dias
+				h.setSegunda(segundaD.isSelected());
+				h.setTerca(tercaD.isSelected());
+				h.setQuarta(quartaD.isSelected());
+				h.setQuinta(quintaD.isSelected());
+				h.setSexta(sextaD.isSelected());
+				h.setSabado(sabadoD.isSelected());
+				h.setDomingo(domingoD.isSelected());
+				
 				// Define o novo nome
 				h.setNome(horarioNome.getText());
 				
 				if(h.update()){
-					CustomAlert.showAlert("Editar Horário", "Horário atualizado com sucesso.", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Turno", "Turno atualizado com sucesso.", AlertType.WARNING);
 					Main.loadListaHorarioView();
 				} else {
-					CustomAlert.showAlert("Editar Horário", "Algo de errado aconteceu.", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Turno", "Algo de errado aconteceu.", AlertType.WARNING);
 				}
 			} catch(RuntimeException ex) {
-				CustomAlert.showAlert("Editar Horário", ex.getMessage(), AlertType.WARNING);
+				CustomAlert.showAlert("Editar Turno", ex.getMessage(), AlertType.WARNING);
 			}
 		});
 	}
@@ -103,6 +118,15 @@ public class HorarioEditarController implements Initializable {
 		almocoInicioMinuto.getSelectionModel().select(h.getInicioAlmoco().getMinutes());
 		almocoTerminoHora.getSelectionModel().select(h.getTerminoAlmoco().getHours());
 		almocoTerminoMinuto.getSelectionModel().select(h.getTerminoAlmoco().getMinutes());
+		
+		// Dias
+		segundaD.setSelected(h.getSegunda());
+		tercaD.setSelected(h.getTerca());
+		quartaD.setSelected(h.getQuarta());
+		quintaD.setSelected(h.getQuinta());
+		sextaD.setSelected(h.getSexta());
+		sabadoD.setSelected(h.getSabado());
+		domingoD.setSelected(h.getDomingo());
 	}
 	
 	// Configura as horas e os minutos nos combo box

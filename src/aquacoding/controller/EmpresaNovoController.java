@@ -58,6 +58,7 @@ public class EmpresaNovoController implements Initializable {
 					// Empresa criado com sucesso
 					CustomAlert.showAlert("Cadastro da empresa", "Empresa cadastrada com sucesso",
 							AlertType.WARNING);
+					Main.initRootLayout();
 					Main.loadEmpresaVer();
 				} else {
 					// Erro ao criar o empresa
