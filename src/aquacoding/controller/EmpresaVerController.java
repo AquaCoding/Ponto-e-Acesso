@@ -36,7 +36,7 @@ public class EmpresaVerController implements Initializable{
 		
 		// Evento do botão de editar
 		editar.setOnMouseClicked((MouseEvent e) -> {
-			
+			Main.loadEmpresaEditarView();
 		});
 	}
 	
