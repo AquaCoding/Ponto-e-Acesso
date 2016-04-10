@@ -25,7 +25,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarFuncaoNovo, menuBarFuncaoLista;
 
 	@FXML
-	MenuItem menuBarFuncionarioNovo, menuBarFuncionarioLista;
+	MenuItem menuBarFuncionarioNovo, menuBarFuncionarioLista, menuBarFuncionarioAbono;
 
 	@FXML
 	MenuItem menuBarHorarioNovo, menuBarHorarioLista;
@@ -101,6 +101,10 @@ public class RootLayoutController implements Initializable {
 
 		menuBarFeriasNova.setOnAction((ActionEvent e) -> {
 			Main.loadFeriasNovoView();
+		});
+		
+		menuBarFuncionarioAbono.setOnAction((ActionEvent e) -> {
+			Main.loadFuncionarioAbonoView();
 		});
 		
 		// Oculta o ver da empresa, caso nenhuma empresa esteja cadastrada

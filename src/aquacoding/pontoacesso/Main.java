@@ -38,74 +38,75 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		// Inicia a janela principal (Main.fxml)
 		primaryStage = stage;
-		//initRootLayout();
+		// initRootLayout();
 		initLoginLayout();
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
-	// Realiza a inicialização da janela de login
-		public static void initLoginLayout() {
-			try {
-				if(loginStage == null) {
-					loginStage.setResizable(false);
-					loginStage.initModality(Modality.APPLICATION_MODAL);
-					loginStage.setAlwaysOnTop(true);
-				}
-				
-				if(!Usuario.haveUsuario()) {
-					CustomAlert.showAlert("Primeiro acesso", "É preciso criar um usuário", AlertType.INFORMATION);
-		            initPrimeiroAcesso();
-				} else {
-					// Inicia a tela de login
-					FXMLLoader loader = new FXMLLoader();
-					loader.setLocation(ClassLoader.getSystemResource("resources/views/Login.fxml"));
-					Parent root = (AnchorPane) loader.load();
-					
-					// Configura a tela de login
-					Scene scene = new Scene(root);
-					scene.getStylesheets().add(""+Main.class.getResource("application.css"));
-					loginStage.setResizable(false);
-					loginStage.setTitle(pageTitle + " - Entrar");
-					loginStage.setScene(scene);
-					loginStage.show();
-				}
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 
-		// Fecha a janela de login
-		public static void endLoginLayout() {
-			loginStage.close();
-		}
-		
-		// Realiza a inicialização da janela princpal
-		public static void initPrimeiroAcesso() {
-			try {
-				// Carrega o layout de cadastro de usuario
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
-				Parent root = (AnchorPane) loader.load();
-				
-				// Obtem o controller da view e informa para fechar e abrir o login apos o criar
-				UsuarioNovoController controller = loader.getController();
-				controller.setCloseAfterCreate(true);
-				
-				// Inicia o layout
-				Scene scene = new Scene(root);
-				scene.getStylesheets().add(""+Main.class.getResource("application.css"));
+	// Realiza a inicialização da janela de login
+	public static void initLoginLayout() {
+		try {
+			if (loginStage == null) {
 				loginStage.setResizable(false);
-				loginStage.setTitle(pageTitle + " - Criando primeiro usuario");
+				loginStage.initModality(Modality.APPLICATION_MODAL);
+				loginStage.setAlwaysOnTop(true);
+			}
+
+			if (!Usuario.haveUsuario()) {
+				CustomAlert.showAlert("Primeiro acesso", "É preciso criar um usuário", AlertType.INFORMATION);
+				initPrimeiroAcesso();
+			} else {
+				// Inicia a tela de login
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/Login.fxml"));
+				Parent root = (AnchorPane) loader.load();
+
+				// Configura a tela de login
+				Scene scene = new Scene(root);
+				scene.getStylesheets().add("" + Main.class.getResource("application.css"));
+				loginStage.setResizable(false);
+				loginStage.setTitle(pageTitle + " - Entrar");
 				loginStage.setScene(scene);
 				loginStage.show();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+
+	// Fecha a janela de login
+	public static void endLoginLayout() {
+		loginStage.close();
+	}
+
+	// Realiza a inicialização da janela princpal
+	public static void initPrimeiroAcesso() {
+		try {
+			// Carrega o layout de cadastro de usuario
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
+			Parent root = (AnchorPane) loader.load();
+
+			// Obtem o controller da view e informa para fechar e abrir o login
+			// apos o criar
+			UsuarioNovoController controller = loader.getController();
+			controller.setCloseAfterCreate(true);
+
+			// Inicia o layout
+			Scene scene = new Scene(root);
+			scene.getStylesheets().add("" + Main.class.getResource("application.css"));
+			loginStage.setResizable(false);
+			loginStage.setTitle(pageTitle + " - Criando primeiro usuario");
+			loginStage.setScene(scene);
+			loginStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	// Realiza a inicialização da janela princpal
 	public static void initRootLayout() {
@@ -117,7 +118,7 @@ public class Main extends Application {
 
 			// Mostra a scene contendo o root layout.
 			Scene scene = new Scene(rootLayout);
-			scene.getStylesheets().add(""+Main.class.getResource("application.css"));
+			scene.getStylesheets().add("" + Main.class.getResource("application.css"));
 			primaryStage.setScene(scene);
 			primaryStage.show();
 
@@ -332,7 +333,8 @@ public class Main extends Application {
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
 
-			// Obtem o controller da interface e passa o funcionario a ser editado
+			// Obtem o controller da interface e passa o funcionario a ser
+			// editado
 			FuncionarioEditarController controller = loader.getController();
 			controller.setFuncionario(funcionario);
 
@@ -343,95 +345,109 @@ public class Main extends Application {
 	}
 
 	// Carrega a view de visualizar funcionario
-		public static void loadFuncionarioVerView(Funcionario funcionario) {
-			try {
-				primaryStage.setTitle(pageTitle + " - Editar Funcionário");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioVer.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
+	public static void loadFuncionarioVerView(Funcionario funcionario) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Funcionário");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioVer.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
 
-				// Obtem o controller da interface
-				FuncionarioVerController controller = loader.getController();
-				controller.setFuncionario(funcionario);
+			// Obtem o controller da interface
+			FuncionarioVerController controller = loader.getController();
+			controller.setFuncionario(funcionario);
 
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
-		// Carrega a view de editar um horario
-		public static void loadHorarioEditarView(Horario horario) {
-			try {
-				primaryStage.setTitle(pageTitle + " - Editar Horário");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioEditar.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
+	// Carrega a view de editar um horario
+	public static void loadHorarioEditarView(Horario horario) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Horário");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioEditar.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
 
-				// Obtem o controller da interface
-				HorarioEditarController controller = loader.getController();
-				controller.setHorario(horario);
+			// Obtem o controller da interface
+			HorarioEditarController controller = loader.getController();
+			controller.setHorario(horario);
 
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
-		// Carrega a view de editar um horario
-		public static void loadEmpresaNovoView() {
-			try {
-				primaryStage.setTitle(pageTitle + " - Nova Empresa");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaNovo.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();				
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	// Carrega a view de editar um horario
+	public static void loadEmpresaNovoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Nova Empresa");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
-		// Carrega a view de editar um horario
-		public static void loadEmpresaVer() {
-			try {
-				primaryStage.setTitle(pageTitle + " - Empresa");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaVer.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
-				
-				// Obtem o controller da interface
-				EmpresaVerController controller = loader.getController();
-				controller.loadEmpresaInfo();
-				
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+	// Carrega a view de editar um horario
+	public static void loadEmpresaVer() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Empresa");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaVer.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
 
-		// Carrega a view de listagem de ferias
-		public static void loadListaFeriasView() {
-			try {
-				primaryStage.setTitle(pageTitle + " - Férias");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasLista.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
+			// Obtem o controller da interface
+			EmpresaVerController controller = loader.getController();
+			controller.loadEmpresaInfo();
 
-		// Carrega a view de na Férias
-		public static void loadFeriasNovoView() {
-			try {
-				primaryStage.setTitle(pageTitle + " - Nova Férias");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasNovo.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
+
+	// Carrega a view de listagem de ferias
+	public static void loadListaFeriasView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Férias");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasLista.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de na Férias
+	public static void loadFeriasNovoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Nova Férias");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de na Abono de Falta
+	public static void loadFuncionarioAbonoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Cadastro de abono");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioAbono.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
 }
