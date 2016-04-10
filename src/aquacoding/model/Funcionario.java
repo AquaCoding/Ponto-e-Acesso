@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Image;
 
@@ -194,8 +193,9 @@ public class Funcionario {
 		setEstado(builder.estado);
 		setSalarioHoras(builder.salarioHoras);
 		this.horario = builder.horario;
-	
-		
+
+
+
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
@@ -215,8 +215,8 @@ public class Funcionario {
 		private String cidade;
 		private String estado;
 		private double salarioHoras;
-		
-		
+
+
 		private ArrayList<Horario> horario = new ArrayList<Horario>();
 
 		// Sets do Builder
@@ -329,21 +329,20 @@ public class Funcionario {
 				ResultSet id = statement.getGeneratedKeys();
 				while (id.next())
 					setId(id.getInt(1));
-
+				
+				// Percorre cada um dos horarios
 				for(int i = 0; i < horario.size(); i++) {
 					// Cria um prepared statement
-					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
-							"INSERT INTO HorarioFuncionario (idHorario, idFuncionario) VALUES (?, ?)",
-							Statement.RETURN_GENERATED_KEYS);
+					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("INSERT INTO HorarioFuncionario (idHorario, idFuncionario) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 					
+					// Define os binds
 					statement2.setInt(1, horario.get(i).getId());
 					statement2.setInt(2, this.id);
 					
+					// Executa o SQL
 					statement2.executeUpdate();
-					
 				}
-				
-				
+
 				// Encerra conexao
 				connect.close();
 
@@ -392,13 +391,13 @@ public class Funcionario {
 				statement2.setInt(1, f.getId());
 
 				// Executa o SQL
-				ResultSet resultSet2 = statement2.executeQuery();		
-				
+				ResultSet resultSet2 = statement2.executeQuery();
+
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-				
-				
+
+
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
 
@@ -412,12 +411,12 @@ public class Funcionario {
 			throw new RuntimeException("Um erro ocorreu");
 		}
 	}
-	
+
 	public static ArrayList<Funcionario> getAll(String filter) {
 		try {
 			// Define o filtro pra buscar no meio das strings
 			filter = "%" + filter + "%";
-			
+
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
@@ -426,7 +425,7 @@ public class Funcionario {
 			statement.setString(1, filter);
 			statement.setString(2, filter);
 			statement.setString(3, filter);
-			
+
 			// Executa o SQL
 			ResultSet resultSet = statement.executeQuery();
 			//ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcionario WHERE nome = ? OR cpf = ?");
@@ -448,12 +447,12 @@ public class Funcionario {
 				statement2.setInt(1, f.getId());
 
 				// Executa o SQL
-				ResultSet resultSet2 = statement2.executeQuery();		
-				
+				ResultSet resultSet2 = statement2.executeQuery();
+
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-				
+
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
 

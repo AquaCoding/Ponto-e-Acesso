@@ -36,18 +36,18 @@
                <items>
                   <MenuItem fx:id="menuBarHorarioLista" mnemonicParsing="false" text="Ver todos" />
                   <MenuItem fx:id="menuBarHorarioNovo" mnemonicParsing="false" text="Novo" />
-                  <Menu mnemonicParsing="false" text="Férias">
-                    <items>
-                      <MenuItem fx:id="menuBarFeriasLista" mnemonicParsing="false" text="Ver todas" />
-                        <MenuItem fx:id="menuBarFeriasNova" mnemonicParsing="false" text="Novo" />
-                    </items>
-                  </Menu>
                </items>
             </Menu>
            <Menu mnemonicParsing="false" text="Funcionário">
             <items>
                   <MenuItem fx:id="menuBarFuncionarioLista" mnemonicParsing="false" text="Ver todos" />
                   <MenuItem fx:id="menuBarFuncionarioNovo" mnemonicParsing="false" text="Novo" />
+                  <Menu mnemonicParsing="false" text="Férias">
+                    <items>
+                        <MenuItem fx:id="menuBarFeriasNova" mnemonicParsing="false" text="Cadastrar" />
+                      <MenuItem fx:id="menuBarFeriasLista" mnemonicParsing="false" text="Ver todas" />
+                    </items>
+                  </Menu>
             </items>
           </Menu> 
         </menus>

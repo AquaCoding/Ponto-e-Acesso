@@ -6,11 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import aquacoding.utils.DatabaseConnect;
-
 
 public class Ferias {
 
@@ -18,6 +17,7 @@ public class Ferias {
 	private String nome;
 	private java.sql.Date inicio;
 	private java.sql.Date termino;
+	private ArrayList<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 	public int getId() {
 		return id;
@@ -35,20 +35,31 @@ public class Ferias {
 		this.nome = nome;
 	}
 
-	public Date getInicio() {
-		return inicio;
+	public String getInicio() {
+		SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy");
+		return format.format(inicio);
 	}
 
 	public void setInicio(java.sql.Date inicio) {
 		this.inicio = inicio;
 	}
 
-	public Date getTermino() {
-		return termino;
+	public String getTermino() {
+		SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy");
+		return format.format(termino);
 	}
 
 	public void setTermino(java.sql.Date termino) {
 		this.termino = termino;
+	}
+
+	public ArrayList<Funcionario> getFuncionario() {
+	     return funcionarios;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		funcionarios.add(funcionario);
+
 	}
 
 
@@ -81,7 +92,6 @@ public class Ferias {
 				statement.setDate(2, this.inicio);
 				statement.setDate(3, this.termino);
 
-
 				// Executa o SQL
 				int ret = statement.executeUpdate();
 
@@ -91,6 +101,18 @@ public class Ferias {
 					ResultSet id = statement.getGeneratedKeys();
 					while (id.next())
 						setId(id.getInt(1));
+
+
+					for(int i = 0; i < funcionarios.size(); i++) {
+						// Cria um prepared statement
+						PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
+								"INSERT INTO FuncionarioFerias (idFuncionario, idFerias) VALUES (?, ?)",
+								Statement.RETURN_GENERATED_KEYS);
+						statement2.setInt(1, funcionarios.get(i).getId());
+						statement2.setInt(2, this.id);
+						statement2.executeUpdate();
+
+					}
 
 					// Encerra conexao
 					connect.close();
@@ -119,8 +141,10 @@ public class Ferias {
 
 				ArrayList<Ferias> Ferias = new ArrayList<Ferias>();
 				while (resultSet.next()) {
+
 					// Cria uma ferias com os dados do BD
 					java.sql.Date inicio = resultSet.getDate("inicio");
+
 					java.sql.Date termino = resultSet.getDate("termino");
 
 					Ferias c = new Ferias(resultSet.getInt("idFerias"), resultSet.getString("nome"), inicio, termino);
@@ -136,36 +160,6 @@ public class Ferias {
 			}
 		}
 
-		public boolean delete() {
-			try {
-				// Obtem uma conexão com o banco de dados
-				Connection connect = DatabaseConnect.getInstance();
-
-				// Cria um prepared statement
-				PreparedStatement statement = (PreparedStatement) connect
-						.prepareStatement("DELETE FROM Ferias WHERE idFerias = ?");
-
-				// Realiza o bind dos valores
-				statement.setInt(1, this.id);
-
-				// Executa o SQL
-				int resp = statement.executeUpdate();
-
-				// Encerra conexao
-				connect.close();
-
-				if(resp == 1) {
-					return true;
-				}else {
-					return false;
-				}
-
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-				throw new RuntimeException("Um erro ocorreu ao deletar a Ferias");
-			}
-		}
-
 		public boolean update() {
 			try {
 				// Obtem uma conexão com o banco de dados
@@ -175,6 +169,7 @@ public class Ferias {
 				PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
 						"UPDATE Ferias SET nome = ?, inicio = ?, termino = ? WHERE idFerias = ?");
 
+
 				// Realiza o bind dos valores
 				statement.setString(1, this.nome);
 				statement.setDate(2, this.inicio);
@@ -183,6 +178,17 @@ public class Ferias {
 
 				// Executa o SQL
 				int ret = statement.executeUpdate();
+
+				for(int i = 0; i < funcionarios.size(); i++) {
+					// Cria um prepared statement
+					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
+							"INSERT INTO FuncionarioFerias (idFuncionario, idFerias) VALUES (?, ?)",
+							Statement.RETURN_GENERATED_KEYS);
+					statement2.setInt(1, funcionarios.get(i).getId());
+					statement2.setInt(2, this.id);
+					statement2.executeUpdate();
+
+				}
 
 				// Encerra conexao
 				connect.close();

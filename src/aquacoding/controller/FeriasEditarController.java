@@ -20,13 +20,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
-public class FeriasNovoController implements Initializable {
+public class FeriasEditarController implements Initializable {
 
 	@FXML
 	TextField feriasNome;
 
 	@FXML
-	Button cancelar, cadastrar;
+	Button cancelar, alterar;
 
 	@FXML
 	DatePicker feriasInicio, feriasTermino;
@@ -37,11 +37,14 @@ public class FeriasNovoController implements Initializable {
 	// Atributos
 	ObservableList<Funcionario> items;
 
+	private Ferias ferias;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		// Retorna para o menu de listagem ao clicar em cancelar
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
-			Main.loadMainView();
+			Main.loadListaFeriasView();;
 		});
 
 		// Define o nome método de criação de células
@@ -54,36 +57,44 @@ public class FeriasNovoController implements Initializable {
 		// Adiciona a lista
 		listFuncionaios.setItems(items);
 
-		cadastrar.setOnMouseClicked((MouseEvent e) -> {
+		// Realiza a edição da função
+		alterar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				//inicio
 				java.sql.Date inicio = java.sql.Date.valueOf(feriasInicio.getValue());
 				//termino
 				java.sql.Date termino = java.sql.Date.valueOf(feriasTermino.getValue());
 
-				// Cria novo horario
-				Ferias f = new Ferias(feriasNome.getText(), inicio, termino);
+				// Salva as alterações no objeto
+				ferias.setNome(feriasNome.getText());
+				ferias.setInicio(inicio);
+				ferias.setTermino(termino);
 
 				ObservableList<Funcionario> fun;
 				fun = FXCollections.observableArrayList(listFuncionaios.getSelectionModel().getSelectedItems());
 
 				for(int i = 0; i < fun.size(); i++){
-					f.setFuncionario(fun.get(i));
+					ferias.setFuncionario(fun.get(i));
 					}
 
-				// Salva novo horario no BD
-				if(f.create()) {
-					CustomAlert.showAlert("Nova Férias", "Nova férias cadastrado com sucesso.", AlertType.WARNING);
-					Main.loadListaFeriasView();
+				// Tenta atualizar
+				if(ferias.update()) {
+					CustomAlert.showAlert("Editar Férias", "Férias editada com sucesso.", AlertType.WARNING);
+					Main.loadListaFeriasView();;
 				} else {
-					CustomAlert.showAlert("Nova Férias", "Algo de errado aconteceu.", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Férias", "Algo errado aconteceu.", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
-				CustomAlert.showAlert("Nova Férias", ex.getMessage(), AlertType.WARNING);
+				CustomAlert.showAlert("Editar Férias", ex.getMessage(), AlertType.WARNING);
 			}
 		});
 
+	}
 
+	// Define a férias que esta sendo usada para a edição
+	public void setFerias(Ferias ferias) {
+		this.ferias = ferias;
+		feriasNome.setText(ferias.getNome());
 	}
 
 	private void setFuncionarioListagemCellFactory() {
@@ -116,8 +127,4 @@ public class FeriasNovoController implements Initializable {
 		});
 	}
 
-
-	}
-
-
-
+}
