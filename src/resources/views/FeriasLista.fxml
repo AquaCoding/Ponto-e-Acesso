@@ -23,8 +23,7 @@
             <TableColumn fx:id="feriasTermino" prefWidth="75.0" text="Termino" />
          </columns>
       </TableView>
-      <Button fx:id="remover" layoutX="531.0" layoutY="277.0" mnemonicParsing="false" text="Remover" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="254.0" />
-      <Button fx:id="alterar" layoutX="502.0" layoutY="294.0" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="254.0" />
+      <Button fx:id="alterar" layoutX="502.0" layoutY="294.0" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="254.0" />
       <Button fx:id="cancelar" layoutX="25.0" layoutY="264.0" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="254.0" />
    </children>
 </AnchorPane>

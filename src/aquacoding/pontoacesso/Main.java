@@ -2,11 +2,13 @@ package aquacoding.pontoacesso;
 
 import java.io.IOException;
 
+import aquacoding.controller.FeriasEditarController;
 import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.HorarioEditarController;
 import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
+import aquacoding.model.Ferias;
 import aquacoding.model.Funcao;
 import aquacoding.controller.FuncionarioEditarController;
 import aquacoding.model.Funcionario;
@@ -355,6 +357,24 @@ public class Main extends Application {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasNovo.fxml"));
 				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Carrega a view de editar ferias
+		public static void loadFeriasEditarView(Ferias ferias) {
+			try {
+				primaryStage.setTitle(pageTitle + " - Editar Férias");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasEditar.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+
+				// Obtem o controller da interface e passa o setor a ser editado
+				FeriasEditarController controller = loader.getController();
+				controller.setFerias(ferias);
+
 				rootLayout.setCenter(personOverview);
 			} catch (IOException e) {
 				e.printStackTrace();
