@@ -2,6 +2,7 @@ package aquacoding.pontoacesso;
 
 import java.io.IOException;
 
+import aquacoding.controller.EmpresaEditarController;
 import aquacoding.controller.EmpresaVerController;
 import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.FuncionarioVerController;
@@ -15,6 +16,7 @@ import aquacoding.model.Funcionario;
 import aquacoding.model.Horario;
 import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
+import aquacoding.model.Empresa;
 import aquacoding.utils.CustomAlert;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -438,12 +440,18 @@ public class Main extends Application {
 	}
 
 	// Carrega a view de edição de empresa
-	public static void loadEmpresaEditarView() {
+	public static void loadEmpresaEditarView(Empresa empresa) {
 		try {
 			primaryStage.setTitle(pageTitle + " - Editar Empresa");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface e passa a empresa a ser
+			// editada
+			EmpresaEditarController controller = loader.getController();
+			controller.setEmpresa(empresa);
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();

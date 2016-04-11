@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -22,18 +21,15 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class EmpresaEditarController implements Initializable {
 
 	@FXML
-	TextField empresaNome, empresaRazaoSocial, empresaCNPJ, empresaRua, empresaNumero, empresaBairro, empresaEstado,
-			empresaCidade;
+	TextField empresaNome, empresaRazaoSocial, empresaCNPJ, empresaRua, empresaNumero, empresaBairro, empresaEstado, empresaCidade;
 
 	@FXML
 	Button cancelar, editar, btnImage;
-
+	
 	@FXML
 	Label lblImagePath;
-
+	
 	private File selectedFile;
-
-	private Empresa empresa;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -46,21 +42,23 @@ public class EmpresaEditarController implements Initializable {
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Salva as alterações no objeto
-				empresa.setNome(empresaNome.getText());
-				empresa.setRazaoSocial(empresaRazaoSocial.getText());
-				empresa.setCNPJ(empresaCNPJ.getText());
-				empresa.setRua(empresaRua.getText());
-				empresa.setNumero(Integer.parseInt(empresaNumero.getText()));
-				empresa.setBairro(empresaBairro.getText());
-				empresa.setEstado(empresaEstado.getText());
-				empresa.setCidade(empresaCidade.getText());
+				
+				Empresa emp = new Empresa.Builder().setNome(empresaNome.getText())
+						.setRazaoSocial(empresaRazaoSocial.getText())
+						.setCNPJ(empresaCNPJ.getText())
+						.setRua(empresaRua.getText())
+						.setNumero(Integer.parseInt(empresaNumero.getText()))
+						.setBairro(empresaBairro.getText())
+						.setCidade(empresaCidade.getText())
+						.setEstado(empresaEstado.getText())
+						.build();
 
 				// Adiciona a imagem ao objeto da empresa
 				if (selectedFile != null)
-					empresa.setImageURL(selectedFile);
+					emp.setImageURL(selectedFile);
 				
 				// Tenta atualizar
-				if (empresa.update()) {
+				if (emp.update()) {
 					CustomAlert.showAlert("Editar Empresa", "Empresa editada com sucesso.", AlertType.WARNING);
 					Main.loadEmpresaVer();
 				} else {

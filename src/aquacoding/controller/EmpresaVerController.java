@@ -27,6 +27,8 @@ public class EmpresaVerController implements Initializable{
 	@FXML
 	Button cancelar, editar;
 	
+	private Empresa empresa;
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Evento do botão cancelar
@@ -36,7 +38,7 @@ public class EmpresaVerController implements Initializable{
 		
 		// Evento do botão de editar
 		editar.setOnMouseClicked((MouseEvent e) -> {
-			Main.loadEmpresaEditarView();
+			Main.loadEmpresaEditarView(empresa);
 		});
 	}
 	
