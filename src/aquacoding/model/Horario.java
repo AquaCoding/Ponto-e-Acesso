@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
-
 import aquacoding.utils.DatabaseConnect;
 
 public class Horario {
@@ -324,5 +325,52 @@ public class Horario {
 	
 	public String toString(){
 		return " " + nome;
+	}
+	
+	// Obtem o tempo de trabalho durante um dia por um funcionario considerando os horarios das batidades dos pontos
+	public static Duration getHorasTrabalhadasByDateAndFuncionario(Funcionario f, String date) {
+		try{
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("SELECT * FROM Ponto WHERE idFuncionario = ? AND date(horario) = ?;");
+
+			// Realiza o bind dos valores
+			statement.setInt(1, f.getId());
+			statement.setString(2, date);
+
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();
+			
+			// ArrayList para armazenar todos os pontos
+			ArrayList<Instant> pontos = new ArrayList<Instant>();
+			
+			// Percorre todos os pontos retornados e obtem o horario
+			while(resultSet.next())
+				pontos.add(resultSet.getTimestamp("horario").toInstant());
+			
+			// ArrayList para armazenar a duração de cada turno trabalhado
+			ArrayList<Duration> turnosTrabalhados = new ArrayList<Duration>();
+			
+			// Percorre pelos conjuntos de entrada/saida dos turnos, calculando a duração entre uma batida e outra
+			for(int i = 0; i < pontos.size() - 1; i += 2) {
+				turnosTrabalhados.add(Duration.between(pontos.get(i), pontos.get(i + 1)));
+			}
+			
+			// Armazena o tempo final trabalhado naquele dia pelo funcionario
+			Duration tempoTrabalhado = null;
+			
+			// Realiza a soma das durações dos tempos dos pontos
+			for(int i = 0; i < turnosTrabalhados.size() - 1; i += 2) {
+				tempoTrabalhado = turnosTrabalhados.get(i).plus(turnosTrabalhados.get(i + 1));
+			}
+			
+			// Retorna a tempo trabalhado
+			return tempoTrabalhado;
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu");
+		}
 	}
 }

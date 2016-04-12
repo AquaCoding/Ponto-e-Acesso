@@ -1,13 +1,13 @@
 package aquacoding.pontoacesso;
 
 import java.io.IOException;
-
 import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.HorarioEditarController;
 import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
 import aquacoding.controller.UsuarioNovoController;
+import aquacoding.controller.WebViewController;
 import aquacoding.model.Funcao;
 import aquacoding.controller.FuncionarioEditarController;
 import aquacoding.model.Funcionario;
@@ -427,13 +427,44 @@ public class Main extends Application {
 			}
 		}
 
-		// Carrega a view de na Férias
+		// Carrega a view de nova Férias
 		public static void loadFeriasNovoView() {
 			try {
 				primaryStage.setTitle(pageTitle + " - Nova Férias");
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasNovo.fxml"));
 				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// Carrega a view de gerar relatorio de trabalho
+		public static void loadRelatorioTrabalhoView() {
+			try {
+				primaryStage.setTitle(pageTitle + " - Relatório de trabalho");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/RelatorioPonto.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// Inicia a webview e abre o arquivo especificado
+		public static void loadWebView(String fileToOpen) {
+			try {
+				primaryStage.setTitle(pageTitle + " - Editar Horário");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/WebView.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+
+				// Obtem o controller da interface
+				WebViewController controller = loader.getController();
+				controller.openPage(fileToOpen);
+
 				rootLayout.setCenter(personOverview);
 			} catch (IOException e) {
 				e.printStackTrace();
