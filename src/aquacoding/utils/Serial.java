@@ -3,7 +3,11 @@ package aquacoding.utils;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import aquacoding.model.Ponto;
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
@@ -11,28 +15,18 @@ import jssc.SerialPortException;
 
 public class Serial {
 
-	private String value;
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
+	private static final String PORT_NUMBER = "COM4";
 
 	public void SerialLeitura() throws SerialPortException {
-
-		
-		
 		try {
-			SerialPort serialPort = new SerialPort("COM4");
+			SerialPort serialPort = new SerialPort(PORT_NUMBER);
 			serialPort.openPort();
 			serialPort.setParams(SerialPort.BAUDRATE_9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
 					SerialPort.PARITY_NONE);
 
 			serialPort.addEventListener(new SerialPortEventListener() {
 				String tag;
+
 				@Override
 				public void serialEvent(SerialPortEvent event) {
 					if (event.isRXCHAR()) {
@@ -43,7 +37,7 @@ public class Serial {
 								System.out.print(l);
 								tag += l;
 							}
-							
+
 							try {
 								// Obtem uma conexão com o banco de dados
 								Connection connect = DatabaseConnect.getInstance();
@@ -52,29 +46,29 @@ public class Serial {
 								Statement statement = connect.createStatement();
 
 								// Executa um SQL
-								ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");																
-								
-								resultSet.next();
-								
-								String codigo = resultSet.getString("codigo"); 
-								
-								System.out.println();
-								System.out.println(codigo);
-								
-								if(tag.equals(codigo)) {
-									serialPort.writeString("Ponto registrado");								
-								}else {
-									serialPort.writeString("Bloqueado");
-								}
-								
-								//encerra conexão
+								ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
+
+								while (resultSet.next()) {
+									if (tag.equals(resultSet.getString("codigo"))) {
+										Ponto ponto = new Ponto(getDateTime(), resultSet.getInt("idFuncionario"), resultSet.getInt("idFuncionarioTag"));
+
+										if (ponto.create()) {
+											serialPort.writeString("Ponto registrado");
+										} else {
+											serialPort.writeString("Erro, contate o Suporte");
+										}
+									} else {
+										serialPort.writeString("Usuário não encontrado");
+									}
+								};
+
+								// encerra conexão
 								connect.close();
-								
+
 							} catch (Exception e) {
 								System.out.println("Erro na busca pelo banco: " + e.getMessage());
 							}
-							
-							
+
 						} catch (SerialPortException e) {
 							System.out.println("Erro na leitura serial " + e.getMessage());
 						}
@@ -84,8 +78,12 @@ public class Serial {
 		} catch (Exception e) {
 			System.out.println("Erro na leitura serial " + e.getMessage());
 		}
+	}
 
-		// serialPort.writeString();
+	private String getDateTime() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = new Date();
+		return dateFormat.format(date);
 	}
 
 }
