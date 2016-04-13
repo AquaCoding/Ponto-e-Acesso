@@ -48,6 +48,7 @@
                       <MenuItem fx:id="menuBarFeriasLista" mnemonicParsing="false" text="Ver todas" />
                     </items>
                   </Menu>
+                  <MenuItem fx:id="menuBarFuncionarioAbono" mnemonicParsing="false" text="Abono de Faltas" />
             </items>
           </Menu> 
         </menus>

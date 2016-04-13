@@ -544,4 +544,37 @@ public class Funcionario {
 		}
 	}
 
+	public static Funcionario getByID(int id) {
+		try{
+			// Obtem uma conex�o com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+			
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("SELECT * FROM Setor WHERE idSetor = ?", Statement.RETURN_GENERATED_KEYS);
+
+			// Realiza o bind dos valores
+			statement.setInt(1, id);
+
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();
+			
+			// Obtem o primeiro resultado e o retorna
+			if(resultSet.next())
+				return new Funcionario.Builder().setId(resultSet.getInt("idFuncionario"))
+						.setNome(resultSet.getString("nome")).setSobrenome(resultSet.getString("sobrenome"))
+						.setRg(resultSet.getString("rg")).setCpf(resultSet.getString("cpf"))
+						.setCtps(resultSet.getString("ctps")).setTelefone(resultSet.getString("telefone"))
+						.setRua(resultSet.getString("rua")).setNumero(resultSet.getInt("numero"))
+						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
+						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
+						.build();
+			
+			// Se nada for achado, retorna nulo
+			return null;
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu");
+		}
+	}
+
 }

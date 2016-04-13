@@ -448,11 +448,23 @@ public class Main extends Application {
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
 
-			// Obtem o controller da interface e passa a empresa a ser
-			// editada
+			// Obtem o controller da interface e passa a empresa a ser editada
 			EmpresaEditarController controller = loader.getController();
 			controller.setEmpresa(empresa);
-
+			
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Carrega a view de na Abono de Falta
+	public static void loadFuncionarioAbonoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Cadastro de abono");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioAbono.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();

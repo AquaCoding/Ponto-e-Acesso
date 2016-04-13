@@ -100,3 +100,13 @@ CREATE TABLE FuncionarioFerias(
 	CONSTRAINT fk_ferias FOREIGN KEY (idFerias)
 		REFERENCES Ferias(idFerias)
 );
+
+CREATE TABLE Abono(
+	idAbono			INT			NOT NULL auto_increment,
+    dataFalta		DATE		NOT NULL,
+	descricao		VARCHAR(60)	NOT NULL,
+	idFuncionario	INT			NOT NULL,
+	CONSTRAINT pk_abono PRIMARY KEY (idAbono),
+    CONSTRAINT fk_funcionario_abono FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario)
+);
