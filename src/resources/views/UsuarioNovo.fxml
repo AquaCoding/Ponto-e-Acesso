@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.UsuarioNovoController">
+<AnchorPane prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.UsuarioNovoController">
    <children>
       <Label layoutX="34.0" layoutY="34.0" text="Novo Usuário" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
