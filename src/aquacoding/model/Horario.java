@@ -114,6 +114,34 @@ public class Horario {
 		this.domingo = domingo;
 	}
 
+	public Boolean getSegunda() {
+		return segunda;
+	}
+
+	public Boolean getTerca() {
+		return terca;
+	}
+
+	public Boolean getQuarta() {
+		return quarta;
+	}
+
+	public Boolean getQuinta() {
+		return quinta;
+	}
+
+	public Boolean getSexta() {
+		return sexta;
+	}
+
+	public Boolean getSabado() {
+		return sabado;
+	}
+
+	public Boolean getDomingo() {
+		return domingo;
+	}
+
 	// CONSTRUTORES
 	public Horario(int id, String nome, Time inicio, Time termino, Time inicioAlmoco, Time terminoAlmoco, Boolean segunda, Boolean terca, Boolean quarta, Boolean quinta, Boolean sexta, Boolean sabado, Boolean domingo) {
 		setId(id);
@@ -304,8 +332,7 @@ public class Horario {
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("SELECT * FROM Horario WHERE idHorario = ?", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM Horario WHERE idHorario = ?");
 
 			// Realiza o bind dos valores
 			statement.setInt(1, id);
@@ -315,7 +342,19 @@ public class Horario {
 
 			// Obtem o primeiro resultado e o retorna
 			if(resultSet.next())
-				return new Horario(resultSet.getInt("idHorario"), resultSet.getString("nome"), resultSet.getTime("inicio"), resultSet.getTime("termino"), resultSet.getTime("almocoInicio"), resultSet.getTime("almocoTermino"), resultSet.getBoolean("segunda"), resultSet.getBoolean("terca"), resultSet.getBoolean("quarta"), resultSet.getBoolean("quinta"), resultSet.getBoolean("sexta"), resultSet.getBoolean("sabado"), resultSet.getBoolean("domingo"));
+				return new Horario(resultSet.getInt("idHorario"),
+									resultSet.getString("nome"),
+									resultSet.getTime("inicio"),
+									resultSet.getTime("termino"),
+									resultSet.getTime("almocoInicio"),
+									resultSet.getTime("almocoTermino"),
+									resultSet.getBoolean("segunda"),
+									resultSet.getBoolean("terca"),
+									resultSet.getBoolean("quarta"),
+									resultSet.getBoolean("quinta"),
+									resultSet.getBoolean("sexta"),
+									resultSet.getBoolean("sabado"),
+									resultSet.getBoolean("domingo"));
 
 			// Se nada for achado, retorna nulo
 			return null;

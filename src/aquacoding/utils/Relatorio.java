@@ -2,6 +2,7 @@ package aquacoding.utils;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -124,6 +125,47 @@ public class Relatorio {
 		
 		// Retorna o relatorio
 		return lines;
+	}
+	
+	public static ArrayList<LocalDate> contaFaltas(LocalDate LocalDateInicio, LocalDate LocalDateFim, Funcionario selecionado) {
+		// Obtem um arraylist dos dias das semanas trabalhados pelo funcionário
+		ArrayList<Horario> horarios = selecionado.getHorario();
+		ArrayList<DayOfWeek> diasTrabalhados = new ArrayList<DayOfWeek>();
+		for(Horario h: horarios) {
+			if(h.getSegunda())
+				diasTrabalhados.add(DayOfWeek.MONDAY);
+			if(h.getTerca())
+				diasTrabalhados.add(DayOfWeek.TUESDAY);
+			if(h.getQuarta())
+				diasTrabalhados.add(DayOfWeek.WEDNESDAY);
+			if(h.getQuinta())
+				diasTrabalhados.add(DayOfWeek.THURSDAY);
+			if(h.getSexta())
+				diasTrabalhados.add(DayOfWeek.FRIDAY);
+			if(h.getSabado())
+				diasTrabalhados.add(DayOfWeek.SATURDAY);
+			if(h.getDomingo())
+				diasTrabalhados.add(DayOfWeek.SUNDAY);
+		}
+					
+		// Percorre por todas as datas no intervalo e procura por horas trabalhadas
+		ArrayList<LocalDate> faltas = new ArrayList<LocalDate>();
+		do {
+			
+			// Verifica se é um dia de trabalho válido
+			if(diasTrabalhados.contains(LocalDateInicio.getDayOfWeek())) {
+				// Verifica se o dia não possui nenhuma hora trabalhada
+				if(Horario.getHorasTrabalhadasByDateAndFuncionario(selecionado, LocalDateInicio.toString()) == null)
+					//adiciona ele ao arraylist de faltas
+					faltas.add(LocalDateInicio);
+			}
+			
+			// Incrementa um dia a data
+			LocalDateInicio = LocalDateInicio.plusDays(1);
+		} while(LocalDateInicio.isBefore(LocalDateFim) || LocalDateInicio.isEqual(LocalDateFim));
+		
+		// Retorna as faltas
+		return faltas;
 	}
 }
 
