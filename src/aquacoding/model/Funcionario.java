@@ -170,8 +170,7 @@ public class Funcionario {
 	}
 
 	public void setHorario(Horario horario) {
-		if (horario == null)
-			throw new RuntimeException("Um Funcionário precisa ter um Horário.");
+		this.horario.clear();
 		this.horario.add(horario);
 
 	}
@@ -329,16 +328,16 @@ public class Funcionario {
 				ResultSet id = statement.getGeneratedKeys();
 				while (id.next())
 					setId(id.getInt(1));
-				
+
 				// Percorre cada um dos horarios
 				for(int i = 0; i < horario.size(); i++) {
 					// Cria um prepared statement
 					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("INSERT INTO HorarioFuncionario (idHorario, idFuncionario) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
-					
+
 					// Define os binds
 					statement2.setInt(1, horario.get(i).getId());
 					statement2.setInt(2, this.id);
-					
+
 					// Executa o SQL
 					statement2.executeUpdate();
 				}
@@ -491,8 +490,21 @@ public class Funcionario {
 			statement.setDouble(12, this.salarioHoras);
 			statement.setDouble(13, this.id);
 
+
 			// Executa o SQL
 			int ret = statement.executeUpdate();
+
+			if(horario.size() == 1){
+				// Cria um prepared statement
+				PreparedStatement statement2 = (PreparedStatement) connect
+						.prepareStatement("DELETE FROM horariofuncionario WHERE idHorario = ? AND idFuncionario = ?");
+				statement2.setInt(1, this.horario.get(0).getId());
+				statement2.setInt(2, this.id);
+
+				// Executa o SQL
+				statement2.executeUpdate();
+			}
+
 
 			// Encerra conexao
 			connect.close();
@@ -548,7 +560,7 @@ public class Funcionario {
 		try{
 			// Obtem uma conex�o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
-			
+
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect
 					.prepareStatement("SELECT * FROM Setor WHERE idSetor = ?", Statement.RETURN_GENERATED_KEYS);
@@ -558,7 +570,7 @@ public class Funcionario {
 
 			// Executa o SQL
 			ResultSet resultSet = statement.executeQuery();
-			
+
 			// Obtem o primeiro resultado e o retorna
 			if(resultSet.next())
 				return new Funcionario.Builder().setId(resultSet.getInt("idFuncionario"))
@@ -569,7 +581,7 @@ public class Funcionario {
 						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.build();
-			
+
 			// Se nada for achado, retorna nulo
 			return null;
 		} catch (SQLException e) {
