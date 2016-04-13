@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.EmpresaEditarController">
+   <children>
+      <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="44.0">
+         <children>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  
+                  <Label text="Nome">
+                     <padding>
+                        <Insets bottom="2.0" />
+                     </padding></Label>
+                  
+                  
+                  <TextField fx:id="empresaNome" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="Razao Social">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding></Label> 
+                  <TextField fx:id="empresaRazaoSocial" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="CNPJ">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding></Label>
+                  <TextField fx:id="empresaCNPJ" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="Rua">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding></Label>
+                  <TextField fx:id="empresaRua" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="Número">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding></Label>
+                  <TextField fx:id="empresaNumero" prefHeight="25.0" prefWidth="212.0" />
+                  <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets right="15.0" />
+               </padding>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Bairro">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding></Label>
+                  <TextField fx:id="empresaBairro" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="Cidade">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding></Label>
+                  <TextField fx:id="empresaCidade" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="Estado">
+                     <padding>
+                        <Insets bottom="2.0" top="2.0" />
+                     </padding></Label>
+                  <TextField fx:id="empresaEstado" prefHeight="25.0" prefWidth="212.0" />
+                  <Label fx:id="lblImagePath" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="183.0" text="Nenhuma imagem selecionada" />
+                  <Button fx:id="btnImage" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" text="Selecionar logo">
+                     <VBox.margin>
+                        <Insets top="2.0" />
+                     </VBox.margin></Button>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        
+                                                <Button fx:id="editar" focusTraversable="false" mnemonicParsing="false" text="Editar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="53.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <Label layoutX="14.0" layoutY="14.0" text="Cadastro de empresa" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -247,6 +247,51 @@ public class Empresa {
 		}
 	}
 	
+	public boolean update() {		
+		try {			
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"UPDATE Empresa SET nome = ?, razaoSocial = ?, cnpj = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ? WHERE idEmpresa = ?");
+
+			
+			// Realiza o bind dos valores
+			statement.setString(1, this.nome);
+			statement.setString(2, this.razaoSocial);
+			statement.setString(3, this.CNPJ);
+			statement.setString(4, this.rua);
+			statement.setInt(5, this.numero);
+			statement.setString(6, this.bairro);
+			statement.setString(7, this.cidade);
+			statement.setString(8, this.estado);
+			statement.setInt(9, this.idEmpresa);
+			
+			
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();
+			
+			// Salva a imagem
+			if (profileImage != null) {
+				Image.copyImage(profileImage, "img/empresa/" + this.idEmpresa);
+			}
+			
+			// Retorna resultado
+			if (ret == 1) {				
+				return true;
+			} else {				
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Um erro ocorreu ao atualizar a Empresa");
+		}
+	}
+	
 	public static ArrayList<Empresa> getAll() {
 		try {
 			// Obtem uma conexão com o banco de dados
