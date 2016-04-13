@@ -8,13 +8,14 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import aquacoding.utils.DatabaseConnect;
+import javafx.util.StringConverter;
 
 public class Abono {
 
 	private int id;
 	private java.sql.Date dataFalta;
 	private String descricao;
-	private Funcionario funcionario;
+	private int idFuncionario;
 
 	public int getId() {
 		return id;
@@ -40,24 +41,26 @@ public class Abono {
 		this.descricao = descricao;
 	}
 	
-	public Funcionario getFuncionario() {
-		return funcionario;
+	public int getIdFuncionario() {
+		return this.idFuncionario;
 	}
 
-	public void setFuncionario(Funcionario funcionario) {
-		this.funcionario = funcionario;
+	public void setIdFuncionario(int idFuncionario) {
+		this.idFuncionario = idFuncionario;
 	}
 	
 	// CONSTRUTORES
-	public Abono(int id, java.sql.Date dataFalta, String descricao, Funcionario funcionario) {
+	public Abono(int id, java.sql.Date dataFalta, String descricao, int idFuncionario) {
 		setId(id);
 		setDataFalta(dataFalta);
 		setDescricao(descricao);
+		setIdFuncionario(idFuncionario);
 	}
 
-	public Abono(java.sql.Date dataFalta, String descricao, Funcionario funcionario) {
+	public Abono(java.sql.Date dataFalta, String descricao, int idFuncionario) {
 		setDataFalta(dataFalta);
 		setDescricao(descricao);
+		setIdFuncionario(idFuncionario);
 	}
 
 	// Cria um novo abono no banco de dados
@@ -73,7 +76,11 @@ public class Abono {
 			// Realiza o bind dos valores
 			statement.setDate(1, this.dataFalta);
 			statement.setString(2, this.descricao);
-			statement.setInt(3, this.funcionario.getId());
+			statement.setInt(3, this.idFuncionario);
+			
+			System.out.println(this.dataFalta);
+			System.out.println(this.descricao);
+			System.out.println(this.idFuncionario);
 			
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -115,7 +122,7 @@ public class Abono {
 				// Cria um abono com os dados do BD
 				java.sql.Date data = resultSet.getDate("dataFalta");
 
-				Abono a = new Abono(resultSet.getInt("idAbono"), data, resultSet.getString("descricao"), Funcionario.getByID(resultSet.getInt("idSetor")));
+				Abono a = new Abono(resultSet.getInt("idAbono"), data, resultSet.getString("descricao"), resultSet.getInt("idFuncionario"));
 
 				// Adiciona o abono ao retorno
 				abono.add(a);
@@ -127,5 +134,4 @@ public class Abono {
 			throw new RuntimeException("Um erro ocorreu");
 		}
 	}
-
 }

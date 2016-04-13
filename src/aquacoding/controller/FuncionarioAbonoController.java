@@ -15,6 +15,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
+import javafx.util.StringConverter;
 
 public class FuncionarioAbonoController implements Initializable {
 
@@ -25,7 +26,7 @@ public class FuncionarioAbonoController implements Initializable {
 	TextArea descricaoFalta;
 
 	@FXML
-	DatePicker faltaData;
+	DatePicker dataFalta;
 
 	@FXML
 	ComboBox<Funcionario> funcionarioSelect;
@@ -45,25 +46,52 @@ public class FuncionarioAbonoController implements Initializable {
 		// Tenta realizar o cadastro
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
-				java.sql.Date dataFalta = java.sql.Date.valueOf(faltaData.getValue());
 				
+				System.out.println("Passou");
+				
+				System.out.println(java.sql.Date.valueOf(dataFalta.getValue()));
+				
+				java.sql.Date falta = java.sql.Date.valueOf(dataFalta.getValue());
+
+				System.out.println("Passou 2");
+				
+				System.out.println(dataFalta);
+				System.out.println(descricaoFalta.getText());
+				System.out.println(funcionarioSelect.getSelectionModel().getSelectedItem().getId());
+
 				// Cria um novo objeto do abono
-				Abono a = new Abono(dataFalta, descricaoFalta.getText(), funcionarioSelect.getSelectionModel().getSelectedItem());
+				Abono a = new Abono(falta, descricaoFalta.getText(),
+						funcionarioSelect.getSelectionModel().getSelectedItem().getId());
 
 				// Tenta registar o abono no BD
 				if (a.create()) {
 					// Abono criado com sucesso
-					CustomAlert.showAlert("Novo Abono", "Novo abono cadastrado com sucesso",
-							AlertType.WARNING);
+					CustomAlert.showAlert("Novo Abono", "Novo abono cadastrado com sucesso", AlertType.WARNING);
 					Main.loadListaFuncionarioView();
 				} else {
 					// Erro ao criar o abono
 					CustomAlert.showAlert("Novo Abono", "Algo deu errado", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
+				System.out.println(ex);
 				CustomAlert.showAlert("Novo Abono", ex.getMessage(), AlertType.WARNING);
-			} catch (Exception ex) {
+			}
+		});
 
+		funcionarioSelect.setConverter(new StringConverter<Funcionario>() {
+			@Override
+			public String toString(Funcionario item) {
+				if (item != null) {
+					return item.getNome();
+				} else {
+					return null;
+				}
+			}
+
+			@Override
+			public Funcionario fromString(String string) {
+				// TODO Auto-generated method stub
+				return null;
 			}
 		});
 
