@@ -42,8 +42,12 @@ public class EmpresaEditarController implements Initializable {
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Salva as alterações no objeto
+				ArrayList<Empresa> empresas = Empresa.getAll();
+				Empresa em = empresas.get(0);
 				
-				Empresa emp = new Empresa.Builder().setNome(empresaNome.getText())
+				Empresa emp = new Empresa.Builder()
+						.setIdEmpresa(em.getIdEmpresa())
+						.setNome(empresaNome.getText())
 						.setRazaoSocial(empresaRazaoSocial.getText())
 						.setCNPJ(empresaCNPJ.getText())
 						.setRua(empresaRua.getText())
@@ -53,6 +57,9 @@ public class EmpresaEditarController implements Initializable {
 						.setEstado(empresaEstado.getText())
 						.build();
 
+				
+				
+				
 				// Adiciona a imagem ao objeto da empresa
 				if (selectedFile != null)
 					emp.setImageURL(selectedFile);

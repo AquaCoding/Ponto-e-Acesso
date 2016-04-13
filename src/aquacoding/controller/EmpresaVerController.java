@@ -60,6 +60,8 @@ public class EmpresaVerController implements Initializable{
 			empresaCidade.setText(e.getCidade());
 			empresaEstado.setText(e.getEstado());
 			
+			System.out.println("Id da empresa: "+e.getIdEmpresa());
+			
 			File f = e.getProfileImage();
 			if(f.exists()) {
 				Image i = new Image(f.toURI().toString(), 200, 200, false, true);

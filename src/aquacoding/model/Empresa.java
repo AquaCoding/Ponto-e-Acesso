@@ -247,8 +247,8 @@ public class Empresa {
 		}
 	}
 	
-	public boolean update() {
-		try {
+	public boolean update() {		
+		try {			
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
@@ -256,6 +256,7 @@ public class Empresa {
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
 					"UPDATE Empresa SET nome = ?, razaoSocial = ?, cnpj = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ? WHERE idEmpresa = ?");
 
+			
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
 			statement.setString(2, this.razaoSocial);
@@ -267,21 +268,22 @@ public class Empresa {
 			statement.setString(8, this.estado);
 			statement.setInt(9, this.idEmpresa);
 			
+			
 			// Executa o SQL
 			int ret = statement.executeUpdate();
 
 			// Encerra conexao
 			connect.close();
-
+			
 			// Salva a imagem
 			if (profileImage != null) {
 				Image.copyImage(profileImage, "img/empresa/" + this.idEmpresa);
 			}
-
+			
 			// Retorna resultado
-			if (ret == 1) {
+			if (ret == 1) {				
 				return true;
-			} else {
+			} else {				
 				return false;
 			}
 		} catch (SQLException e) {
