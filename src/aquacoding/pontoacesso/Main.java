@@ -11,6 +11,7 @@ import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
 import aquacoding.controller.UsuarioNovoController;
 import aquacoding.model.Ferias;
+import aquacoding.controller.WebViewController;
 import aquacoding.model.Funcao;
 import aquacoding.controller.FuncionarioEditarController;
 import aquacoding.model.Funcionario;
@@ -18,6 +19,7 @@ import aquacoding.model.Horario;
 import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
 import aquacoding.model.Empresa;
+import aquacoding.utils.Serial;
 import aquacoding.utils.CustomAlert;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -41,8 +43,20 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		// Inicia a janela principal (Main.fxml)
 		primaryStage = stage;
-		// initRootLayout();
+		//initRootLayout();
 		initLoginLayout();
+		
+		// Serial
+		Serial serial = new Serial();
+		Thread t = new Thread(() -> {
+			try {
+				serial.SerialLeitura();
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				System.out.println("Erro Serial: " + e.getMessage());
+			}
+		});
+		t.start();
 	}
 
 	public static void main(String[] args) {
@@ -495,6 +509,37 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/BonificacaoCadastro.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+		
+	// Carrega a view de gerar relatorio de trabalho
+	public static void loadRelatorioTrabalhoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Relatório de trabalho");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/RelatorioPonto.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Inicia a webview e abre o arquivo especificado
+	public static void loadWebView(String fileToOpen) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Horário");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/WebView.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface
+			WebViewController controller = loader.getController();
+			controller.openPage(fileToOpen);
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -35,6 +35,9 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	MenuItem menuBarFeriasLista, menuBarFeriasNova;
+	
+	@FXML
+	MenuItem menuBarRelatorioTrabalho;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -111,9 +114,12 @@ public class RootLayoutController implements Initializable {
 			Main.loadBonificacaoCadastroView();
 		});
 		
+		menuBarRelatorioTrabalho.setOnAction((ActionEvent e) -> {
+			Main.loadRelatorioTrabalhoView();
+		});
+		
 		// Oculta o ver da empresa, caso nenhuma empresa esteja cadastrada
 		if(Empresa.getAll().size() == 0)
 			menuBarEmpresaVer.setVisible(false);
-
 	}
 }
