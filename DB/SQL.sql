@@ -110,3 +110,14 @@ CREATE TABLE Abono(
     CONSTRAINT fk_funcionario_abono FOREIGN KEY (idFuncionario)
 		REFERENCES Funcionario(idFuncionario)
 );
+
+
+CREATE TABLE Bonificacao (
+	idBonificacao		INT		NOT NULL	auto_increment,
+    nome				VARCHAR(45)		NOT NULL,
+    valor				FLOAT			NOT NULL,
+    idFuncionario		INT				NOT NULL,
+    CONSTRAINT pk_bonificacao PRIMARY KEY (idBonificacao),
+    CONSTRAINT fk_bonificacao_funcionario FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario)
+);

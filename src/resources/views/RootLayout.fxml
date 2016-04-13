@@ -49,6 +49,7 @@
                     </items>
                   </Menu>
                   <MenuItem fx:id="menuBarFuncionarioAbono" mnemonicParsing="false" text="Abono de Faltas" />
+                  <MenuItem fx:id="menuBarFuncionarioBonificacao" mnemonicParsing="false" text="Bonificações" />
             </items>
           </Menu> 
         </menus>

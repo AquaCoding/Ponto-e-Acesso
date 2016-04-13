@@ -6,9 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import aquacoding.utils.DatabaseConnect;
-import javafx.util.StringConverter;
 
 public class Abono {
 

@@ -488,4 +488,16 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+
+	public static void loadBonificacaoCadastroView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Cadastrar bonificação");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/BonificacaoCadastro.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

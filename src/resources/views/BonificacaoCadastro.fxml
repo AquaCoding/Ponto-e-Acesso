@@ -5,21 +5,21 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioAbonoController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.BonificacaoCadastroController">
    <children>
-      <Label layoutX="24.0" layoutY="24.0" text="Cadastro de Abono" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+      <Label layoutX="24.0" layoutY="24.0" text="Cadastro de Bonificação" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
          <children>
-            <Label text="Funcionario" />
-            <ComboBox fx:id="funcionarioSelect" />
-      	  <Label text="Data falta" />   
-            <DatePicker fx:id="dataFalta" />
-         	  <Label text="Descrição" />
-            <TextArea fx:id="descricaoFalta" />
+            <Label text="Nome" />
+            <TextField fx:id="nome" />
+            <Label text="Valor (%)" />
+            <TextField fx:id="valor" />
+            <Label text="Funcionários (Selecione mais de um se necessário segurando CTRL ao clicar)" />
+            <ListView fx:id="funcionarioListagem" prefHeight="200.0" prefWidth="200.0" />
             <AnchorPane prefWidth="200.0">
                <children>
                   <Button fx:id="cadastrar" mnemonicParsing="false" text="Cadastar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

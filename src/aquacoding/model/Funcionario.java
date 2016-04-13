@@ -27,6 +27,7 @@ public class Funcionario {
 	private double salarioHoras;
 	private File profileImage;
 	private ArrayList<Horario> horario = new ArrayList<Horario>();
+	private ArrayList<Bonificacao> bonificacoes = new ArrayList<Bonificacao>();
 
 	// Setters e Getters
 	public int getId() {
@@ -175,6 +176,14 @@ public class Funcionario {
 		this.horario.add(horario);
 
 	}
+	
+	public ArrayList<Bonificacao> getBonificacoes() {
+		return bonificacoes;
+	}
+
+	public void setBonificacoes(ArrayList<Bonificacao> bonificacoes) {
+		this.bonificacoes = bonificacoes;
+	}
 
 	// Construtor de Funcionario
 	// Só pode ser chamado pelo método build() da classe Builder
@@ -193,9 +202,6 @@ public class Funcionario {
 		setEstado(builder.estado);
 		setSalarioHoras(builder.salarioHoras);
 		this.horario = builder.horario;
-
-
-
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
@@ -396,7 +402,9 @@ public class Funcionario {
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-
+				
+				// Obtem as bonificações
+				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
 
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
