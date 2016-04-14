@@ -48,20 +48,24 @@ public class Serial {
 								// Executa um SQL
 								ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
 
+								boolean estado = false;
+								
 								while (resultSet.next()) {
 									if (tag.equals(resultSet.getString("codigo"))) {
-										Ponto ponto = new Ponto(getDateTime(), resultSet.getInt("idFuncionario"), resultSet.getInt("idFuncionarioTag"));
+										Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"), resultSet.getInt("idFuncionarioTag"));
 
 										if (ponto.create()) {
 											serialPort.writeString("Ponto registrado");
 										} else {
 											serialPort.writeString("Erro, contate o Suporte");
 										}
-									} else {
-										serialPort.writeString("Usuário não encontrado");
+										estado = true;
 									}
 								};
 
+								if(estado == false)
+									serialPort.writeString("Usuário não encontrado");
+								
 								// encerra conexão
 								connect.close();
 
@@ -78,12 +82,6 @@ public class Serial {
 		} catch (Exception e) {
 			System.out.println("Erro na leitura serial " + e.getMessage());
 		}
-	}
-
-	private String getDateTime() {
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date date = new Date();
-		return dateFormat.format(date);
 	}
 
 }

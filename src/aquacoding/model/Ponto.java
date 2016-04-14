@@ -57,7 +57,7 @@ public class Ponto {
 		setIdFuncionarioTag(idFuncionarioTag);
 	}
 
-	public Ponto(int idFuncionario, String horario, int idFuncionarioTag) {
+	public Ponto(int idFuncionario, int idFuncionarioTag) {
 		setHorario(horario);
 		setIdFuncionario(idFuncionario);
 		setIdFuncionarioTag(idFuncionarioTag);
@@ -71,12 +71,11 @@ public class Ponto {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Ponto (horario, idFuncionario, idFuncionaritag) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					"INSERT INTO Ponto (horario, idFuncionario, idFuncionaritag) VALUES (now(), ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
-			statement.setString(1, this.horario);
-			statement.setInt(2, this.idFuncionario);
-			statement.setInt(3, this.idFuncionarioTag);
+			statement.setInt(1, this.idFuncionario);
+			statement.setInt(2, this.idFuncionarioTag);
 			
 			// Executa o SQL
 			int ret = statement.executeUpdate();
