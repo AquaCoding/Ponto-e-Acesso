@@ -48,7 +48,7 @@ public class Empresa {
 	
 	public void setRazaoSocial(String razaoSocial) {
 		if(razaoSocial == null || razaoSocial.equals(""))
-			throw new RuntimeException("A Razao Social da empresa não pode estar vazio.");
+			throw new RuntimeException("A razao social da empresa não pode estar vazio.");
 		this.razaoSocial = razaoSocial;
 	}
 	
@@ -68,7 +68,7 @@ public class Empresa {
 	
 	public void setRua(String rua) {
 		if(rua == null || rua.equals(""))
-			throw new RuntimeException("A rua da empresa não pode estar vazio.");
+			throw new RuntimeException("A rua da empresa não pode estar vazia.");
 		this.rua = rua;
 	}
 	
@@ -124,15 +124,15 @@ public class Empresa {
 	
 	// CONSTRUCTOR
 	protected Empresa(Builder build) {
-		this.idEmpresa 		= build.idEmpresa;
-		this.nome 			= build.nome;
-		this.razaoSocial 	= build.razaoSocial;
-		this.CNPJ 			= build.CNPJ;
-		this.rua 			= build.rua;
-		this.numero 		= build.numero;
-		this.bairro 		= build.bairro;
-		this.cidade 		= build.cidade;
-		this.estado 		= build.estado;
+		setIdEmpresa(build.idEmpresa);
+		setNome(build.nome);
+		setRazaoSocial(build.razaoSocial);
+		setCNPJ(build.CNPJ);
+		setRua(build.rua);
+		setNumero(build.numero);
+		setBairro(build.bairro);
+		setCidade(build.cidade);
+		setEstado(build.estado);
 	}
 	
 	// BUILDER
@@ -243,7 +243,7 @@ public class Empresa {
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao criar o Funcionario");
+			throw new RuntimeException("Um erro ocorreu ao criar a empresa.");
 		}
 	}
 	
@@ -288,7 +288,7 @@ public class Empresa {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar a Empresa");
+			throw new RuntimeException("Um erro ocorreu ao atualizar a empresa");
 		}
 	}
 	
@@ -328,7 +328,7 @@ public class Empresa {
 			// Retorna os funcionarios
 			return empresa;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter a empresa.");
 		}
 	}
 }

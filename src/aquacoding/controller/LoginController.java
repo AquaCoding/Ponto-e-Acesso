@@ -34,7 +34,7 @@ public class LoginController implements Initializable {
 				Main.initRootLayout();
 				Main.endLoginLayout();
 			} else {
-				CustomAlert.showAlert("Caixa - Entrar", "Nome de usuário ou senha incorretos", AlertType.INFORMATION);
+				CustomAlert.showAlert("Caixa - Entrar", "Nome de usuário ou senha incorretos.", AlertType.INFORMATION);
 			}
 		});
 	}

@@ -56,13 +56,12 @@ public class EmpresaNovoController implements Initializable {
 				// Tenta registar a empresa no BD
 				if (emp.create()) {
 					// Empresa criado com sucesso
-					CustomAlert.showAlert("Cadastro da empresa", "Empresa cadastrada com sucesso",
-							AlertType.WARNING);
+					CustomAlert.showAlert("Cadastro da empresa", "Empresa cadastrada com sucesso.", AlertType.WARNING);
 					Main.initRootLayout();
 					Main.loadEmpresaVer();
 				} else {
 					// Erro ao criar o empresa
-					CustomAlert.showAlert("Cadastro da empresa", "Algo deu errado", AlertType.WARNING);
+					CustomAlert.showAlert("Cadastro da empresa", "Algo deu errado.", AlertType.WARNING);
 				}
 			} catch(RuntimeException ex) {
 				CustomAlert.showAlert("Cadastro da empresa", ex.getMessage(), AlertType.WARNING);

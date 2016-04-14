@@ -123,7 +123,7 @@ public class Ferias {
 					return false;
 				}
 			} catch (SQLException e) {
-				throw new RuntimeException("Um erro ocorreu ao criar a ferias");
+				throw new RuntimeException("Um erro ocorreu ao criar as férias.");
 			}
 		}
 
@@ -156,7 +156,7 @@ public class Ferias {
 				// Retorna as ferias
 				return Ferias;
 			} catch (SQLException e) {
-				throw new RuntimeException("Um erro ocorreu");
+				throw new RuntimeException("Um erro ocorreu ao obter as férias.");
 			}
 		}
 
@@ -201,7 +201,7 @@ public class Ferias {
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
-				throw new RuntimeException("Um erro ocorreu ao atualizar a Ferias");
+				throw new RuntimeException("Um erro ocorreu ao atualizar as férias.");
 			}
 		}
 
@@ -227,7 +227,7 @@ public class Ferias {
 				// Se nada for achado, retorna nulo
 				return null;
 			} catch (SQLException e) {
-				throw new RuntimeException("Um erro ocorreu");
+				throw new RuntimeException("Um erro ocorreu ao obter as ferías");
 			}
 		}
 

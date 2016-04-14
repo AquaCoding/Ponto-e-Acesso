@@ -51,7 +51,7 @@ public class BonificacaoCadastroController implements Initializable {
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			// Verificações manuais para evitar entrar no for
 			if(nome.getText().equals("") || valor.getText().equals("")) {
-				CustomAlert.showAlert("Cadastro de bonificação", "Nome e valor devem ser preenchidos", AlertType.WARNING);
+				CustomAlert.showAlert("Cadastro de bonificação", "Nome e valor devem ser preenchidos.", AlertType.WARNING);
 			} else {
 				if(funcionarioListagem.getSelectionModel().getSelectedItem() != null) {
 					// Obtem uma lista de todos os funcionários selecionados
@@ -70,12 +70,12 @@ public class BonificacaoCadastroController implements Initializable {
 					
 					// Verifica se todas as bonificações foram cadastradas
 					if(cadastros == selectedFuncionarios.size()) {
-						CustomAlert.showAlert("Cadastro de bonificação", "Bonificações cadastradas com sucesso", AlertType.WARNING);
+						CustomAlert.showAlert("Cadastro de bonificação", "Bonificações cadastradas com sucesso.", AlertType.WARNING);
 					} else {
-						CustomAlert.showAlert("Cadastro de bonificação", "Algo deu errado ao cadastrar uma ou mais bonificações", AlertType.WARNING);
+						CustomAlert.showAlert("Cadastro de bonificação", "Algo deu errado ao cadastrar uma ou mais bonificações.", AlertType.WARNING);
 					}
 				} else {
-					CustomAlert.showAlert("Cadastro de bonificação", "Ao menos 1 funcionário deve ser selecionado", AlertType.WARNING);
+					CustomAlert.showAlert("Cadastro de bonificação", "Ao menos 1 funcionário deve ser selecionado.", AlertType.WARNING);
 				}
 			}
 		});

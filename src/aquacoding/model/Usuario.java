@@ -26,7 +26,7 @@ public class Usuario {
 	}
 	public void setNome(String nome) {
 		if(nome.equals(""))
-			throw new RuntimeException("O nome da usuário não pode ser vazio.");
+			throw new RuntimeException("O nome do usuário não pode estar vazio.");
 		this.nome = nome;
 	}
 	public String getSenha() {
@@ -34,10 +34,10 @@ public class Usuario {
 	}
 	public void setSenha(String senha) {
 		if (!senha.matches("[\\S ]{6,}"))
-			throw new RuntimeException("O valor de senha é inválido");
+			throw new RuntimeException("O valor de senha é inválido.");
 
 		if(senha.equals(""))
-			throw new RuntimeException("A senha não pode ser vazio.");
+			throw new RuntimeException("A senha não pode ser vazia.");
 
 		this.senha = senha;
 	}
@@ -115,7 +115,7 @@ public class Usuario {
 			// Retorna os clientes
 			return usuarios;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter os usuários.");
 		}
 	}
 
@@ -141,7 +141,7 @@ public class Usuario {
 			// Se nada for achado, retorna nulo
 			return null;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter o usuário.");
 		}
 	}
 
@@ -207,7 +207,7 @@ public class Usuario {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o usuário");
+			throw new RuntimeException("Um erro ocorreu ao atualizar o usuário.");
 		}
 	}
 
@@ -237,7 +237,7 @@ public class Usuario {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao deletar o usuário");
+			throw new RuntimeException("Um erro ocorreu ao deletar o usuário.");
 		}
 	}
 
@@ -269,7 +269,7 @@ public class Usuario {
 				}
 			} catch (SQLException e) {
 				System.out.println(e.getMessage());
-				throw new RuntimeException("Um erro ocorreu ao buscar o usuário");
+				throw new RuntimeException("Um erro ocorreu ao buscar o usuário.");
 			}
 		}
 		

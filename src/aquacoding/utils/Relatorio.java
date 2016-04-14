@@ -49,7 +49,7 @@ public class Relatorio {
 			// Abre o arquivo
 			Main.loadWebView("relatorioTrabalho.html");
 		} catch (Exception e1) {
-			throw new RuntimeException("Um erro ocorreu ao criar o relatório");
+			throw new RuntimeException("Um erro ocorreu ao criar o relatório.");
 		}
 	}
 	

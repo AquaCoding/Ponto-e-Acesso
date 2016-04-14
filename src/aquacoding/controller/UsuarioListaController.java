@@ -62,11 +62,11 @@ public class UsuarioListaController implements Initializable {
 							// Tenta remover o setor no BD
 							if (u.delete()) {
 								// Setor removido com sucesso
-								CustomAlert.showAlert("Remover Usuário", "Usuário removido com sucesso", AlertType.WARNING);
+								CustomAlert.showAlert("Remover Usuário", "Usuário removido com sucesso.", AlertType.WARNING);
 								Main.loadListaUsuarioView();
 							} else {
 								// Erro ao remover o usuário
-								CustomAlert.showAlert("Remover Usuário", "Algo deu errado", AlertType.WARNING);
+								CustomAlert.showAlert("Remover Usuário", "Algo deu errado.", AlertType.WARNING);
 							}
 						}
 					} catch (RuntimeException ex) {

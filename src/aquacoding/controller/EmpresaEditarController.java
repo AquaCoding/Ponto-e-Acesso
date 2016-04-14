@@ -56,9 +56,6 @@ public class EmpresaEditarController implements Initializable {
 						.setCidade(empresaCidade.getText())
 						.setEstado(empresaEstado.getText())
 						.build();
-
-				
-				
 				
 				// Adiciona a imagem ao objeto da empresa
 				if (selectedFile != null)

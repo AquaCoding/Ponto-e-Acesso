@@ -92,18 +92,18 @@ public class FuncionarioEditarController implements Initializable {
 				// Tenta alterar o funcionario no BD
 				if (funcionario.update()) {
 					// funcionario alterado com sucesso
-					CustomAlert.showAlert("Editar Funcionário", "Funcionário alterado com sucesso", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Funcionário", "Funcionário alterado com sucesso.", AlertType.WARNING);
 					Main.loadListaFuncionarioView();
 				} else {
 					// Erro ao cria o funcionario
-					CustomAlert.showAlert("Editar Funcionário", "Algo deu errado", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Funcionário", "Algo deu errado.", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
 				String message = "";
 				if(ex.getMessage() == "empty String") {
-					message = "Pagamento hora precisa ser um número";
+					message = "Pagamento hora precisa ser um número.";
 				} else if(ex.getMessage().matches("^For input string: \"[\\S ]{0,}\"$")) {
-					message = "Número precisa ser um número inteiro";
+					message = "Número precisa ser um número inteiro.";
 				} else {
 					message = ex.getMessage();
 				}

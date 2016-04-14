@@ -40,11 +40,11 @@ public class SetorEditarController implements Initializable {
 				// Tenta alterar o setor no BD
 				if (setor.update()) {
 					// Setor alterado com sucesso
-					CustomAlert.showAlert("Editar Setor", "Setor alterado com sucesso", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Setor", "Setor alterado com sucesso.", AlertType.WARNING);
 					Main.loadListaSetorView();
 				} else {
 					// Erro ao cria o setor
-					CustomAlert.showAlert("Editar Setor", "Algo deu errado", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Setor", "Algo deu errado.", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
 				// Erro de validação

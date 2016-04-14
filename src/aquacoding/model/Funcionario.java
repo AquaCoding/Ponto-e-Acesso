@@ -177,6 +177,10 @@ public class Funcionario {
 
 	}
 	
+	public void setHorarios(ArrayList<Horario> horario) {
+		this.horario = horario;
+	}
+	
 	public ArrayList<Bonificacao> getBonificacoes() {
 		return bonificacoes;
 	}
@@ -201,7 +205,7 @@ public class Funcionario {
 		setCidade(builder.cidade);
 		setEstado(builder.estado);
 		setSalarioHoras(builder.salarioHoras);
-		this.horario = builder.horario;
+		setHorarios(builder.horario);
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
@@ -365,7 +369,7 @@ public class Funcionario {
 			}
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao criar o Funcionario");
+			throw new RuntimeException("Um erro ocorreu ao criar o funcionário.");
 		}
 	}
 
@@ -416,7 +420,7 @@ public class Funcionario {
 			// Retorna os funcionarios
 			return funcionarios;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter os funcionários.");
 		}
 	}
 
@@ -471,7 +475,7 @@ public class Funcionario {
 			// Retorna os funcionarios
 			return funcionarios;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter os funcionários.");
 		}
 	}
 
@@ -518,7 +522,7 @@ public class Funcionario {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o Funcionario");
+			throw new RuntimeException("Um erro ocorreu ao atualizar o funcionário");
 		}
 	}
 
@@ -548,7 +552,7 @@ public class Funcionario {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao deletar o Funcionario");
+			throw new RuntimeException("Um erro ocorreu ao deletar o funcionário");
 		}
 	}
 
@@ -581,7 +585,7 @@ public class Funcionario {
 			// Se nada for achado, retorna nulo
 			return null;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter o funcionário.");
 		}
 	}
 

@@ -28,7 +28,7 @@ public class Funcao {
 	
 	public void setNome(String nome) {
 		if(nome.equals(""))
-			throw new RuntimeException("O nome da função não pode ser vazio.");
+			throw new RuntimeException("O nome da função não pode estar vazio.");
 		this.nome = nome;
 	}
 	
@@ -114,7 +114,7 @@ public class Funcao {
 			// Retorna os clientes
 			return funcoes;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter as funções");
 		}
 	}
 	
@@ -146,7 +146,7 @@ public class Funcao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o Setor");
+			throw new RuntimeException("Um erro ocorreu ao atualizar a função.");
 		}
 	}
 	
@@ -176,7 +176,7 @@ public class Funcao {
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao deletar o Funcao");
+			throw new RuntimeException("Um erro ocorreu ao deletar a função");
 		}
 	}
 }

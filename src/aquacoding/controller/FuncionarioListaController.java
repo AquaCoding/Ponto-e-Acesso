@@ -69,12 +69,11 @@ public class FuncionarioListaController implements Initializable {
 					// Tenta remover o funcionario no BD
 					if (f.delete()) {
 						// funcionario removido com sucesso
-						CustomAlert.showAlert("Remover Funcionario", "Funcionario removido com sucesso",
-								AlertType.WARNING);
+						CustomAlert.showAlert("Remover Funcionario", "Funcionario removido com sucesso.", AlertType.WARNING);
 						Main.loadListaFuncionarioView();
 					} else {
 						// Erro ao remover o funcionario
-						CustomAlert.showAlert("Remover Funcionario", "Algo deu errado", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Funcionario", "Algo deu errado.", AlertType.WARNING);
 					}
 				}
 			} catch (RuntimeException ex) {

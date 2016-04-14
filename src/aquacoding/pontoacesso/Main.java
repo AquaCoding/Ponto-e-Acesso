@@ -43,7 +43,6 @@ public class Main extends Application {
 	public void start(Stage stage) throws Exception {
 		// Inicia a janela principal (Main.fxml)
 		primaryStage = stage;
-		//initRootLayout();
 		initLoginLayout();
 		
 		// Serial
@@ -108,8 +107,7 @@ public class Main extends Application {
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
 			Parent root = (AnchorPane) loader.load();
 
-			// Obtem o controller da view e informa para fechar e abrir o login
-			// apos o criar
+			// Obtem o controller da view e informa para fechar e abrir o login apos o criar
 			UsuarioNovoController controller = loader.getController();
 			controller.setCloseAfterCreate(true);
 
@@ -161,7 +159,7 @@ public class Main extends Application {
 	// Carrega a view de novo setor dentro da janela principal
 	public static void loadNovoSetorView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Novo Setor");
+			primaryStage.setTitle(pageTitle + " - Novo setor");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/SetorNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -187,7 +185,7 @@ public class Main extends Application {
 	// Carrega a view de nova função
 	public static void loadNovoFuncaoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Nova Função");
+			primaryStage.setTitle(pageTitle + " - Nova função");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -200,7 +198,7 @@ public class Main extends Application {
 	// Carrega a view de listagem de função
 	public static void loadListaFuncaoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Funções");
+			primaryStage.setTitle(pageTitle + " - funções");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoLista.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -213,7 +211,7 @@ public class Main extends Application {
 	// Carrega a view de edição de setor
 	public static void loadSetorEditarView(Setor setor) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Setor");
+			primaryStage.setTitle(pageTitle + " - Editar setor");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/SetorEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -231,7 +229,7 @@ public class Main extends Application {
 	// Carrega a view de novo horario
 	public static void loadNovoHorarioView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Novo Horïário");
+			primaryStage.setTitle(pageTitle + " - Novo horário");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -270,7 +268,7 @@ public class Main extends Application {
 	// Carrega a view de editar função
 	public static void loadFuncaoEditarView(Funcao funcao) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Função");
+			primaryStage.setTitle(pageTitle + " - Editar função");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -288,7 +286,7 @@ public class Main extends Application {
 	// Carrega a view de novo usuario
 	public static void loadUsuarioNovoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Novo Usuïário");
+			primaryStage.setTitle(pageTitle + " - Novo usuïário");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -314,7 +312,7 @@ public class Main extends Application {
 	// Carrega a view de edição de usuários
 	public static void loadEditarUsuarioView(Usuario usuario) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Usuário");
+			primaryStage.setTitle(pageTitle + " - Editar usuário");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -332,7 +330,7 @@ public class Main extends Application {
 	// Carrega a view de novo Funcionario
 	public static void loadNovoFuncionarioView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Funcionário");
+			primaryStage.setTitle(pageTitle + " - Novo funcionário");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -345,7 +343,7 @@ public class Main extends Application {
 	// Carrega a view de editar funcionpario
 	public static void loadFuncionarioEditarView(Funcionario funcionario) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Funcionário");
+			primaryStage.setTitle(pageTitle + " - Editar funcionário");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -364,7 +362,7 @@ public class Main extends Application {
 	// Carrega a view de visualizar funcionario
 	public static void loadFuncionarioVerView(Funcionario funcionario) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Funcionário");
+			primaryStage.setTitle(pageTitle + " - Ver funcionário");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioVer.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -382,7 +380,7 @@ public class Main extends Application {
 	// Carrega a view de editar um horario
 	public static void loadHorarioEditarView(Horario horario) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Horário");
+			primaryStage.setTitle(pageTitle + " - Editar horário");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -400,7 +398,7 @@ public class Main extends Application {
 	// Carrega a view de editar um horario
 	public static void loadEmpresaNovoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Nova Empresa");
+			primaryStage.setTitle(pageTitle + " - Nova empresa");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -413,7 +411,7 @@ public class Main extends Application {
 	// Carrega a view de editar um horario
 	public static void loadEmpresaVer() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Empresa");
+			primaryStage.setTitle(pageTitle + " - Ver empresa");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaVer.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -444,7 +442,7 @@ public class Main extends Application {
 	// Carrega a view de na Férias
 	public static void loadFeriasNovoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Nova Férias");
+			primaryStage.setTitle(pageTitle + " - Nova férias");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -457,7 +455,7 @@ public class Main extends Application {
 	// Carrega a view de edição de empresa
 	public static void loadEmpresaEditarView(Empresa empresa) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Empresa");
+			primaryStage.setTitle(pageTitle + " - Editar empresa");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/EmpresaEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -475,7 +473,7 @@ public class Main extends Application {
 	// Carrega a view de na Abono de Falta
 	public static void loadFuncionarioAbonoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Cadastro de abono");
+			primaryStage.setTitle(pageTitle + " - Cadastro de abono de falta");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioAbono.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -488,7 +486,7 @@ public class Main extends Application {
 	// Carrega a view de editar ferias
 	public static void loadFeriasEditarView(Ferias ferias) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Férias");
+			primaryStage.setTitle(pageTitle + " - Editar férias");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FeriasEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -531,7 +529,7 @@ public class Main extends Application {
 	// Inicia a webview e abre o arquivo especificado
 	public static void loadWebView(String fileToOpen) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar Horário");
+			primaryStage.setTitle(pageTitle + " - Relatório");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/WebView.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();

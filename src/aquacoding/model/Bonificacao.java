@@ -30,6 +30,8 @@ public class Bonificacao {
 	}
 
 	public void setNome(String nome) {
+		if(nome == null || nome.equals(""))
+			throw new RuntimeException("O nome da bonificação não pode estar vazio.");
 		this.nome = nome;
 	}
 	
@@ -38,6 +40,8 @@ public class Bonificacao {
 	}
 	
 	public void setValor(float valor) {
+		if(valor <= 0)
+			throw new RuntimeException("O valor precisa ser positivo.");
 		this.valor = valor;
 	}
 	
@@ -46,6 +50,8 @@ public class Bonificacao {
 	}
 	
 	public void setF(Funcionario f) {
+		if(f == null)
+			throw new RuntimeException("O funcionário não pode ser nulo.");
 		this.f = f;
 	}
 	
@@ -121,7 +127,7 @@ public class Bonificacao {
 			// Retorna bonificações
 			return bonificacoes;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar a bonificação");
+			throw new RuntimeException("Um erro ocorreu ao buscar bonificações");
 		}
 	}
 }

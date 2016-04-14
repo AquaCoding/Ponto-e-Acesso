@@ -66,11 +66,11 @@ public class FuncionarioAbonoController implements Initializable {
 				// Tenta registar o abono no BD
 				if (a.create()) {
 					// Abono criado com sucesso
-					CustomAlert.showAlert("Novo Abono", "Novo abono cadastrado com sucesso", AlertType.WARNING);
+					CustomAlert.showAlert("Novo Abono", "Novo abono cadastrado com sucesso.", AlertType.WARNING);
 					Main.loadListaFuncionarioView();
 				} else {
 					// Erro ao criar o abono
-					CustomAlert.showAlert("Novo Abono", "Algo deu errado", AlertType.WARNING);
+					CustomAlert.showAlert("Novo Abono", "Algo deu errado.", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
 				System.out.println(ex);

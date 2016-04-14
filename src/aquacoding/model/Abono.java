@@ -99,7 +99,7 @@ public class Abono {
 				return false;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar o abono");
+			throw new RuntimeException("Um erro ocorreu ao criar o abono.");
 		}
 	}
 
@@ -129,7 +129,7 @@ public class Abono {
 			// Retorna as ferias
 			return abono;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter o abono.");
 		}
 	}
 }

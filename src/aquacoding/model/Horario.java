@@ -217,7 +217,7 @@ public class Horario {
 				return false;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao criar o Horário");
+			throw new RuntimeException("Um erro ocorreu ao criar o horário");
 		}
 	}
 
@@ -257,7 +257,7 @@ public class Horario {
 			// Retorna os clientes
 			return horarios;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter os horários.");
 		}
 	}
 
@@ -287,7 +287,7 @@ public class Horario {
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao deletar o Horario");
+			throw new RuntimeException("Um erro ocorreu ao deletar o horário");
 		}
 	}
 
@@ -329,7 +329,7 @@ public class Horario {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o Horário");
+			throw new RuntimeException("Um erro ocorreu ao atualizar o horário");
 		}
 	}
 
@@ -366,7 +366,7 @@ public class Horario {
 			// Se nada for achado, retorna nulo
 			return null;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter o horário.");
 		}
 	}
 	
@@ -427,7 +427,7 @@ public class Horario {
 				return tempoTrabalhado;
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter as horas trabalhadas.");
 		}
 	}
 
@@ -457,7 +457,7 @@ public class Horario {
 			// Retorna a tempo trabalhado
 			return pontos;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter os pontos.");
 		}
 	}
 }

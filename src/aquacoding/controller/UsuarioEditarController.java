@@ -48,7 +48,7 @@ public class UsuarioEditarController implements Initializable {
 						if (usuarioPassword.getText().equals(usuarioConPassword.getText())) {
 							u.setSenha(usuarioPassword.getText());
 						} else {
-							CustomAlert.showAlert("Usuário - Atualização", "As senhas não conferem",
+							CustomAlert.showAlert("Usuário - Atualização", "As senhas não conferem.",
 									AlertType.INFORMATION);
 							update = false;
 						}
@@ -56,7 +56,7 @@ public class UsuarioEditarController implements Initializable {
 
 					// Atualiza o usuario
 					if (update && u.update()) {
-						CustomAlert.showAlert("Usuário - Atualização", "Usuário atualizado com sucesso",
+						CustomAlert.showAlert("Usuário - Atualização", "Usuário atualizado com sucesso.",
 								AlertType.INFORMATION);
 						Main.loadListaUsuarioView();
 					}
@@ -66,7 +66,7 @@ public class UsuarioEditarController implements Initializable {
 
 			} else {
 				CustomAlert.showAlert("Usuário - Atualização",
-						"A senha informada está incorreta. Caso esteja modificando sua senha utilize a senha antiga",
+						"A senha informada está incorreta. Caso esteja modificando sua senha utilize a senha antiga.",
 						AlertType.INFORMATION);
 			}
 

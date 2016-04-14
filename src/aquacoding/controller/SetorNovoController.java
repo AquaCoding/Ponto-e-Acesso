@@ -42,11 +42,11 @@ public class SetorNovoController implements Initializable {
 				// Tenta registar o setor no BD
 				if(s.create()) {
 					// Setor criado com sucesso
-					CustomAlert.showAlert("Novo Setor", "Novo setor cadastrado com sucesso", AlertType.WARNING);
+					CustomAlert.showAlert("Novo Setor", "Novo setor cadastrado com sucesso.", AlertType.WARNING);
 					Main.loadListaSetorView();
 				} else {
 					// Erro ao cria o setor
-					CustomAlert.showAlert("Novo Setor", "Algo deu errado", AlertType.WARNING);
+					CustomAlert.showAlert("Novo Setor", "Algo deu errado.", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
 				// Erro de validação

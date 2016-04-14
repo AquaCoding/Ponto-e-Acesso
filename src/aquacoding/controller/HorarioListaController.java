@@ -44,11 +44,11 @@ public class HorarioListaController implements Initializable {
 					// Tenta remover o Horario no BD
 					if (h.delete()) {
 						// horario removido com sucesso
-						CustomAlert.showAlert("Remover Turno", "Turno removido com sucesso", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Turno", "Turno removido com sucesso.", AlertType.WARNING);
 						Main.loadListaHorarioView();
 					} else {
 						// Erro ao remover o horario
-						CustomAlert.showAlert("Remover Turno", "Algo deu errado", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Turno", "Algo deu errado.", AlertType.WARNING);
 					}
 				}
 			} catch (RuntimeException ex) {

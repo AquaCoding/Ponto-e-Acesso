@@ -90,8 +90,7 @@ public class FuncionarioNovoController implements Initializable {
 				// Tenta registar o Funcionario no BD
 				if (f.create()) {
 					// Funcionario criado com sucesso
-					CustomAlert.showAlert("Novo Funcionário", "Novo Funcionário cadastrado com sucesso",
-							AlertType.WARNING);
+					CustomAlert.showAlert("Novo Funcionário", "Novo funcionário cadastrado com sucesso.", AlertType.WARNING);
 					Main.loadListaFuncionarioView();
 				} else {
 					// Erro ao criar o Funcionario
@@ -100,9 +99,9 @@ public class FuncionarioNovoController implements Initializable {
 			} catch (RuntimeException ex) {
 				String message = "";
 				if (ex.getMessage() == "empty String") {
-					message = "Pagamento hora precisa ser um número";
+					message = "Pagamento hora precisa ser um número.";
 				} else if (ex.getMessage().matches("^For input string: \"[\\S ]{0,}\"$")) {
-					message = "Número precisa ser um número inteiro";
+					message = "Número precisa ser um número inteiro.";
 				} else {
 					message = ex.getMessage();
 				}

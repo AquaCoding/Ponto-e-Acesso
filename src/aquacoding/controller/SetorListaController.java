@@ -55,18 +55,18 @@ public class SetorListaController implements Initializable {
 		remover.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Verifica se algum setor foi selecionado e pergunta se ele realmente o que remover
-				if(setorListagem.getSelectionModel().getSelectedItem() != null && CustomAlert.showConfirmationAlert("Remover Setor", "Você tem certeza que deseja remover esse Setor?")) {
+				if(setorListagem.getSelectionModel().getSelectedItem() != null && CustomAlert.showConfirmationAlert("Remover Setor", "Você tem certeza que deseja remover esse setor?")) {
 					// Obtem o setor selecionado
 					Setor s = setorListagem.getSelectionModel().getSelectedItem();
 
 					// Tenta remover o setor no BD
 					if (s.delete()) {
 						// Setor removido com sucesso
-						CustomAlert.showAlert("Remover Setor", "Setor removido com sucesso", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Setor", "Setor removido com sucesso.", AlertType.WARNING);
 						Main.loadListaSetorView();
 					} else {
 						// Erro ao remover o setor
-						CustomAlert.showAlert("Remover Setor", "Algo deu errado", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Setor", "Algo deu errado.", AlertType.WARNING);
 					}
 				}
 			} catch (RuntimeException ex) {

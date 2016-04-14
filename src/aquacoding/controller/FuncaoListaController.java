@@ -56,14 +56,14 @@ public class FuncaoListaController implements Initializable {
 				// Verifica se algum Funcao foi selecionado e pergunta se ele
 				// realmente o que remover
 				if (funcaoListagem.getSelectionModel().getSelectedItem() != null && CustomAlert
-						.showConfirmationAlert("Remover Funcao", "Você tem certeza que deseja remover esse Funcao?")) {
+						.showConfirmationAlert("Remover Funcao", "Você tem certeza que deseja remover esse função?")) {
 					// Obtem o Funcao selecionado
 					Funcao f = funcaoListagem.getSelectionModel().getSelectedItem();
 
 					// Tenta remover o Funcao no BD
 					if (f.delete()) {
 						// Funcao removido com sucesso
-						CustomAlert.showAlert("Remover Funcao", "Funcao removido com sucesso", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Funcao", "Função removido com sucesso.", AlertType.WARNING);
 						Main.loadListaFuncaoView();
 					} else {
 						// Erro ao remover o Funcao

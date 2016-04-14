@@ -27,7 +27,7 @@ public class Setor {
 
 	public void setNome(String nome) {
 		if (nome.equals(""))
-			throw new RuntimeException("O nome do setor não pode ser vazio.");
+			throw new RuntimeException("O nome do setor não pode estar vazio.");
 		this.nome = nome;
 	}
 
@@ -98,7 +98,7 @@ public class Setor {
 			// Retorna os clientes
 			return setores;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu obter os setores.");
 		}
 	}
 
@@ -124,7 +124,7 @@ public class Setor {
 			// Se nada for achado, retorna nulo
 			return null;
 		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu");
+			throw new RuntimeException("Um erro ocorreu ao obter o setor.");
 		}
 	}
 
@@ -155,7 +155,7 @@ public class Setor {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new RuntimeException("Um erro ocorreu ao atualizar o Setor");
+			throw new RuntimeException("Um erro ocorreu ao atualizar o setor");
 		}
 	}
 
@@ -185,7 +185,7 @@ public class Setor {
 			
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			throw new RuntimeException("Um erro ocorreu ao deletar o Setor");
+			throw new RuntimeException("Um erro ocorreu ao deletar o setor");
 		}
 	}
 
