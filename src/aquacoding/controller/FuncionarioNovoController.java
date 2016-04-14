@@ -69,19 +69,26 @@ public class FuncionarioNovoController implements Initializable {
 		// Tenta realizar o cadastro
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
+				Funcionario f;
 				// Cria um novo objeto do Funcionario
-				Funcionario f = new Funcionario.Builder().setNome(funcionarioNome.getText())
-						.setSobrenome(funcionarioSobrenome.getText()).setRg(funcionarioRG.getText())
-						.setCpf(funcionarioCPF.getText()).setCtps(funcionarioCTPS.getText())
-						.setTelefone(funcionarioTelefone.getText()).setRua(funcionarioRua.getText())
-						.setNumero(Integer.parseInt(funcionarioNumero.getText())).setBairro(funcionarioBairro.getText())
-						.setCidade(funcionarioCidade.getText()).setEstado(funcionarioEstado.getText())
-						.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
-						.setHorario(horarioSelect.getSelectionModel().getSelectedItem())
-						.setHorario(horarioSelect2.getSelectionModel().getSelectedItem())
-						.build();
-
-
+				 f = new Funcionario.Builder().setNome(funcionarioNome.getText())
+								.setSobrenome(funcionarioSobrenome.getText()).setRg(funcionarioRG.getText())
+								.setCpf(funcionarioCPF.getText()).setCtps(funcionarioCTPS.getText())
+								.setTelefone(funcionarioTelefone.getText()).setRua(funcionarioRua.getText())
+								.setNumero(Integer.parseInt(funcionarioNumero.getText())).setBairro(funcionarioBairro.getText())
+								.setCidade(funcionarioCidade.getText()).setEstado(funcionarioEstado.getText())
+								.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
+								.build();
+								
+				
+				if(horarioSelect.getSelectionModel().getSelectedItem() != null){
+					f.setHorario(horarioSelect.getSelectionModel().getSelectedItem());
+				}
+				
+				if(horarioSelect2.getSelectionModel().getSelectedItem() != null){
+					f.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
+				}
+				
 
 				// Adiciona a imagem ao objeto do funcionario
 				if (selectedFile != null)

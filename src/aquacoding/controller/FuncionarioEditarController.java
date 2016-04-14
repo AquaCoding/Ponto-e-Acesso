@@ -76,12 +76,14 @@ public class FuncionarioEditarController implements Initializable {
 				funcionario.setCidade(funcionarioCidade.getText());
 				funcionario.setEstado(funcionarioEstado.getText());
 				funcionario.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()));
-
-				if(horarioSelect != null){
+				
+				funcionario.limparHorarios();
+								
+				if(horarioSelect.getSelectionModel().getSelectedItem() != null){
 					funcionario.setHorario(horarioSelect.getSelectionModel().getSelectedItem());
 				}
 				
-				if(horarioSelect2 != null){
+				if(horarioSelect2.getSelectionModel().getSelectedItem() != null){
 					funcionario.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
 				}
 
