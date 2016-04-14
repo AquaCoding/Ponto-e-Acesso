@@ -1,6 +1,8 @@
 package aquacoding.pontoacesso;
 
 import java.io.IOException;
+
+import aquacoding.controller.BonificacaoCadastroController;
 import aquacoding.controller.EmpresaEditarController;
 import aquacoding.controller.EmpresaVerController;
 import aquacoding.controller.FeriasEditarController;
@@ -18,6 +20,7 @@ import aquacoding.model.Funcionario;
 import aquacoding.model.Horario;
 import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
+import aquacoding.model.Bonificacao;
 import aquacoding.model.Empresa;
 import aquacoding.utils.Serial;
 import aquacoding.utils.CustomAlert;
@@ -44,7 +47,7 @@ public class Main extends Application {
 		// Inicia a janela principal (Main.fxml)
 		primaryStage = stage;
 		initLoginLayout();
-		
+
 		// Serial
 		Serial serial = new Serial();
 		Thread t = new Thread(() -> {
@@ -463,13 +466,13 @@ public class Main extends Application {
 			// Obtem o controller da interface e passa a empresa a ser editada
 			EmpresaEditarController controller = loader.getController();
 			controller.setEmpresa(empresa);
-			
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de na Abono de Falta
 	public static void loadFuncionarioAbonoView() {
 		try {
@@ -512,7 +515,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-		
+
 	// Carrega a view de gerar relatorio de trabalho
 	public static void loadRelatorioTrabalhoView() {
 		try {
@@ -525,7 +528,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Inicia a webview e abre o arquivo especificado
 	public static void loadWebView(String fileToOpen) {
 		try {
@@ -537,6 +540,24 @@ public class Main extends Application {
 			// Obtem o controller da interface
 			WebViewController controller = loader.getController();
 			controller.openPage(fileToOpen);
+
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de editar bonificação
+	public static void loadbinificacaoEditarView(Bonificacao bonificacao) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Bonificação");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/BonificacaoCadastro.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface e passa o setor a ser editado
+			BonificacaoCadastroController controller = loader.getController();
+			controller.setBonificacao(bonificacao);
 
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {

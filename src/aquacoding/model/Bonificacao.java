@@ -10,17 +10,17 @@ import java.util.ArrayList;
 import aquacoding.utils.DatabaseConnect;
 
 public class Bonificacao {
-	
+
 	private int id;
 	private String nome;
 	private float valor;
 	private Funcionario f;
-	
+
 	// GETTER and SETTERS
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -34,34 +34,41 @@ public class Bonificacao {
 			throw new RuntimeException("O nome da bonificação não pode estar vazio.");
 		this.nome = nome;
 	}
-	
+
 	public float getValor() {
 		return valor;
 	}
-	
+
 	public void setValor(float valor) {
 		if(valor <= 0)
 			throw new RuntimeException("O valor precisa ser positivo.");
 		this.valor = valor;
 	}
-	
+
 	public Funcionario getF() {
 		return f;
 	}
-	
+
 	public void setF(Funcionario f) {
 		if(f == null)
 			throw new RuntimeException("O funcionário não pode ser nulo.");
 		this.f = f;
 	}
-	
+
 	// CONSTRUCTOR
 	public Bonificacao(String nome, float valor, Funcionario f) {
 		this.nome = nome;
 		this.valor = valor;
 		this.f = f;
 	}
-	
+
+	public Bonificacao(int id,String nome, float valor, Funcionario f) {
+		this.id = id;
+		this.nome = nome;
+		this.valor = valor;
+		this.f = f;
+	}
+
 	// Cria uma bonificação
 	public boolean create() {
 		try {
@@ -99,7 +106,41 @@ public class Bonificacao {
 			throw new RuntimeException("Um erro ocorreu ao criar a bonificação");
 		}
 	}
-	
+
+	public boolean update() {
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"UPDATE Bonificacao SET nome = ?, valor = ? WHERE idFuncionario = ? AND idBonificacao = ?");
+
+
+			// Realiza o bind dos valores
+			statement.setString(1, nome);
+			statement.setFloat(2, valor);
+			statement.setInt(3, f.getId());
+			statement.setInt(4, id);
+
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();
+
+			// Retorna resultado
+			if (ret == 1) {
+				return true;
+			} else {
+				return false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Um erro ocorreu ao atualizar a Bonificação.");
+		}
+	}
+
 	public static ArrayList<Bonificacao> getAllByFuncionario(Funcionario f) {
 		try {
 			// Obtem uma conexÃ£o com o banco de dados
@@ -114,16 +155,16 @@ public class Bonificacao {
 
 			// Executa o SQL
 			ResultSet rs = statement.executeQuery();
-			
+
 			// Armazena as bonificações
 			ArrayList<Bonificacao> bonificacoes = new ArrayList<Bonificacao>();
 			while(rs.next()) {
-				bonificacoes.add(new Bonificacao(rs.getString("nome"), rs.getFloat("valor"), Funcionario.getByID(rs.getInt("idFuncionario"))));
+				bonificacoes.add(new Bonificacao(rs.getInt("idBonificacao"), rs.getString("nome"), rs.getFloat("valor"), Funcionario.getByID(rs.getInt("idFuncionario"))));
 			}
 
 			// Encerra conexão
 			connect.close();
-			
+
 			// Retorna bonificações
 			return bonificacoes;
 		} catch (SQLException e) {

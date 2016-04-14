@@ -23,34 +23,36 @@ public class FuncionarioVerController implements Initializable {
 
 	@FXML
 	ImageView profileImage;
-	
+
 	@FXML
 	Label nomeShow, sobrenomeShow, rgShow, cpfShow, cptsShow, salarioHorasShow,
 	telefoneShow, ruaShow, numeroShow, bairroShow, estadoShow, cidadeShow;
-	
+
 	@FXML
 	ListView<Bonificacao> bonificacoesListagem;
-	
+
 	@FXML
-	Button cancelar, editar;
-	
+	Button cancelar, editar, bonificaEditar;
+
 	private Funcionario func;
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Ação do botão de cancelar
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadListaFuncionarioView();
 		});
-		
+
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadFuncionarioEditarView(func);
 		});
+
+
 	}
-	
+
 	public void setFuncionario(Funcionario func) {
 		this.func = func;
-		
+
 		nomeShow.setText(func.getNome());
 		sobrenomeShow.setText(func.getSobrenome());
 		rgShow.setText(func.getRg());
@@ -63,18 +65,24 @@ public class FuncionarioVerController implements Initializable {
 		bairroShow.setText(func.getBairro());
 		estadoShow.setText(func.getEstado());
 		cidadeShow.setText(func.getCidade());
-		
+
 		File f = func.getProfileImage();
 		if(f.exists()) {
 			Image i = new Image(f.toURI().toString(), 200, 200, false, true);
 			profileImage.setImage(i);
 		}
-		
+
 		// Define a listview de bonificações
 		bonificacoesListagem.setItems(FXCollections.observableArrayList(func.getBonificacoes()));
 		setBonificacoesListagemCellFactory();
+
+		bonificaEditar.setOnMouseClicked((MouseEvent e) -> {
+			// Verifica se um funcionario foi selecionado
+			if (bonificacoesListagem.getSelectionModel().getSelectedItem() != null)
+				Main.loadbinificacaoEditarView(bonificacoesListagem.getSelectionModel().getSelectedItem());
+		});
 	}
-	
+
 	private void setBonificacoesListagemCellFactory() {
 		// Define um novo cell factory
 		bonificacoesListagem.setCellFactory(new Callback<ListView<Bonificacao>, ListCell<Bonificacao>>() {
