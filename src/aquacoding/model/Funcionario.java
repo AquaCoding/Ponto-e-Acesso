@@ -170,9 +170,12 @@ public class Funcionario {
 	}
 
 	public void setHorario(Horario horario) {
-		this.horario.clear();
 		this.horario.add(horario);
 
+	}
+		
+	public void limparHorarios(){
+		this.horario.clear();
 	}
 
 	// Construtor de Funcionario
@@ -494,15 +497,28 @@ public class Funcionario {
 			// Executa o SQL
 			int ret = statement.executeUpdate();
 
-			if(horario.size() == 1){
+			
 				// Cria um prepared statement
 				PreparedStatement statement2 = (PreparedStatement) connect
-						.prepareStatement("DELETE FROM horariofuncionario WHERE idHorario = ? AND idFuncionario = ?");
-				statement2.setInt(1, this.horario.get(0).getId());
-				statement2.setInt(2, this.id);
-
+						.prepareStatement("DELETE FROM horariofuncionario WHERE idFuncionario = ?");
+				statement2.setInt(1, this.id);
+				
+				
 				// Executa o SQL
 				statement2.executeUpdate();
+							
+			
+			// Percorre cada um dos horarios
+			for(int i = 0; i < horario.size(); i++) {
+				// Cria um prepared statement
+				PreparedStatement statement3 = (PreparedStatement) connect.prepareStatement("INSERT INTO HorarioFuncionario (idHorario, idFuncionario) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+				// Define os binds
+				statement3.setInt(1, horario.get(i).getId());
+				statement3.setInt(2, this.id);
+
+				// Executa o SQL
+				statement3.executeUpdate();
 			}
 
 
