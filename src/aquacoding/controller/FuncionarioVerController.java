@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import aquacoding.model.Bonificacao;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
+import aquacoding.utils.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,7 +34,7 @@ public class FuncionarioVerController implements Initializable {
 	ListView<Bonificacao> bonificacoesListagem;
 
 	@FXML
-	Button cancelar, editar, bonificaEditar;
+	Button cancelar, editar, bonificaEditar, bonificaRemover;
 
 	private Funcionario func;
 
@@ -71,6 +73,31 @@ public class FuncionarioVerController implements Initializable {
 			Image i = new Image(f.toURI().toString(), 200, 200, false, true);
 			profileImage.setImage(i);
 		}
+
+		bonificaRemover.setOnMouseClicked((MouseEvent e) -> {
+			try {
+				// Verifica se alguma bonificação foi selecionado e pergunta se
+				// ele realmente o que remover
+				if (bonificacoesListagem.getSelectionModel().getSelectedItem() != null && CustomAlert.showConfirmationAlert(
+						"Remover Bonificação", "Você tem certeza que deseja remover essa bonificação?")) {
+					// Obtem a bonificação selecionado
+					Bonificacao b = bonificacoesListagem.getSelectionModel().getSelectedItem();
+
+					// Tenta remover a bonificação no BD
+					if (b.delete()) {
+						// bonificação removido com sucesso
+						CustomAlert.showAlert("Remover Bonificação", "Bonificação removido com sucesso.", AlertType.WARNING);
+						Main.loadListaFuncionarioView();
+					} else {
+						// Erro ao remover a bonificação
+						CustomAlert.showAlert("Remover Bonificação", "Algo deu errado.", AlertType.WARNING);
+					}
+				}
+			} catch (RuntimeException ex) {
+				// Erro de validação
+				CustomAlert.showAlert("Remover Bonificação", ex.getMessage(), AlertType.WARNING);
+			}
+		});
 
 		// Define a listview de bonificações
 		bonificacoesListagem.setItems(FXCollections.observableArrayList(func.getBonificacoes()));

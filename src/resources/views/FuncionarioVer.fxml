@@ -157,6 +157,7 @@
                   
                                                       <Button fx:id="editar" focusTraversable="false" mnemonicParsing="false" text="Editar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
                   <Button fx:id="bonificaEditar" layoutX="400.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Editar bonificação" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="10.0" />
+                  <Button fx:id="bonificaRemover" layoutX="72.0" layoutY="10.0" mnemonicParsing="false" text="Remover bonificação" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
          </children>

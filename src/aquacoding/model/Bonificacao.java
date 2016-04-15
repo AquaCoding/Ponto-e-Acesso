@@ -171,4 +171,34 @@ public class Bonificacao {
 			throw new RuntimeException("Um erro ocorreu ao buscar bonificações");
 		}
 	}
+
+	public boolean delete() {
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("DELETE FROM Bonificacao WHERE idBonificacao = ?");
+
+			// Realiza o bind dos valores
+			statement.setInt(1, this.id);
+
+			// Executa o SQL
+			int resp = statement.executeUpdate();
+
+			// Encerra conexao
+			connect.close();
+
+			if (resp == 1) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException("Um erro ocorreu ao deletar a bonificação");
+		}
+	}
 }
