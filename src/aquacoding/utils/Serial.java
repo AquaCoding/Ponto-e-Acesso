@@ -15,7 +15,7 @@ import jssc.SerialPortException;
 
 public class Serial {
 
-	private static final String PORT_NUMBER = "COM4";
+	private static final String PORT_NUMBER = "COM6";
 
 	public void SerialLeitura() throws SerialPortException {
 		try {
@@ -25,7 +25,7 @@ public class Serial {
 					SerialPort.PARITY_NONE);
 
 			serialPort.addEventListener(new SerialPortEventListener() {
-				String tag;
+				String tag, preview;
 
 				@Override
 				public void serialEvent(SerialPortEvent event) {
@@ -34,10 +34,15 @@ public class Serial {
 							byte buffer[] = serialPort.readBytes();
 							for (int i = 0; i < buffer.length; i++) {
 								char l = (char) buffer[i];
-								System.out.print(l);
-								tag += l;
+								preview += l;
+								if(!preview.equals(null)) {
+									tag += l;
+								}
+								
 							}
 
+							System.out.println(tag);
+							
 							try {
 								// Obtem uma conexão com o banco de dados
 								Connection connect = DatabaseConnect.getInstance();
