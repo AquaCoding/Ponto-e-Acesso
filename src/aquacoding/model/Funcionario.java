@@ -28,6 +28,7 @@ public class Funcionario {
 	private File profileImage;
 	private ArrayList<Horario> horario = new ArrayList<Horario>();
 	private ArrayList<Bonificacao> bonificacoes = new ArrayList<Bonificacao>();
+	private boolean suspensao;
 
 	// Setters e Getters
 	public int getId() {
@@ -174,11 +175,11 @@ public class Funcionario {
 		this.horario.add(horario);
 
 	}
-	
+
 	public void setHorarios(ArrayList<Horario> horario) {
 		this.horario = horario;
 	}
-	
+
 	public ArrayList<Bonificacao> getBonificacoes() {
 		return bonificacoes;
 	}
@@ -186,9 +187,17 @@ public class Funcionario {
 	public void setBonificacoes(ArrayList<Bonificacao> bonificacoes) {
 		this.bonificacoes = bonificacoes;
 	}
-		
+
 	public void limparHorarios(){
 		this.horario.clear();
+	}
+
+	public void setSuspensao(boolean suspensao){
+		this.suspensao = suspensao;
+	}
+
+	public boolean getSuspensao(){
+		return suspensao;
 	}
 
 	// Construtor de Funcionario
@@ -208,6 +217,7 @@ public class Funcionario {
 		setEstado(builder.estado);
 		setSalarioHoras(builder.salarioHoras);
 		setHorarios(builder.horario);
+		setSuspensao(builder.suspensao);
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
@@ -227,6 +237,7 @@ public class Funcionario {
 		private String cidade;
 		private String estado;
 		private double salarioHoras;
+		private boolean suspensao;
 
 
 		private ArrayList<Horario> horario = new ArrayList<Horario>();
@@ -302,6 +313,11 @@ public class Funcionario {
 			return this;
 		}
 
+		public Builder setSuspensao(Boolean suspensao){
+			this.suspensao = suspensao;
+			return this;
+		}
+
 		// Cria a instancia de Funcionario
 		public Funcionario build() {
 			return new Funcionario(this);
@@ -315,7 +331,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					"INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras, suspensao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
@@ -331,6 +347,7 @@ public class Funcionario {
 			statement.setString(10, this.cidade);
 			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
+			statement.setBoolean(13, this.suspensao);
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -396,6 +413,7 @@ public class Funcionario {
 						.setRua(resultSet.getString("rua")).setNumero(resultSet.getInt("numero"))
 						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
+						.setSuspensao(resultSet.getBoolean("suspensao"))
 						.build();
 
 				// Obtem os horarios desse funcionario
@@ -408,7 +426,7 @@ public class Funcionario {
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-				
+
 				// Obtem as bonificações
 				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
 
@@ -454,6 +472,7 @@ public class Funcionario {
 						.setRua(resultSet.getString("rua")).setNumero(resultSet.getInt("numero"))
 						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
+						.setSuspensao(resultSet.getBoolean("suspensao"))
 						.build();
 
 				// Obtem os horarios desse funcionario
@@ -488,7 +507,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ? WHERE idFuncionario = ?");
+					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ?, suspensao = ? WHERE idFuncionario = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -504,22 +523,23 @@ public class Funcionario {
 			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
 			statement.setDouble(13, this.id);
+			statement.setBoolean(14, this.suspensao);
 
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
 
-			
+
 				// Cria um prepared statement
 				PreparedStatement statement2 = (PreparedStatement) connect
 						.prepareStatement("DELETE FROM horariofuncionario WHERE idFuncionario = ?");
 				statement2.setInt(1, this.id);
-				
-				
+
+
 				// Executa o SQL
 				statement2.executeUpdate();
-							
-			
+
+
 			// Percorre cada um dos horarios
 			for(int i = 0; i < horario.size(); i++) {
 				// Cria um prepared statement
@@ -608,6 +628,7 @@ public class Funcionario {
 						.setRua(resultSet.getString("rua")).setNumero(resultSet.getInt("numero"))
 						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
+						.setSuspensao(resultSet.getBoolean("suspensao"))
 						.build();
 
 			// Se nada for achado, retorna nulo

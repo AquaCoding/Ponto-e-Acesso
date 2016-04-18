@@ -78,17 +78,18 @@ public class FuncionarioNovoController implements Initializable {
 								.setNumero(Integer.parseInt(funcionarioNumero.getText())).setBairro(funcionarioBairro.getText())
 								.setCidade(funcionarioCidade.getText()).setEstado(funcionarioEstado.getText())
 								.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
+								.setSuspensao(false)
 								.build();
-								
-				
+
+
 				if(horarioSelect.getSelectionModel().getSelectedItem() != null){
 					f.setHorario(horarioSelect.getSelectionModel().getSelectedItem());
 				}
-				
+
 				if(horarioSelect2.getSelectionModel().getSelectedItem() != null){
 					f.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
 				}
-				
+
 
 				// Adiciona a imagem ao objeto do funcionario
 				if (selectedFile != null)

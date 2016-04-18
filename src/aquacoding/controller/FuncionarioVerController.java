@@ -28,7 +28,7 @@ public class FuncionarioVerController implements Initializable {
 
 	@FXML
 	Label nomeShow, sobrenomeShow, rgShow, cpfShow, cptsShow, salarioHorasShow,
-	telefoneShow, ruaShow, numeroShow, bairroShow, estadoShow, cidadeShow;
+	telefoneShow, ruaShow, numeroShow, bairroShow, estadoShow, cidadeShow, statusShow;
 
 	@FXML
 	ListView<Bonificacao> bonificacoesListagem;
@@ -67,6 +67,12 @@ public class FuncionarioVerController implements Initializable {
 		bairroShow.setText(func.getBairro());
 		estadoShow.setText(func.getEstado());
 		cidadeShow.setText(func.getCidade());
+
+		if(func.getSuspensao() == true){
+			statusShow.setText("Suspenso");
+		}else{
+			statusShow.setText("Regular");
+		}
 
 		File f = func.getProfileImage();
 		if(f.exists()) {

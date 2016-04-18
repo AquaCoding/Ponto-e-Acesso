@@ -87,6 +87,12 @@
                   </VBox>
                   <VBox HBox.hgrow="ALWAYS">
                      <children>
+                        <Label fx:id="lblFuncionarioStatus" text="Status">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="statusShow" text="Label" />
                         <Label fx:id="lblFuncionarioTelefone" text="Telefone">
                            <padding>
                               <Insets bottom="2.0" />

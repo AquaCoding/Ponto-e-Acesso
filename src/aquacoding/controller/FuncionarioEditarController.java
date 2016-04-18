@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -26,6 +27,9 @@ public class FuncionarioEditarController implements Initializable {
 	// Obtem os elementos FXML
 	@FXML
 	Button cancelar, alterar, btnImage;
+
+	@FXML
+	CheckBox checkSuspenso;
 
 	@FXML
 	Label lblImagePath;
@@ -58,7 +62,7 @@ public class FuncionarioEditarController implements Initializable {
 		// Preenche o campo de seleção do horario
 				horarioSelect.setItems(FXCollections.observableArrayList(Horario.getAll()));
 				horarioSelect2.setItems(FXCollections.observableArrayList(Horario.getAll()));
-				
+
 		// Tenta realizar a edição
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			try {
@@ -76,13 +80,14 @@ public class FuncionarioEditarController implements Initializable {
 				funcionario.setCidade(funcionarioCidade.getText());
 				funcionario.setEstado(funcionarioEstado.getText());
 				funcionario.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()));
-				
+				funcionario.setSuspensao(checkSuspenso.isSelected());
+
 				funcionario.limparHorarios();
-								
+
 				if(horarioSelect.getSelectionModel().getSelectedItem() != null){
 					funcionario.setHorario(horarioSelect.getSelectionModel().getSelectedItem());
 				}
-				
+
 				if(horarioSelect2.getSelectionModel().getSelectedItem() != null){
 					funcionario.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
 				}
