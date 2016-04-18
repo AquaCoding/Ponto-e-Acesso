@@ -25,23 +25,13 @@ public class Serial {
 					SerialPort.PARITY_NONE);
 
 			serialPort.addEventListener(new SerialPortEventListener() {
-				String tag, preview;
+				String tag;
 
 				@Override
 				public void serialEvent(SerialPortEvent event) {
 					if (event.isRXCHAR()) {
 						try {
-							byte buffer[] = serialPort.readBytes();
-							for (int i = 0; i < buffer.length; i++) {
-								char l = (char) buffer[i];
-								preview += l;
-								if(!preview.equals(null)) {
-									tag += l;
-								}
-								
-							}
-
-							System.out.println(tag);
+							String buffer = serialPort.readString();							
 							
 							try {
 								// Obtem uma conexão com o banco de dados
@@ -51,25 +41,22 @@ public class Serial {
 								Statement statement = connect.createStatement();
 
 								// Executa um SQL
-								ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
-
-								boolean estado = false;
+								ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");							
 								
 								while (resultSet.next()) {
-									if (tag.equals(resultSet.getString("codigo"))) {
+									if (buffer.equals(resultSet.getString("codigo"))) {
+										System.out.println("Achou");
 										Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"), resultSet.getInt("idFuncionarioTag"));
-
+										System.out.println("Objeto");
 										if (ponto.create()) {
 											serialPort.writeString("Ponto registrado");
+											System.out.println("criou");
 										} else {
 											serialPort.writeString("Erro, contate o Suporte");
-										}
-										estado = true;
+											System.out.println("errou");
+										}										
 									}
 								};
-
-								if(estado == false)
-									serialPort.writeString("Usuário não encontrado");
 								
 								// encerra conexão
 								connect.close();
