@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="471.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioNovoController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioNovoController">
    <children>
       <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="44.0">
          <children>
@@ -49,6 +49,10 @@
                   <ComboBox fx:id="horarioSelect" />
                   <Label text="Horario Turno 2" />
                   <ComboBox fx:id="horarioSelect2" />
+                  
+                  <Label text="Funcao" />
+                  <ComboBox fx:id="funcaoSelect" />
+                  
                   <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar">
                      <VBox.margin>
                         <Insets top="10.0" />

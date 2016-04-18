@@ -28,6 +28,7 @@ public class Funcionario {
 	private File profileImage;
 	private ArrayList<Horario> horario = new ArrayList<Horario>();
 	private ArrayList<Bonificacao> bonificacoes = new ArrayList<Bonificacao>();
+	private ArrayList<Funcao> funcao = new ArrayList<Funcao>();
 
 	// Setters e Getters
 	public int getId() {
@@ -172,7 +173,6 @@ public class Funcionario {
 
 	public void setHorario(Horario horario) {
 		this.horario.add(horario);
-
 	}
 	
 	public void setHorarios(ArrayList<Horario> horario) {
@@ -191,6 +191,14 @@ public class Funcionario {
 		this.horario.clear();
 	}
 
+	public ArrayList<Funcao> getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(Funcao funcao) {
+		this.funcao.add(funcao);
+	}
+	
 	// Construtor de Funcionario
 	// Só pode ser chamado pelo método build() da classe Builder
 	protected Funcionario(Builder builder) {
@@ -230,6 +238,8 @@ public class Funcionario {
 
 
 		private ArrayList<Horario> horario = new ArrayList<Horario>();
+		
+		private ArrayList<Funcao> funcao = new ArrayList<Funcao>();
 
 		// Sets do Builder
 		public Builder setId(int id) {
@@ -301,7 +311,12 @@ public class Funcionario {
 			this.horario.add(horario);
 			return this;
 		}
-
+		
+		public Builder setFuncao(Funcao funcao) {
+			this.funcao.add(funcao);
+			return this;
+		}
+		
 		// Cria a instancia de Funcionario
 		public Funcionario build() {
 			return new Funcionario(this);
@@ -353,6 +368,19 @@ public class Funcionario {
 
 					// Executa o SQL
 					statement2.executeUpdate();
+				}
+				
+				// Percorre cada um dos horarios
+				for(int i = 0; i < funcao.size(); i++) {
+					// Cria um prepared statement
+					PreparedStatement statement3 = (PreparedStatement) connect.prepareStatement("INSERT INTO FuncaoFuncionario (idFuncionario, idFuncao) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+					// Define os binds	
+					statement3.setInt(1, this.id);
+					statement3.setInt(2, funcao.get(i).getId());
+
+					// Executa o SQL
+					statement3.executeUpdate();
 				}
 
 				// Encerra conexao

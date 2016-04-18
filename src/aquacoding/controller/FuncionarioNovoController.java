@@ -18,6 +18,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
+import aquacoding.model.Funcao;
 import aquacoding.model.Funcionario;
 import aquacoding.model.Horario;
 import aquacoding.pontoacesso.Main;
@@ -41,6 +43,9 @@ public class FuncionarioNovoController implements Initializable {
 	@FXML
 	ComboBox<Horario> horarioSelect, horarioSelect2;
 
+	@FXML
+	ComboBox<Funcao> funcaoSelect;
+	
 	private File selectedFile;
 
 	/* (non-Javadoc)
@@ -66,6 +71,11 @@ public class FuncionarioNovoController implements Initializable {
 
 		setHorarioSelectFactory();
 
+		//Preenche o campo de funcao
+		funcaoSelect.setItems(FXCollections.observableArrayList(Funcao.getAll()));
+		
+		setFuncaoSelectFactory();
+		
 		// Tenta realizar o cadastro
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
@@ -89,6 +99,9 @@ public class FuncionarioNovoController implements Initializable {
 					f.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
 				}
 				
+				if(funcaoSelect.getSelectionModel().getSelectedItem() != null){
+					f.setFuncao(funcaoSelect.getSelectionModel().getSelectedItem());
+				}
 
 				// Adiciona a imagem ao objeto do funcionario
 				if (selectedFile != null)
@@ -129,6 +142,23 @@ public class FuncionarioNovoController implements Initializable {
 				lblImagePath.setText(selectedFile.getName());
 			}
 		});
+		
+		funcaoSelect.setConverter(new StringConverter<Funcao>() {
+			@Override
+			public String toString(Funcao item) {
+				if (item != null) {
+					return item.getNome();
+				} else {
+					return null;
+				}
+			}
+
+			@Override
+			public Funcao fromString(String string) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
 	}
 
 	private void setHorarioSelectFactory() {
@@ -143,6 +173,35 @@ public class FuncionarioNovoController implements Initializable {
 					// nome de exibição na lista
 					@Override
 					protected void updateItem(Horario item, boolean empty) {
+						// Chama o construtor padrão
+						super.updateItem(item, empty);
+
+						// Define o nome customizado
+						if (item != null) {
+							setText(item.toString());
+						} else {
+							setText("");
+						}
+					}
+				};
+				// Retorna a célula
+				return cell;
+			}
+		});
+	}
+	
+	private void setFuncaoSelectFactory() {
+		// Define um novo cell factory
+		funcaoSelect.setCellFactory(new Callback<ListView<Funcao>, ListCell<Funcao>>() {
+			// Realiza o override do método padrão
+			@Override
+			public ListCell<Funcao> call(ListView<Funcao> param) {
+				// Cria uma nova célula da lista
+				ListCell<Funcao> cell = new ListCell<Funcao>() {
+					// Realiza o overrida do método padrão para definição do
+					// nome de exibição na lista
+					@Override
+					protected void updateItem(Funcao item, boolean empty) {
 						// Chama o construtor padrão
 						super.updateItem(item, empty);
 
