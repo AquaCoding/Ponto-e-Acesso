@@ -2,12 +2,20 @@ package aquacoding.controller;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import aquacoding.model.Bonificacao;
+import aquacoding.model.Ferias;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
+import aquacoding.utils.DatabaseConnect;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +36,7 @@ public class FuncionarioVerController implements Initializable {
 
 	@FXML
 	Label nomeShow, sobrenomeShow, rgShow, cpfShow, cptsShow, salarioHorasShow,
-	telefoneShow, ruaShow, numeroShow, bairroShow, estadoShow, cidadeShow;
+	telefoneShow, ruaShow, numeroShow, bairroShow, estadoShow, cidadeShow, nomeFeriasShow, inicioFeriasShow, terminoFeriasShow;
 
 	@FXML
 	ListView<Bonificacao> bonificacoesListagem;
@@ -37,6 +45,8 @@ public class FuncionarioVerController implements Initializable {
 	Button cancelar, editar, bonificaEditar, bonificaRemover;
 
 	private Funcionario func;
+	
+	private String nome, inicio, termino;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -48,8 +58,6 @@ public class FuncionarioVerController implements Initializable {
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadFuncionarioEditarView(func);
 		});
-
-
 	}
 
 	public void setFuncionario(Funcionario func) {
@@ -67,6 +75,39 @@ public class FuncionarioVerController implements Initializable {
 		bairroShow.setText(func.getBairro());
 		estadoShow.setText(func.getEstado());
 		cidadeShow.setText(func.getCidade());
+		
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+			
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM funcionarioFerias WHERE idFuncionario = ?");
+
+			//Bind
+			statement.setInt(1, this.func.getId());
+			
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();											
+			
+			PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM ferias WHERE idFerias = ?");
+
+			//Bind
+			statement2.setInt(1, resultSet.getInt("idFerias"));					
+			
+			// Executa o SQL
+			ResultSet resultSet2 = statement2.executeQuery();
+			
+			this.nome = resultSet2.getString("nome");			
+			this.inicio = resultSet2.getString("inicio");			
+			this.termino = resultSet2.getString("termino");	
+			
+			connect.close();
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu ao obter as férias.");
+		}
+		
+		nomeFeriasShow.setText(this.nome);
+		inicioFeriasShow.setText(this.inicio);
+		terminoFeriasShow.setText(this.termino);
 
 		File f = func.getProfileImage();
 		if(f.exists()) {

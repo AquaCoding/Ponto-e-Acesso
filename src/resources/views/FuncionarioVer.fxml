@@ -143,7 +143,42 @@
                         <Label fx:id="cidadeShow" text="Label" />
                      </children>
                   </VBox>
-               </children>
+             
+            
+            <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                     <Label fx:id="lblFuncionarioFerias" text="Nome Ferias">
+                           <padding>
+                              <Insets bottom="2.0" top="2.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="nomeFeriasShow" text="Label" />
+                    
+                     <Label fx:id="lblFuncionarioFerias" text="Inicio Ferias">
+                           <padding>
+                              <Insets bottom="2.0" top="2.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="inicioFeriasShow" text="Label" />
+                        
+                        <Label fx:id="lblFuncionarioFerias" text="Termino Ferias">
+                           <padding>
+                              <Insets bottom="2.0" top="2.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="terminoFeriasShow" text="Label" />    
+                     </children>
+                  </VBox>
+              </children>
             </HBox>
             <Label text="Bonificações - Nome (%)">
                <font>
