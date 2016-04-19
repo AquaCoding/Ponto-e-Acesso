@@ -564,4 +564,17 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+
+	// Carrega a view de exibição dos cartões
+	public static void loadCartoesVerView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Cartões");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/CartoesVer.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

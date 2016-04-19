@@ -37,6 +37,9 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarFeriasLista, menuBarFeriasNova;
 	
 	@FXML
+	MenuItem menuBarCartoesVer;
+	
+	@FXML
 	MenuItem menuBarRelatorioTrabalho;
 
 	@Override
@@ -112,6 +115,10 @@ public class RootLayoutController implements Initializable {
 		
 		menuBarFuncionarioBonificacao.setOnAction((ActionEvent e) -> {
 			Main.loadBonificacaoCadastroView();
+		});
+		
+		menuBarCartoesVer.setOnAction((ActionEvent e) -> {
+			Main.loadCartoesVerView();
 		});
 		
 		menuBarRelatorioTrabalho.setOnAction((ActionEvent e) -> {

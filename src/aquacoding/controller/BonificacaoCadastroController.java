@@ -2,10 +2,7 @@ package aquacoding.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javax.xml.bind.ParseConversionEvent;
-
 import aquacoding.model.Bonificacao;
-import aquacoding.model.Ferias;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
@@ -37,8 +34,6 @@ public class BonificacaoCadastroController implements Initializable {
 
 	@FXML
 	Button cancelar, cadastrar;
-
-	private Bonificacao bonificacao;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -95,7 +90,6 @@ public class BonificacaoCadastroController implements Initializable {
 	public void setBonificacao(Bonificacao bonificacao) {
 		titulo.setText("Editar Bonificação");
 		System.out.println(bonificacao.getId());
-		this.bonificacao = bonificacao;
 		nome.setText(bonificacao.getNome());
 		valor.setText(String.valueOf(bonificacao.getValor()));
 
