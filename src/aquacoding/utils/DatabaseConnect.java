@@ -1,5 +1,6 @@
 package aquacoding.utils;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +8,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public abstract class DatabaseConnect {
+	
+	private final static String DB_HOST = "localhost";
+	private final static String DB_NAME = "PontoAcesso";
+	private final static String DB_USER = "root";
+	private final static String DB_PASS = "";
 
 	// MySQL Connection
 	private static Connection con;
@@ -19,8 +27,7 @@ public abstract class DatabaseConnect {
 			Class.forName("com.mysql.jdbc.Driver");
 
 			// Cria uma conexão com o MySQL
-			con = DriverManager.getConnection("jdbc:mysql://localhost/PontoAcesso",
-					"root", "");
+			con = DriverManager.getConnection("jdbc:mysql://"+DB_HOST+"/"+DB_NAME, DB_USER, DB_PASS);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,6 +60,15 @@ public abstract class DatabaseConnect {
 			
 			if(s != null)
 				s.close();
+		}
+	}
+	
+	public static void makeBackup(String localToSave) {
+		try {
+		   String command = "cmd.exe /C mysqldump --user="+DB_USER+" --password="+DB_PASS+" "+DB_NAME+" > "+localToSave;	   
+		   Runtime.getRuntime().exec(command);
+		} catch (IOException ex) {
+		   JOptionPane.showMessageDialog(null, "erro" + ex.getMessage());
 		}
 	}
 }

@@ -1,17 +1,19 @@
 package aquacoding.controller;
 
+import java.io.File;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
-
-
-
 import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
+import aquacoding.utils.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 
 public class RootLayoutController implements Initializable {
 
@@ -41,6 +43,9 @@ public class RootLayoutController implements Initializable {
 	
 	@FXML
 	MenuItem menuBarRelatorioTrabalho;
+	
+	@FXML
+	MenuItem menuBarBackupCriar;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -123,6 +128,17 @@ public class RootLayoutController implements Initializable {
 		
 		menuBarRelatorioTrabalho.setOnAction((ActionEvent e) -> {
 			Main.loadRelatorioTrabalhoView();
+		});
+		
+		menuBarBackupCriar.setOnAction((ActionEvent e) -> {
+			FileChooser fileC = new FileChooser();
+			fileC.setTitle("Selecione a imagem do funcionário");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+			fileC.setInitialFileName("PontoAcesso_backup_" + formatter.format(LocalDate.now()));
+			fileC.getExtensionFilters().add(new ExtensionFilter("SQL Files (*.sql)", "*.sql"));
+			File localToSave = fileC.showSaveDialog(Main.primaryStage);
+			
+			DatabaseConnect.makeBackup(localToSave.getAbsolutePath());
 		});
 		
 		// Oculta o ver da empresa, caso nenhuma empresa esteja cadastrada

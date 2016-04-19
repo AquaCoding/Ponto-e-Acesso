@@ -61,6 +61,11 @@
                <items>
                   <MenuItem fx:id="menuBarRelatorioTrabalho" mnemonicParsing="false" text="Trabalho" />
                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Backup">
+               <items>
+                  <MenuItem fx:id="menuBarBackupCriar" mnemonicParsing="false" text="Criar" />
+               </items>
             </Menu> 
         </menus>
       </MenuBar>

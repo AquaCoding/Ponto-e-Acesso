@@ -28,7 +28,6 @@ public class FeriasListaController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		// Ação do botão de cancelar
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
-			System.out.print("cancelar");
 			Main.loadMainView();
 		});
 
