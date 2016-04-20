@@ -577,4 +577,30 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+
+	// Carrega a view de cadastro de imposto
+	public static void loadImpostoCriarView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Cadastrar imposto");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/ImpostoNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Carrega a view de visualização de imposto
+	public static void loadImpostoVerView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Impostos");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/ImpostoVer.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

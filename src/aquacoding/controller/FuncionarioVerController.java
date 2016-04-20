@@ -6,12 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-
 import aquacoding.model.Bonificacao;
-import aquacoding.model.Ferias;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;

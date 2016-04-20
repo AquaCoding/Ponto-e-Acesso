@@ -153,4 +153,11 @@ CREATE TABLE FuncaoFuncionario(
 		REFERENCES Funcionario(idFuncionario),
 	CONSTRAINT fk_funcao_funcionario_idFuncao FOREIGN KEY (idFuncao)
 		REFERENCES Funcao(idFuncao) 
-  )
+);
+  
+CREATE TABLE Imposto (
+	idImposto		INT				NOT NULL auto_increment,
+    nome			VARCHAR(45)		NOT NULL,
+    valor			DOUBLE(3,2)		NOT NULL,
+    CONSTRAINT pk_imposto PRIMARY KEY (idImposto)
+);

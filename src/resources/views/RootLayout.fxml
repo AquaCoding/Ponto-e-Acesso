@@ -66,6 +66,16 @@
                <items>
                   <MenuItem fx:id="menuBarBackupCriar" mnemonicParsing="false" text="Criar" />
                </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Holerite">
+               <items>
+                  <Menu mnemonicParsing="false" text="Imposto">
+                    <items>
+                        <MenuItem fx:id="menuBarImpostoVer" mnemonicParsing="false" text="Ver todos" />
+                        <MenuItem fx:id="menuBarImpostoCriar" mnemonicParsing="false" text="Criar" />
+                    </items>
+                  </Menu>
+               </items>
             </Menu> 
         </menus>
       </MenuBar>

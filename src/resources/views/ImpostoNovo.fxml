@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.ImpostoNovoController">
+   <children>
+      <Label fx:id="titulo" layoutX="24.0" layoutY="24.0" text="Cadastro de Imposto" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <Label text="Nome" />
+            <TextField fx:id="nome" />
+            <Label text="Valor (%)" />
+            <TextField fx:id="valor" />
+            <AnchorPane prefWidth="200.0">
+               <children>
+                  <Button fx:id="cadastrar" mnemonicParsing="false" text="Cadastar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button fx:id="cancelar" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
