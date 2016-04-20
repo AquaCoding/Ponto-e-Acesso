@@ -1,7 +1,6 @@
 package aquacoding.pontoacesso;
 
 import java.io.IOException;
-
 import aquacoding.controller.BonificacaoCadastroController;
 import aquacoding.controller.EmpresaEditarController;
 import aquacoding.controller.EmpresaVerController;
@@ -41,6 +40,7 @@ public class Main extends Application {
 	private static BorderPane rootLayout;
 	private static Stage loginStage = new Stage();
 	private static String pageTitle = "Controle de Ponto e Acesso";
+	public static Usuario loggedUser = null;
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -597,6 +597,19 @@ public class Main extends Application {
 			primaryStage.setTitle(pageTitle + " - Impostos");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/ImpostoVer.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de auditoria dos logs
+	public static void loadAuditoriaVerView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Auditoria");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/AuditoriaVer.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {

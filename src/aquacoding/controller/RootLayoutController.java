@@ -49,6 +49,9 @@ public class RootLayoutController implements Initializable {
 	
 	@FXML
 	MenuItem menuBarImpostoCriar, menuBarImpostoVer;
+	
+	@FXML
+	MenuItem menuBarAuditoriaVer;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -141,6 +144,9 @@ public class RootLayoutController implements Initializable {
 			Main.loadImpostoVerView();
 		});	
 		
+		menuBarAuditoriaVer.setOnAction((ActionEvent e) -> {
+			Main.loadAuditoriaVerView();
+		});	
 		
 		menuBarBackupCriar.setOnAction((ActionEvent e) -> {
 			FileChooser fileC = new FileChooser();

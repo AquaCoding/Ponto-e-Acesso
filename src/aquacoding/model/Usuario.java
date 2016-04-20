@@ -1,13 +1,18 @@
 package aquacoding.model;
 
 import java.sql.Connection;
+
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.BCrypt;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
 import aquacoding.utils.DatabaseConnect;
 
 public class Usuario {
@@ -148,7 +153,15 @@ public class Usuario {
 	public static boolean isValidSenha(String nome, String senha) {
 		try {
 			Usuario u = Usuario.getByNome(nome);
-			return BCrypt.checkpw(senha, u.getSenha());
+			boolean result = BCrypt.checkpw(senha, u.getSenha());
+
+			if(result) {
+				Logs.makeLog(u.getId(), ObjectCode.USUARIO, u.getId(), ActionsCode.VALID_LOGIN);
+				Main.loggedUser = u;
+			} else {
+				Logs.makeLog(u.getId(), ObjectCode.USUARIO, u.getId(), ActionsCode.INVALID_LOGIN);
+			}
+			return result;
 		} catch (RuntimeException e) {
 			return false;
 		}

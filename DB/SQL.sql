@@ -158,6 +158,24 @@ CREATE TABLE FuncaoFuncionario(
 CREATE TABLE Imposto (
 	idImposto		INT				NOT NULL auto_increment,
     nome			VARCHAR(45)		NOT NULL,
-    valor			DOUBLE(3,2)		NOT NULL,
+    valor			DOUBLE			NOT NULL,
     CONSTRAINT pk_imposto PRIMARY KEY (idImposto)
 );
+
+CREATE TABLE Logs (
+	idLog			INT				NOT NULL auto_increment,
+    idUsuario		INT				NOT NULL,
+    objeto			VARCHAR(30)		NOT NULL,
+    objetoId		INT				NOT NULL,
+    acao			VARCHAR(60)		NOT NULL,
+    data			DATETIME		NOT NULL DEFAULT NOW(),
+    CONSTRAINT pk_logs PRIMARY KEY (idLog),
+    CONSTRAINT fk_log_usuario FOREIGN KEY (idUsuario)
+		REFERENCES Usuario(idUsuario)
+);
+
+CREATE VIEW ShowTags as SELECT ft.idFuncionarioTag, concat(f.nome, ' ', f.sobrenome) as nome, f.cpf, ft.codigo, ft.ativo
+FROM Funcionario as f JOIN FuncionarioTag as ft;
+
+CREATE VIEW FuncionarioTodasFerias as SELECT ff.idFeriasfuncionario, ff.idFerias, f.nome, f.inicio, f.termino, ff.idFuncionario
+FROM FuncionarioFerias as ff JOIN Ferias as f;
