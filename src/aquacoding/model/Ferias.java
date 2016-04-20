@@ -227,10 +227,34 @@ public class Ferias {
 				// Se nada for achado, retorna nulo
 				return null;
 			} catch (SQLException e) {
-				throw new RuntimeException("Um erro ocorreu ao obter as ferías");
+				throw new RuntimeException("Um erro ocorreu ao obter as férías.");
 			}
 		}
 
+		public static ArrayList<Ferias> getAllByFuncionario(int funcionarioID) {
+			try{
+				// Obtem uma conexão com o banco de dados
+				Connection connect = DatabaseConnect.getInstance();
 
+				// Cria um prepared statement
+				PreparedStatement statement = (PreparedStatement) connect
+						.prepareStatement("SELECT * FROM FuncionarioTodasFerias WHERE idFuncionario = ?", Statement.RETURN_GENERATED_KEYS);
 
+				// Realiza o bind dos valores
+				statement.setInt(1, funcionarioID);
+
+				// Executa o SQL
+				ResultSet resultSet = statement.executeQuery();
+
+				ArrayList<Ferias> ferias = new ArrayList<Ferias>();
+				// Obtem o primeiro resultado e o retorna
+				while(resultSet.next())
+					ferias.add(new Ferias (resultSet.getInt("idFerias"), resultSet.getString("nome"), resultSet.getDate("inicio"), resultSet.getDate("termino")));
+
+				// Se nada for achado, retorna nulo
+				return ferias;
+			} catch (SQLException e) {
+				throw new RuntimeException("Um erro ocorreu ao obter as férías.");
+			}
+		}
 }

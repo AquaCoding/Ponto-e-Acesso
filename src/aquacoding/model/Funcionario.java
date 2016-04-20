@@ -29,6 +29,7 @@ public class Funcionario {
 	private ArrayList<Horario> horario = new ArrayList<Horario>();
 	private ArrayList<Bonificacao> bonificacoes = new ArrayList<Bonificacao>();
 	private ArrayList<Funcao> funcao = new ArrayList<Funcao>();
+	private ArrayList<Ferias> ferias = new ArrayList<Ferias>();
 
 	// Setters e Getters
 	public int getId() {
@@ -199,6 +200,26 @@ public class Funcionario {
 		this.funcao.add(funcao);
 	}
 	
+	public ArrayList<Ferias> getFerias() {
+		return ferias;
+	}
+
+	public void setFerias(ArrayList<Ferias> ferias) {
+		this.ferias = ferias;
+	}
+
+	public void setProfileImage(File profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	public void setHorario(ArrayList<Horario> horario) {
+		this.horario = horario;
+	}
+
+	public void setFuncao(ArrayList<Funcao> funcao) {
+		this.funcao = funcao;
+	}
+
 	// Construtor de Funcionario
 	// Só pode ser chamado pelo método build() da classe Builder
 	protected Funcionario(Builder builder) {
@@ -439,6 +460,9 @@ public class Funcionario {
 				
 				// Obtem as bonificações
 				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
+				
+				// Obtem as ferias
+				f.setFerias(Ferias.getAllByFuncionario(f.getId()));
 
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
@@ -494,6 +518,12 @@ public class Funcionario {
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
+				
+				// Obtem as bonificações
+				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
+				
+				// Obtem as ferias
+				f.setFerias(Ferias.getAllByFuncionario(f.getId()));
 
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
@@ -628,8 +658,9 @@ public class Funcionario {
 			ResultSet resultSet = statement.executeQuery();
 
 			// Obtem o primeiro resultado e o retorna
+			Funcionario f = null;
 			if(resultSet.next())
-				return new Funcionario.Builder().setId(resultSet.getInt("idFuncionario"))
+				f = new Funcionario.Builder().setId(resultSet.getInt("idFuncionario"))
 						.setNome(resultSet.getString("nome")).setSobrenome(resultSet.getString("sobrenome"))
 						.setRg(resultSet.getString("rg")).setCpf(resultSet.getString("cpf"))
 						.setCtps(resultSet.getString("ctps")).setTelefone(resultSet.getString("telefone"))
@@ -637,12 +668,33 @@ public class Funcionario {
 						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.build();
+			
+			if(f != null) {
+				// Obtem os horarios desse funcionario
+				PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM HorarioFuncionario WHERE idFuncionario = ?");
+				statement2.setInt(1, f.getId());
 
+				// Executa o SQL
+				ResultSet resultSet2 = statement2.executeQuery();
+
+				// Se exitir horario, adiciona ao funcionario
+				while (resultSet2.next())
+					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
+				
+				// Obtem as bonificações
+				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
+				
+				// Obtem as ferias
+				f.setFerias(Ferias.getAllByFuncionario(f.getId()));
+
+				// Obtem a imagem do perfil
+				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
+			}
+			
 			// Se nada for achado, retorna nulo
-			return null;
+			return f;
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu ao obter o funcionário.");
 		}
 	}
-
 }

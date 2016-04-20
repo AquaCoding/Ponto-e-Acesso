@@ -2,28 +2,24 @@ package aquacoding.controller;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
-import aquacoding.model.Bonificacao;
-import aquacoding.model.Funcionario;
-import aquacoding.pontoacesso.Main;
-import aquacoding.utils.CustomAlert;
-import aquacoding.utils.DatabaseConnect;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import aquacoding.model.Bonificacao;
+import aquacoding.model.Ferias;
+import aquacoding.model.Funcionario;
+import aquacoding.pontoacesso.Main;
+import aquacoding.utils.CustomAlert;
 
 public class FuncionarioVerController implements Initializable {
 
@@ -72,33 +68,9 @@ public class FuncionarioVerController implements Initializable {
 		estadoShow.setText(func.getEstado());
 		cidadeShow.setText(func.getCidade());
 		
-		try {
-			// Obtem uma conexão com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-			
-			PreparedStatement statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM funcionarioFerias WHERE idFuncionario = ?");
-
-			//Bind
-			statement.setInt(1, this.func.getId());
-			
-			// Executa o SQL
-			ResultSet resultSet = statement.executeQuery();											
-			
-			PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM ferias WHERE idFerias = ?");
-
-			//Bind
-			statement2.setInt(1, resultSet.getInt("idFerias"));					
-			
-			// Executa o SQL
-			ResultSet resultSet2 = statement2.executeQuery();
-			
-			this.nome = resultSet2.getString("nome");			
-			this.inicio = resultSet2.getString("inicio");			
-			this.termino = resultSet2.getString("termino");	
-			
-			connect.close();
-		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao obter as férias.");
+		// Listando todas as ferias
+		for(Ferias f: func.getFerias()) {
+			System.out.println(f.getId() + " - " + f.getNome());
 		}
 		
 		nomeFeriasShow.setText(this.nome);
