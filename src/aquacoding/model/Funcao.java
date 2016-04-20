@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 
 public class Funcao {
@@ -79,6 +83,10 @@ public class Funcao {
 				
 				// Encerra conexao
 				connect.close();
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCAO, this.id, ActionsCode.CADASTROU);
+				
 				return true;
 			} else {
 				// Encerra conexao
@@ -140,6 +148,9 @@ public class Funcao {
 
 			// Retorna resultado
 			if (ret == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCAO, this.id, ActionsCode.EDITOU);
+				
 				return true;
 			} else {
 				return false;
@@ -169,6 +180,9 @@ public class Funcao {
 			connect.close();	
 			
 			if(resp == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCAO, this.id, ActionsCode.REMOVEU);
+				
 				return true;
 			}else {
 				return false;

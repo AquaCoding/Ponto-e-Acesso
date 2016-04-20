@@ -86,6 +86,10 @@ public class Usuario {
 					setId(id.getInt(1));
 				// Encerra conexao
 				connect.close();
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.USUARIO, this.id, ActionsCode.CADASTROU);
+				
 				return true;
 			} else {
 				// Encerra conexão
@@ -214,6 +218,9 @@ public class Usuario {
 
 			// Retorna resultado
 			if (ret == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.USUARIO, this.id, ActionsCode.EDITOU);
+				
 				return true;
 			} else {
 				return false;
@@ -243,6 +250,9 @@ public class Usuario {
 			connect.close();
 
 			if(resp == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.USUARIO, this.id, ActionsCode.REMOVEU);
+				
 				return true;
 			}else {
 				return false;

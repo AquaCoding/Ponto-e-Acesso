@@ -6,6 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 
 public class Setor {
@@ -64,6 +69,10 @@ public class Setor {
 
 				// Encerra conexao
 				connect.close();
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.SETOR, this.id, ActionsCode.CADASTROU);
+				
 				return true;
 			} else {
 				// Encerra conexao
@@ -149,6 +158,9 @@ public class Setor {
 
 			// Retorna resultado
 			if (ret == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.SETOR, this.id, ActionsCode.EDITOU);
+				
 				return true;
 			} else {
 				return false;
@@ -178,6 +190,9 @@ public class Setor {
 			connect.close();	
 			
 			if(resp == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.SETOR, this.id, ActionsCode.REMOVEU);
+				
 				return true;
 			}else {
 				return false;

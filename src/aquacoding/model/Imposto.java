@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 
 public class Imposto {
@@ -78,6 +82,10 @@ public class Imposto {
 
 				// Encerra conexao
 				connect.close();
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.IMPOSTO, this.id, ActionsCode.CADASTROU);
+				
 				return true;
 			} else {
 				// Encerra conexao

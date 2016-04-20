@@ -9,6 +9,10 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 
 public class Ferias {
@@ -116,6 +120,10 @@ public class Ferias {
 
 					// Encerra conexao
 					connect.close();
+					
+					// Gera log
+					Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FERIAS, this.id, ActionsCode.CADASTROU);
+					
 					return true;
 				} else {
 					// Encerra conexao
@@ -195,6 +203,9 @@ public class Ferias {
 
 				// Retorna resultado
 				if (ret == 1) {
+					// Gera log
+					Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FERIAS, this.id, ActionsCode.EDITOU);
+					
 					return true;
 				} else {
 					return false;

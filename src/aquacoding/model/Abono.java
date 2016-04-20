@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 
 public class Abono {
@@ -92,6 +96,10 @@ public class Abono {
 
 				// Encerra conexao
 				connect.close();
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.ABONO, this.id, ActionsCode.CADASTROU);
+				
 				return true;
 			} else {
 				// Encerra conexao

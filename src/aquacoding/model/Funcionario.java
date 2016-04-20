@@ -7,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Image;
 
@@ -411,6 +416,9 @@ public class Funcionario {
 				if (profileImage != null) {
 					Image.copyImage(profileImage, Image.PROFILE_IMAGE_PATH + this.id);
 				}
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCIONARIO, this.id, ActionsCode.CADASTROU);
 
 				return true;
 			} else {
@@ -602,6 +610,9 @@ public class Funcionario {
 
 			// Retorna resultado
 			if (ret == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCIONARIO, this.id, ActionsCode.EDITOU);
+				
 				return true;
 			} else {
 				return false;
@@ -631,6 +642,9 @@ public class Funcionario {
 			connect.close();
 
 			if (resp == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCIONARIO, this.id, ActionsCode.REMOVEU);
+				
 				return true;
 			} else {
 				return false;

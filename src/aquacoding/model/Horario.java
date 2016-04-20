@@ -10,6 +10,10 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 
 public class Horario {
@@ -210,6 +214,10 @@ public class Horario {
 
 				// Encerra conexao
 				connect.close();
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.HORARIO, this.id, ActionsCode.CADASTROU);
+				
 				return true;
 			} else {
 				// Encerra conexao
@@ -280,6 +288,9 @@ public class Horario {
 			connect.close();
 
 			if(resp == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.HORARIO, this.id, ActionsCode.REMOVEU);
+				
 				return true;
 			}else {
 				return false;
@@ -323,6 +334,9 @@ public class Horario {
 
 			// Retorna resultado
 			if (ret == 1) {
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.HORARIO, this.id, ActionsCode.EDITOU);
+				
 				return true;
 			} else {
 				return false;

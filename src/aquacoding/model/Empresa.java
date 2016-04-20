@@ -7,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Image;
 
@@ -234,6 +239,9 @@ public class Empresa {
 				if(profileImage != null) {
 					Image.copyImage(profileImage, Image.EMPRESA_IMAGE_PATH+this.idEmpresa);
 				}
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.EMPRESA, this.idEmpresa, ActionsCode.CADASTROU);
 
 				return true;
 			} else {
@@ -281,7 +289,10 @@ public class Empresa {
 			}
 			
 			// Retorna resultado
-			if (ret == 1) {				
+			if (ret == 1) {			
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.EMPRESA, this.idEmpresa, ActionsCode.EDITOU);
+				
 				return true;
 			} else {				
 				return false;
