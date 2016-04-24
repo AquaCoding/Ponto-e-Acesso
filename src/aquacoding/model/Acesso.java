@@ -8,19 +8,18 @@ import java.sql.Statement;
 
 import aquacoding.utils.DatabaseConnect;
 
-public class Ponto {
-
-	private int idPonto;
+public class Acesso {
+	private int idAcesso;
 	private String horario;
 	private int idFuncionario;
 	private int idFuncionarioTag;
 
 	public int getIdPonto() {
-		return idPonto;
+		return idAcesso;
 	}
 
-	public void setIdPonto(int idPonto) {
-		this.idPonto = idPonto;
+	public void setIdAcesso(int idAcesso) {
+		this.idAcesso = idAcesso;
 	}
 
 	public String getHorario() {
@@ -30,7 +29,7 @@ public class Ponto {
 	public void setHorario(String horario) {
 		this.horario = horario;
 	}
-	
+
 	public int getIdFuncionario() {
 		return idFuncionario;
 	}
@@ -38,7 +37,7 @@ public class Ponto {
 	public void setIdFuncionario(int idFuncionario) {
 		this.idFuncionario = idFuncionario;
 	}
-	
+
 	public int getIdFuncionarioTag() {
 		return idFuncionarioTag;
 	}
@@ -49,14 +48,14 @@ public class Ponto {
 
 	// Construtores
 
-	public Ponto(int idPonto, String horario, int idFuncionario, int idFuncionarioTag) {
-		setIdPonto(idPonto);
+	public Acesso(int idAcesso, String horario, int idFuncionario, int idFuncionarioTag) {
+		setIdAcesso(idAcesso);
 		setHorario(horario);
 		setIdFuncionario(idFuncionario);
 		setIdFuncionarioTag(idFuncionarioTag);
 	}
 
-	public Ponto(int idFuncionario, int idFuncionarioTag) {
+	public Acesso(int idFuncionario, int idFuncionarioTag) {
 		setHorario(horario);
 		setIdFuncionario(idFuncionario);
 		setIdFuncionarioTag(idFuncionarioTag);
@@ -70,12 +69,13 @@ public class Ponto {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Ponto (horario, idFuncionario, idFuncionaritag) VALUES (now(), ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					"INSERT INTO Acesso (horario, idFuncionario, idFuncionaritag) VALUES (now(), ?, ?)",
+					Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setInt(1, this.idFuncionario);
 			statement.setInt(2, this.idFuncionarioTag);
-			
+
 			// Executa o SQL
 			int ret = statement.executeUpdate();
 
@@ -84,7 +84,7 @@ public class Ponto {
 				// Define o id a classe
 				ResultSet id = statement.getGeneratedKeys();
 				while (id.next())
-					setIdPonto(id.getInt(1));
+					setIdAcesso(id.getInt(1));
 
 				// Encerra conexao
 				connect.close();

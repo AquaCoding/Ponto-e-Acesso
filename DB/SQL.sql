@@ -122,3 +122,15 @@ CREATE TABLE Ponto(
 	CONSTRAINT fk_ponto_tag FOREIGN KEY (idFuncionarioTag)
 		REFERENCES FuncionarioTag(idFuncionarioTag)
 );
+
+CREATE TABLE Acesso(
+	idAcesso			INT			NOT NULL	auto_increment,
+    horario				DATETIME	NOT NULL,
+    idFuncionario		INT			NOT NULL,
+    idFuncionarioTag	INT			NOT NULL,
+	CONSTRAINT pk_acesso PRIMARY KEY (idAcesso),
+    CONSTRAINT fk_funcionario_acesso FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario),
+	CONSTRAINT fk_acesso_tag FOREIGN KEY (idFuncionarioTag)
+		REFERENCES FuncionarioTag(idFuncionarioTag)
+);
