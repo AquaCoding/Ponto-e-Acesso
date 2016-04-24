@@ -88,8 +88,12 @@ public class Usuario {
 				connect.close();
 				
 				// Gera log
-				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.USUARIO, this.id, ActionsCode.CADASTROU);
-				
+				if(Main.loggedUser == null) {
+					Logs.makeLog(this.id, ObjectCode.USUARIO, this.id, ActionsCode.CADASTROU);
+				} else {
+					Logs.makeLog(Main.loggedUser.getId(), ObjectCode.USUARIO, this.id, ActionsCode.CADASTROU);
+				}
+
 				return true;
 			} else {
 				// Encerra conexão

@@ -115,7 +115,6 @@ public class Log {
 				throw new RuntimeException("Um erro ocorre ao criar o log.");
 			}
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 			throw new RuntimeException("Um erro ocorreu ao criar o log.");
 		}
 	}
