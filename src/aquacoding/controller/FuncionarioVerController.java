@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import aquacoding.model.Bonificacao;
 import aquacoding.model.Ferias;
+import aquacoding.model.Funcao;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
@@ -27,8 +28,8 @@ public class FuncionarioVerController implements Initializable {
 	ImageView profileImage;
 
 	@FXML
-	Label nomeShow, sobrenomeShow, rgShow, cpfShow, cptsShow, salarioHorasShow,
-	telefoneShow, ruaShow, numeroShow, bairroShow, estadoShow, cidadeShow, nomeFeriasShow, inicioFeriasShow, terminoFeriasShow;
+	Label nomeShow, sobrenomeShow, rgShow, cpfShow, cptsShow, salarioHorasShow, telefoneShow, ruaShow, numeroShow,
+			bairroShow, estadoShow, cidadeShow, nomeFeriasShow, inicioFeriasShow, terminoFeriasShow, funcaoNomeShow;
 
 	@FXML
 	ListView<Bonificacao> bonificacoesListagem;
@@ -37,8 +38,8 @@ public class FuncionarioVerController implements Initializable {
 	Button cancelar, editar, bonificaEditar, bonificaRemover;
 
 	private Funcionario func;
-	
-	private String nome, inicio, termino;
+
+	private String nome, inicio, termino, nomeFuncao;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -60,27 +61,32 @@ public class FuncionarioVerController implements Initializable {
 		rgShow.setText(func.getRg());
 		cpfShow.setText(func.getCpf());
 		cptsShow.setText(func.getCtps());
-		salarioHorasShow.setText(""+func.getSalarioHoras());
+		salarioHorasShow.setText("" + func.getSalarioHoras());
 		telefoneShow.setText(func.getTelefone());
 		ruaShow.setText(func.getRua());
-		numeroShow.setText(""+func.getNumero());
+		numeroShow.setText("" + func.getNumero());
 		bairroShow.setText(func.getBairro());
 		estadoShow.setText(func.getEstado());
 		cidadeShow.setText(func.getCidade());
-		
+
 		// Listando todas as ferias
-		for(Ferias f: func.getFerias()) {
+		for (Ferias f : func.getFerias()) {
 			this.nome = f.getNome();
 			this.inicio = f.getInicio();
 			this.termino = f.getTermino();
 		}
+
+		
+		this.nomeFuncao = Funcao.getAll().get(0).getNome();			
 		
 		nomeFeriasShow.setText(this.nome);
 		inicioFeriasShow.setText(this.inicio);
 		terminoFeriasShow.setText(this.termino);
 
+		funcaoNomeShow.setText(this.nomeFuncao);
+
 		File f = func.getProfileImage();
-		if(f.exists()) {
+		if (f.exists()) {
 			Image i = new Image(f.toURI().toString(), 200, 200, false, true);
 			profileImage.setImage(i);
 		}
@@ -89,15 +95,17 @@ public class FuncionarioVerController implements Initializable {
 			try {
 				// Verifica se alguma bonificação foi selecionado e pergunta se
 				// ele realmente o que remover
-				if (bonificacoesListagem.getSelectionModel().getSelectedItem() != null && CustomAlert.showConfirmationAlert(
-						"Remover Bonificação", "Você tem certeza que deseja remover essa bonificação?")) {
+				if (bonificacoesListagem.getSelectionModel().getSelectedItem() != null
+						&& CustomAlert.showConfirmationAlert("Remover Bonificação",
+								"Você tem certeza que deseja remover essa bonificação?")) {
 					// Obtem a bonificação selecionado
 					Bonificacao b = bonificacoesListagem.getSelectionModel().getSelectedItem();
 
 					// Tenta remover a bonificação no BD
 					if (b.delete()) {
 						// bonificação removido com sucesso
-						CustomAlert.showAlert("Remover Bonificação", "Bonificação removido com sucesso.", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Bonificação", "Bonificação removido com sucesso.",
+								AlertType.WARNING);
 						Main.loadListaFuncionarioView();
 					} else {
 						// Erro ao remover a bonificação
@@ -138,7 +146,7 @@ public class FuncionarioVerController implements Initializable {
 
 						// Define o nome customizado
 						if (item != null) {
-							setText(item.getNome() + " (" + item.getValor() +")");
+							setText(item.getNome() + " (" + item.getValor() + ")");
 						} else {
 							setText("");
 						}

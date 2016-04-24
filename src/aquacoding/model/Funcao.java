@@ -17,55 +17,55 @@ public class Funcao {
 	private int id;
 	private String nome;
 	private Setor setor;
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getNome() {
 		return nome;
 	}
-	
+
 	public void setNome(String nome) {
-		if(nome.equals(""))
+		if (nome.equals(""))
 			throw new RuntimeException("O nome da função não pode estar vazio.");
 		this.nome = nome;
 	}
-	
+
 	public Setor getSetor() {
 		return setor;
 	}
-	
+
 	public void setSetor(Setor setor) {
-		if(setor == null)
+		if (setor == null)
 			throw new RuntimeException("Uma função precisa ter um setor.");
 		this.setor = setor;
 	}
-	
+
 	// CONSTRUTORES
 	public Funcao(int id, String nome, Setor setor) {
 		setId(id);
 		setNome(nome);
 		setSetor(setor);
 	}
-	
+
 	public Funcao(String nome, Setor setor) {
 		setNome(nome);
 		setSetor(setor);
 	}
-	
+
 	public boolean create() {
 		try {
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect
-					.prepareStatement("INSERT INTO Funcao (nome, idSetor) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"INSERT INTO Funcao (nome, idSetor) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -76,17 +76,17 @@ public class Funcao {
 
 			// Retorna resultado
 			if (ret == 1) {
-				//Define o id a classe
+				// Define o id a classe
 				ResultSet id = statement.getGeneratedKeys();
-				while(id.next())
+				while (id.next())
 					setId(id.getInt(1));
-				
+
 				// Encerra conexao
 				connect.close();
-				
+
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCAO, this.id, ActionsCode.CADASTROU);
-				
+
 				return true;
 			} else {
 				// Encerra conexao
@@ -97,43 +97,44 @@ public class Funcao {
 			throw new RuntimeException("Um erro ocorreu ao criar a função");
 		}
 	}
-	
+
 	// Retorna todas as funções cadastradas
 	public static ArrayList<Funcao> getAll() {
-		try{
+		try {
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
-			
+
 			// Cria um statement
 			Statement statement = connect.createStatement();
-			
+
 			// Executa um SQL
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM Funcao");
-			
+
 			ArrayList<Funcao> funcoes = new ArrayList<Funcao>();
-			while(resultSet.next()) {
+			while (resultSet.next()) {
 				// Cria um cliente com os dados do BD
-				Funcao c = new Funcao(resultSet.getInt("idSetor"), resultSet.getString("nome"), Setor.getByID(resultSet.getInt("idSetor")));
-				
+				Funcao c = new Funcao(resultSet.getInt("idSetor"), resultSet.getString("nome"),
+						Setor.getByID(resultSet.getInt("idSetor")));
+
 				// Adiciona o cliente ao retorno
 				funcoes.add(c);
 			}
-			
+
 			// Retorna os clientes
 			return funcoes;
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu ao obter as funções");
 		}
 	}
-	
+
 	public boolean update() {
 		try {
 			// Obtem uma conex�o com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Funcao SET nome = ?, idSetor = ? WHERE idSetor = ?");
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("UPDATE Funcao SET nome = ?, idSetor = ? WHERE idSetor = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -150,7 +151,7 @@ public class Funcao {
 			if (ret == 1) {
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCAO, this.id, ActionsCode.EDITOU);
-				
+
 				return true;
 			} else {
 				return false;
@@ -160,7 +161,7 @@ public class Funcao {
 			throw new RuntimeException("Um erro ocorreu ao atualizar a função.");
 		}
 	}
-	
+
 	public boolean delete() {
 		try {
 			// Obtem uma conex�o com o banco de dados
@@ -177,17 +178,17 @@ public class Funcao {
 			int resp = statement.executeUpdate();
 
 			// Encerra conexao
-			connect.close();	
-			
-			if(resp == 1) {
+			connect.close();
+
+			if (resp == 1) {
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCAO, this.id, ActionsCode.REMOVEU);
-				
+
 				return true;
-			}else {
+			} else {
 				return false;
 			}
-			
+
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			throw new RuntimeException("Um erro ocorreu ao deletar a função");

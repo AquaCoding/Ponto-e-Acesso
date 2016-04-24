@@ -175,7 +175,18 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="terminoFeriasShow" text="Label" />    
+                        <Label fx:id="terminoFeriasShow" text="Label" /> 
+                        
+                        <Label fx:id="lblFuncionarioFuncao" text="Funcao">
+                           <padding>
+                              <Insets bottom="2.0" top="2.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="funcaoNomeShow" text="Label" />                                              
+                           
                      </children>
                   </VBox>
               </children>

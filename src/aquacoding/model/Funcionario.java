@@ -200,7 +200,7 @@ public class Funcionario {
 	public ArrayList<Funcao> getFuncao() {
 		return funcao;
 	}
-
+	
 	public void setFuncao(Funcao funcao) {
 		this.funcao.add(funcao);
 	}
@@ -208,7 +208,7 @@ public class Funcionario {
 	public ArrayList<Ferias> getFerias() {
 		return ferias;
 	}
-
+	
 	public void setFerias(ArrayList<Ferias> ferias) {
 		this.ferias = ferias;
 	}
@@ -470,7 +470,7 @@ public class Funcionario {
 				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
 				
 				// Obtem as ferias
-				f.setFerias(Ferias.getAllByFuncionario(f.getId()));
+				f.setFerias(Ferias.getAllByFuncionario(f.getId()));		
 
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
