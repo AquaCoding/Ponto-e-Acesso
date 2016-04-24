@@ -70,7 +70,9 @@ public class FuncionarioVerController implements Initializable {
 		
 		// Listando todas as ferias
 		for(Ferias f: func.getFerias()) {
-			System.out.println(f.getId() + " - " + f.getNome());
+			this.nome = f.getNome();
+			this.inicio = f.getInicio();
+			this.termino = f.getTermino();
 		}
 		
 		nomeFeriasShow.setText(this.nome);
