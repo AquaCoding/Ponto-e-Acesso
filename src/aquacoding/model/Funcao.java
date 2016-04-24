@@ -57,7 +57,7 @@ public class Funcao {
 		setNome(nome);
 		setSetor(setor);
 	}
-
+	
 	public boolean create() {
 		try {
 			// Obtem uma conexão com o banco de dados
@@ -124,6 +124,32 @@ public class Funcao {
 			return funcoes;
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu ao obter as funções");
+		}
+	}
+
+	public static String getByID(int id) {
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"SELECT * FROM Funcao WHERE idFuncao = (SELECT idFuncao FROM FuncaoFuncionario WHERE idFuncionario = ?)", Statement.RETURN_GENERATED_KEYS);
+
+			// Realiza o bind dos valores
+			statement.setInt(1, id);
+
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();
+			
+			// Obtem o primeiro resultado e o retorna
+			if(resultSet.next())
+				return resultSet.getString("nome");
+			
+			// Se nada for achado, retorna nulo
+			return null;
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu ao obter a função.");
 		}
 	}
 

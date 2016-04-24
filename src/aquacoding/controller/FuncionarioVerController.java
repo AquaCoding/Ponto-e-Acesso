@@ -39,7 +39,7 @@ public class FuncionarioVerController implements Initializable {
 
 	private Funcionario func;
 
-	private String nome, inicio, termino, nomeFuncao;
+	private String nome, inicio, termino;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -75,15 +75,12 @@ public class FuncionarioVerController implements Initializable {
 			this.inicio = f.getInicio();
 			this.termino = f.getTermino();
 		}
-
-		
-		this.nomeFuncao = Funcao.getAll().get(0).getNome();			
 		
 		nomeFeriasShow.setText(this.nome);
 		inicioFeriasShow.setText(this.inicio);
 		terminoFeriasShow.setText(this.termino);
 
-		funcaoNomeShow.setText(this.nomeFuncao);
+		funcaoNomeShow.setText(Funcao.getByID(func.getId()));
 
 		File f = func.getProfileImage();
 		if (f.exists()) {
