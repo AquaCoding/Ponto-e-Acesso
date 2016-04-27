@@ -48,9 +48,6 @@ public class FuncionarioNovoController implements Initializable {
 	
 	private File selectedFile;
 
-	/* (non-Javadoc)
-	 * @see javafx.fxml.Initializable#initialize(java.net.URL, java.util.ResourceBundle)
-	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Adiciona mascaras aos campos
@@ -88,13 +85,13 @@ public class FuncionarioNovoController implements Initializable {
 								.setNumero(Integer.parseInt(funcionarioNumero.getText())).setBairro(funcionarioBairro.getText())
 								.setCidade(funcionarioCidade.getText()).setEstado(funcionarioEstado.getText())
 								.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
+								.setSuspensao(false)
 								.build();
-								
-				
+
 				if(horarioSelect.getSelectionModel().getSelectedItem() != null){
 					f.setHorario(horarioSelect.getSelectionModel().getSelectedItem());
 				}
-				
+
 				if(horarioSelect2.getSelectionModel().getSelectedItem() != null){
 					f.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
 				}
