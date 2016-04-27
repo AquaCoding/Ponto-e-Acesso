@@ -53,7 +53,6 @@ public class Main extends Application {
 		Thread t = new Thread(() -> {
 			try {
 				serial.SerialLeitura();
-				Thread.sleep(1000);
 			} catch (Exception e) {
 				System.out.println("Erro Serial: " + e.getMessage());
 			}

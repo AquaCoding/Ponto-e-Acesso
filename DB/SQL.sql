@@ -174,6 +174,18 @@ CREATE TABLE Logs (
 		REFERENCES Usuario(idUsuario)
 );
 
+CREATE TABLE Acesso(
+	idAcesso			INT			NOT NULL	auto_increment,
+    horario				DATETIME	NOT NULL,
+    idFuncionario		INT			NOT NULL,
+    idFuncionarioTag	INT			NOT NULL,
+	CONSTRAINT pk_acesso PRIMARY KEY (idAcesso),
+    CONSTRAINT fk_funcionario_acesso FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario),
+	CONSTRAINT fk_acesso_tag FOREIGN KEY (idFuncionarioTag)
+		REFERENCES FuncionarioTag(idFuncionarioTag)
+);
+
 CREATE VIEW ShowTags as SELECT ft.idFuncionarioTag, concat(f.nome, ' ', f.sobrenome) as nome, f.cpf, ft.codigo, ft.ativo
 FROM Funcionario as f JOIN FuncionarioTag as ft;
 
