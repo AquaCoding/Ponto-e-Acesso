@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import aquacoding.model.Cartao;
 import aquacoding.pontoacesso.Main;
+import aquacoding.utils.CustomAlert;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
@@ -26,7 +28,7 @@ public class CartoesVerController implements Initializable{
 	TableColumn<Cartao, String> funcionarioTC, cpfTC, codigoTC, ativoTC;
 	
 	@FXML
-	Button cancelar;
+	Button cancelar, revogarPermitir;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -36,6 +38,13 @@ public class CartoesVerController implements Initializable{
 		
 		loadContent();
 		setTable();
+		
+		revogarPermitir.setOnMouseClicked((MouseEvent e) -> {
+			int id = cartoesTable.getSelectionModel().getSelectedItem().getId();
+			
+			Cartao.revogarpermitir(id);
+			Main.loadCartoesVerView();
+		});
 	}
 	
 	private void loadContent() {
