@@ -1,6 +1,7 @@
 package aquacoding.utils;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -68,22 +69,21 @@ public class Serial {
 				// Executa um SQL
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
 
-				while (resultSet.next()) {
-					if (buffer.equals(resultSet.getString("codigo"))) {
-						System.out.println("Achou");
-						Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
-								resultSet.getInt("idFuncionarioTag"));
-						System.out.println("Objeto");
-						if (ponto.create()) {
-							serialPort.writeString("Ponto registrado");
-							System.out.println("criou");
-						} else {
-							serialPort.writeString("Erro, contate o Suporte");
-							System.out.println("errou");
+				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
+					serialPort.writeString("Funcionario Suspenso");
+				} else {
+					while (resultSet.next()) {
+						if (buffer.equals(resultSet.getString("codigo"))) {
+							Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
+									resultSet.getInt("idFuncionarioTag"));
+							if (ponto.create()) {
+								serialPort.writeString("Ponto registrado");
+							} else {
+								serialPort.writeString("Erro, contate o Suporte");
+							}
 						}
-					}
+					};
 				}
-				;
 
 				// encerra conexão
 				connect.close();
@@ -112,22 +112,25 @@ public class Serial {
 				// Executa um SQL
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
 
-				while (resultSet.next()) {
-					if (buffer.equals(resultSet.getString("codigo"))) {
-						System.out.println("Achou");
-						Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
-								resultSet.getInt("idFuncionarioTag"));
-						System.out.println("Objeto");
-						if (acesso.create()) {
-							serialPort.writeString("Acesso registrado");
-							System.out.println("criou");
-						} else {
-							serialPort.writeString("Erro, contate o Suporte");
-							System.out.println("errou");
+				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
+					serialPort.writeString("Funcionario Suspenso");
+				} else {
+					while (resultSet.next()) {
+						if (buffer.equals(resultSet.getString("codigo"))) {
+							System.out.println("Achou");
+							Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
+									resultSet.getInt("idFuncionarioTag"));
+							System.out.println("Objeto");
+							if (acesso.create()) {
+								serialPort.writeString("Acesso registrado");
+								System.out.println("criou");
+							} else {
+								serialPort.writeString("Erro, contate o Suporte");
+								System.out.println("errou");
+							}
 						}
-					}
-				};
-
+					};
+				}
 				// encerra conexão
 				connect.close();
 
@@ -140,4 +143,36 @@ public class Serial {
 		}
 	}
 
+	// Responsável por verificar suspensão
+	public boolean verificaSuspensao(int idFuncionario) throws SerialPortException {
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Executa um SQL
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"SELECT * FROM Funcionario WHERE idFuncionario = ?", Statement.RETURN_GENERATED_KEYS);
+
+			statement.setInt(1, idFuncionario);
+
+			ResultSet resultSet = statement.executeQuery();
+
+			while (resultSet.next()) {
+				if (resultSet.getBoolean("suspensao") == true) {
+					return true;
+				} else {
+					return false;
+				}
+			};
+
+			// encerra conexão
+			connect.close();
+
+		} catch (Exception e) {
+			System.out.println("Erro na busca pelo banco: " + e.getMessage());
+		}
+
+		return false;
+
+	}
 }
