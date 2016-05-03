@@ -17,39 +17,39 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class EmpresaVerController implements Initializable{
-	
+
 	@FXML
 	ImageView profileImage;
 
 	@FXML
 	Label empresaNome, empresaRazaoSocial, empresaCNPJ, empresaRua, empresaNumero, empresaBairro, empresaCidade, empresaEstado;
-	
+
 	@FXML
 	Button cancelar, editar;
-	
+
 	private Empresa empresa;
-	
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Evento do botão cancelar
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
 		});
-		
+
 		// Evento do botão de editar
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadEmpresaEditarView(empresa);
 		});
 	}
-	
+
 	public void loadEmpresaInfo() {
 		// Obtem a empresa
 		ArrayList<Empresa> empresas = Empresa.getAll();
-		
+
 		if(empresas.size() > 0) {
 			// Obtem a empresa principal
 			Empresa e = empresas.get(0);
-			
+
 			// Define os labels
 			empresaNome.setText(e.getNome());
 			empresaRazaoSocial.setText(e.getRazaoSocial());
@@ -59,18 +59,16 @@ public class EmpresaVerController implements Initializable{
 			empresaBairro.setText(e.getBairro());
 			empresaCidade.setText(e.getCidade());
 			empresaEstado.setText(e.getEstado());
-			
-			System.out.println("Id da empresa: "+e.getIdEmpresa());
-			
+
 			File f = e.getProfileImage();
 			if(f.exists()) {
 				Image i = new Image(f.toURI().toString(), 200, 200, false, true);
 				profileImage.setImage(i);
-			}	
+			}
 		} else {
 			CustomAlert.showAlert("Empresa não cadastrada", "É preciso cadastrar uma empresa antes.", AlertType.WARNING);
 			Main.loadEmpresaNovoView();
-		}		
+		}
 	}
 
 }

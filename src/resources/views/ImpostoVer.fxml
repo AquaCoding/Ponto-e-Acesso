@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.ImpostoVerController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.ImpostoVerController">
    <children>
       <Label text="Impostos" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -20,6 +20,8 @@
             <AnchorPane>
                <children>
                   <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                  <Button fx:id="remover" layoutX="518.0" layoutY="9.0" mnemonicParsing="false" text="Remover" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
+                  <Button fx:id="alterar" layoutX="460.0" layoutY="9.0" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="71.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
          </children>
