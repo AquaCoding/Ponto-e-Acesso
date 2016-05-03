@@ -11,25 +11,28 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 
 public class FuncionarioListaController implements Initializable {
 
 	// Carrega os elementos do layout
 	@FXML
-	ListView<Funcionario> funcionarioListagem;
+	TableView<Funcionario> funcionarioListagem;
 
 	@FXML
 	Button cancelar, alterar, remover;
-	
+
 	@FXML
 	TextField buscar;
+
+	@FXML
+	TableColumn<Funcionario, String> tcNome, tcSobrenome, tcCPF, tcFuncao;
 
 	// Atributos
 	ObservableList<Funcionario> items;
@@ -40,15 +43,6 @@ public class FuncionarioListaController implements Initializable {
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
 		});
-
-		// Define o nome método de criação de células
-		setFuncionarioListagemCellFactory();
-
-		// Obtem todos os funcionario
-		items = FXCollections.observableArrayList(Funcionario.getAll());
-
-		// Adiciona a lista
-		funcionarioListagem.setItems(items);
 
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			// Verifica se um funcionario foi selecionado
@@ -81,47 +75,42 @@ public class FuncionarioListaController implements Initializable {
 				CustomAlert.showAlert("Remover Funcionario", ex.getMessage(), AlertType.WARNING);
 			}
 		});
-		
+
 		// Abre a exibição de funcionario ao dar dois click no funcionario
 		funcionarioListagem.setOnMouseClicked((MouseEvent e) -> {
 			if(e.getClickCount() >= 2) {
 				Main.loadFuncionarioVerView(funcionarioListagem.getSelectionModel().getSelectedItem());
 			}
 		});
-		
+
+		// Obtem todos os funcionario
+		items = FXCollections.observableArrayList(Funcionario.getAll());
+
 		buscar.setOnKeyReleased((KeyEvent e) -> {
 			items = FXCollections.observableArrayList(Funcionario.getAll(buscar.getText()));
 			funcionarioListagem.setItems(items);
 		});
+
+		// Obtem todos os funcionarios e adiciona na tabela
+		loadContent();
+		setTable();
 	}
 
-	private void setFuncionarioListagemCellFactory() {
-		// Define um novo cell factory
-		funcionarioListagem.setCellFactory(new Callback<ListView<Funcionario>, ListCell<Funcionario>>() {
-			// Realiza o override do método padrão
-			@Override
-			public ListCell<Funcionario> call(ListView<Funcionario> param) {
-				// Cria uma nova célula da lista
-				ListCell<Funcionario> cell = new ListCell<Funcionario>() {
-					// Realiza o overrida do método padrão para definição do
-					// nome de exibição na lista
-					@Override
-					protected void updateItem(Funcionario item, boolean empty) {
-						// Chama o construtor padrão
-						super.updateItem(item, empty);
-
-						// Define o nome customizado
-						if (item != null) {
-							setText(item.getNome() + " " + item.getSobrenome() + " ("+ item.getCpf() +")");
-						} else {
-							setText("");
-						}
-					}
-				};
-
-				// Retorna a célula
-				return cell;
-			}
-		});
+	private void loadContent() {
+		funcionarioListagem.setItems(FXCollections.observableArrayList(Funcionario.getAll()));
+		funcionarioListagem.refresh();
 	}
+
+	private void setTable() {
+		tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+		tcSobrenome.setCellValueFactory(new PropertyValueFactory<>("sobrenome"));
+		tcCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
+//		tcFuncao.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Funcionario, String>, ObservableValue<String>>() {
+//			@Override
+//			public ObservableValue<String> call(CellDataFeatures<Funcionario, String> item) {
+//				return new SimpleStringProperty(Funcao.getByID(item.getValue().getFuncao().get(0).getId()));
+//			}
+//		});
+	}
+
 }

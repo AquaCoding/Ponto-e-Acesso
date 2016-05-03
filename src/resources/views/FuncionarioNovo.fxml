@@ -35,7 +35,7 @@
                         <Insets bottom="2.0" top="2.0" />
                      </padding></Label>
                   <TextField fx:id="funcionarioCPF" prefHeight="25.0" prefWidth="212.0" />
-                  <Label fx:id="lblFuncionarioCTPS" text="CPTS">
+                  <Label fx:id="lblFuncionarioCTPS" text="CTPS">
                      <padding>
                         <Insets bottom="2.0" top="2.0" />
                      </padding></Label>

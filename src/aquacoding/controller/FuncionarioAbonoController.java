@@ -46,15 +46,8 @@ public class FuncionarioAbonoController implements Initializable {
 		// Tenta realizar o cadastro
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
-				
-				System.out.println("Passou");
-				
-				System.out.println(java.sql.Date.valueOf(dataFalta.getValue()));
-				
 				java.sql.Date falta = java.sql.Date.valueOf(dataFalta.getValue());
 
-				System.out.println("Passou 2");
-				
 				System.out.println(dataFalta);
 				System.out.println(descricaoFalta.getText());
 				System.out.println(funcionarioSelect.getSelectionModel().getSelectedItem().getId());
@@ -82,7 +75,7 @@ public class FuncionarioAbonoController implements Initializable {
 			@Override
 			public String toString(Funcionario item) {
 				if (item != null) {
-					return item.getNome();
+					return item.getNome() + " " + item.getSobrenome() + " " + "(" + item.getCpf()+")";
 				} else {
 					return null;
 				}

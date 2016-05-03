@@ -8,6 +8,7 @@ import aquacoding.controller.FeriasEditarController;
 import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.HorarioEditarController;
+import aquacoding.controller.ImpostoNovoController;
 import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
 import aquacoding.controller.UsuarioNovoController;
@@ -17,6 +18,7 @@ import aquacoding.model.Funcao;
 import aquacoding.controller.FuncionarioEditarController;
 import aquacoding.model.Funcionario;
 import aquacoding.model.Horario;
+import aquacoding.model.Imposto;
 import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
 import aquacoding.model.Bonificacao;
@@ -589,7 +591,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Carrega a view de visualização de imposto
 	public static void loadImpostoVerView() {
 		try {
@@ -610,6 +612,25 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/AuditoriaVer.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de editar imposto
+	public static void loadImpostoEditarView(Imposto imposto) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Editar Imposto");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/ImpostoNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface e passa o funcionario a ser
+			// editado
+			ImpostoNovoController controller = loader.getController();
+			controller.setImposto(imposto);
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
