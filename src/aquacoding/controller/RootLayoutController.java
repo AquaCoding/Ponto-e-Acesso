@@ -18,6 +18,9 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class RootLayoutController implements Initializable {
 
 	@FXML
+	MenuItem menuBarSistemaDeslogar;
+	
+	@FXML
 	MenuItem menuBarEmpresaNovoEditar, menuBarEmpresaVer;
 
 	@FXML
@@ -55,11 +58,17 @@ public class RootLayoutController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// Cria o evento de click no botão Setor > Novo
+		// Eventos de clique no menu do sistema
+		menuBarSistemaDeslogar.setOnAction((ActionEvent e) -> {
+			Main.loggedUser = null;
+			Main.initLoginLayout();
+			Main.endRootLayout();
+		});
+		
 		menuBarSetorNovo.setOnAction((ActionEvent e) -> {
 			Main.loadNovoSetorView();
 		});
-
+		
 		menuBarSetorLista.setOnAction((ActionEvent e) -> {
 			Main.loadListaSetorView();
 		});

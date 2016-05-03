@@ -225,6 +225,10 @@ public class Main extends Application {
 	public static void endLoginLayout() {
 		loginStage.close();
 	}
+	
+	public static void endRootLayout() {
+		primaryStage.close();
+	}
 
 	// Realiza a inicialização da janela princpal
 	public static void initPrimeiroAcesso() {

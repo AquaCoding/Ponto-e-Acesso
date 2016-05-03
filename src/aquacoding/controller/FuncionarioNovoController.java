@@ -204,7 +204,7 @@ public class FuncionarioNovoController implements Initializable {
 
 						// Define o nome customizado
 						if (item != null) {
-							setText(item.toString());
+							setText(item.getNome());
 						} else {
 							setText("");
 						}
