@@ -2,17 +2,17 @@ package aquacoding.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import aquacoding.model.Usuario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
+import aquacoding.utils.MaskField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
 
 public class LoginController implements Initializable {
 	
@@ -27,7 +27,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		bEntrar.setOnMouseClicked((MouseEvent e) -> {
+		bEntrar.setOnAction((ActionEvent e) -> {
 			boolean senhaCorreta = Usuario.isValidSenha(this.tfUsuario.getText(), this.pfSenha.getText());
 			
 			if(senhaCorreta) {
@@ -37,6 +37,10 @@ public class LoginController implements Initializable {
 				CustomAlert.showAlert("Caixa - Entrar", "Nome de usuário ou senha incorretos.", AlertType.INFORMATION);
 			}
 		});
+		
+		// Adiciona evento no enter
+		MaskField.submitForm(tfUsuario, bEntrar);
+		MaskField.submitForm(pfSenha, bEntrar);
 	}
 
 }

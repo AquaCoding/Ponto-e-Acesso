@@ -1,9 +1,10 @@
 package aquacoding.utils;
+
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
 
 public class MaskField {
 	public static void moneyMask(TextField field) {
@@ -181,5 +182,15 @@ public class MaskField {
 		} else {
 			return false;
 		}
+	}
+	
+	// Realiza o submit de um formulario ao pressionar enter
+	// O Button deve implementar setOnAction
+	public static void submitForm(TextField field, Button submit) {
+		field.setOnKeyPressed(event -> {
+		   if(event.getCode() == KeyCode.ENTER){
+			   submit.fire();
+		   }
+		}); 
 	}
 }
