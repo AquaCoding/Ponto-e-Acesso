@@ -30,7 +30,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarFuncaoNovo, menuBarFuncaoLista;
 
 	@FXML
-	MenuItem menuBarFuncionarioNovo, menuBarFuncionarioLista, menuBarFuncionarioAbono, menuBarFuncionarioBonificacao;
+	MenuItem menuBarFuncionarioNovo, menuBarFuncionarioLista, menuBarFuncionarioAbono;
 
 	@FXML
 	MenuItem menuBarHorarioNovo, menuBarHorarioLista;
@@ -52,6 +52,9 @@ public class RootLayoutController implements Initializable {
 	
 	@FXML
 	MenuItem menuBarImpostoCriar, menuBarImpostoVer;
+	
+	@FXML
+	MenuItem menuBarBonificacaoCriar, menuBarBonificacaoVer;
 	
 	@FXML
 	MenuItem menuBarAuditoriaVer;
@@ -133,8 +136,12 @@ public class RootLayoutController implements Initializable {
 			Main.loadFuncionarioAbonoView();
 		});
 		
-		menuBarFuncionarioBonificacao.setOnAction((ActionEvent e) -> {
+		menuBarBonificacaoCriar.setOnAction((ActionEvent e) -> {
 			Main.loadBonificacaoCadastroView();
+		});
+		
+		menuBarBonificacaoVer.setOnAction((ActionEvent e) -> {
+			Main.loadBonificacaoListarView();
 		});
 		
 		menuBarCartoesVer.setOnAction((ActionEvent e) -> {

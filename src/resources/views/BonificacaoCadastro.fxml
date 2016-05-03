@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.BonificacaoCadastroController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="432.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.BonificacaoCadastroController">
    <children>
       <Label fx:id="titulo" layoutX="24.0" layoutY="24.0" text="Cadastro de Bonificação" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -18,8 +18,6 @@
             <TextField fx:id="nome" />
             <Label text="Valor (%)" />
             <TextField fx:id="valor" />
-            <Label text="Funcionários (Selecione mais de um se necessário segurando CTRL ao clicar)" />
-            <ListView fx:id="funcionarioListagem" prefHeight="200.0" prefWidth="200.0" />
             <AnchorPane prefWidth="200.0">
                <children>
                   <Button fx:id="cadastrar" mnemonicParsing="false" text="Cadastar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />

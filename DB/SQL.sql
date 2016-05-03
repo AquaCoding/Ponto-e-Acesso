@@ -117,10 +117,17 @@ CREATE TABLE Bonificacao (
 	idBonificacao		INT		NOT NULL	auto_increment,
     nome				VARCHAR(45)		NOT NULL,
     valor				FLOAT			NOT NULL,
-    idFuncionario		INT				NOT NULL,
-    CONSTRAINT pk_bonificacao PRIMARY KEY (idBonificacao),
-    CONSTRAINT fk_bonificacao_funcionario FOREIGN KEY (idFuncionario)
-		REFERENCES Funcionario(idFuncionario)
+    CONSTRAINT pk_bonificacao PRIMARY KEY (idBonificacao)
+);
+
+CREATE TABLE BonificacaoFuncionario (
+	idBonificacao	INT		NOT NULL,
+	idFuncionario	INT		NOT NULL,
+	CONSTRAINT fk_bonificacaofuncionario_bonificacao FOREIGN KEY (idBonificacao)
+		REFERENCES Bonificacao(idBonificacao),
+	CONSTRAINT fk_bonificacaofuncionario_funcionario FOREIGN KEY (idFuncionario)
+		REFERENCES Funcionario(idFuncionario),
+	CONSTRAINT pk_bonificacaofuncionario PRIMARY KEY (idBonificacao, idFuncionario)
 );
 
 CREATE TABLE FuncionarioTag(
@@ -188,7 +195,10 @@ CREATE TABLE Acesso(
 );
 
 CREATE VIEW ShowTags as SELECT ft.idFuncionarioTag, concat(f.nome, ' ', f.sobrenome) as nome, f.cpf, ft.codigo, ft.ativo
-FROM Funcionario as f JOIN FuncionarioTag as ft;
+FROM Funcionario as f NATURAL JOIN FuncionarioTag as ft;
 
 CREATE VIEW FuncionarioTodasFerias as SELECT ff.idFeriasfuncionario, ff.idFerias, f.nome, f.inicio, f.termino, ff.idFuncionario
-FROM FuncionarioFerias as ff JOIN Ferias as f;
+FROM FuncionarioFerias as ff NATURAL JOIN Ferias as f;
+
+CREATE VIEW FuncionarioBonificacao as SELECT b.idBonificacao, b.nome, b.valor, bf.idFuncionario
+FROM Bonificacao as b NATURAL JOIN BonificacaoFuncionario as bf

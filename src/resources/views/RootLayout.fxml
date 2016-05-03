@@ -54,7 +54,6 @@
                     </items>
                   </Menu>
                   <MenuItem fx:id="menuBarFuncionarioAbono" mnemonicParsing="false" text="Abono de Faltas" />
-                  <MenuItem fx:id="menuBarFuncionarioBonificacao" mnemonicParsing="false" text="Bonificações" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Cartões">
@@ -79,6 +78,12 @@
                         <MenuItem fx:id="menuBarImpostoVer" mnemonicParsing="false" text="Ver todos" />
                         <MenuItem fx:id="menuBarImpostoCriar" mnemonicParsing="false" text="Criar" />
                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Bonificação">
+                     <items>
+                        <MenuItem fx:id="menuBarBonificacaoVer" mnemonicParsing="false" text="Ver todos" />
+                        <MenuItem fx:id="menuBarBonificacaoCriar" mnemonicParsing="false" text="Criar" />
+                     </items>
                   </Menu>
                </items>
             </Menu>

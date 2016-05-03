@@ -7,7 +7,9 @@ public enum ActionsCode {
 	EDITOU("Editou"),
 	REMOVEU("Removou"),
 	INVALID_LOGIN("Tentou entrar no sistema e falhou"),
-	VALID_LOGIN("Entrou no sistema");
+	VALID_LOGIN("Entrou no sistema"),
+	LINK("Criou um link"),
+	REMOVEU_LINK("Removeu um link");
 	
 	private final String value;
 	private static HashMap<String, ActionsCode> actionsCodes = new HashMap<String, ActionsCode>();
@@ -26,6 +28,8 @@ public enum ActionsCode {
 		actionsCodes.put("Removou", ActionsCode.REMOVEU);
 		actionsCodes.put("Tentou entrar no sistema e falhou", ActionsCode.INVALID_LOGIN);
 		actionsCodes.put("Entrou no sistema", ActionsCode.VALID_LOGIN);
+		actionsCodes.put("Criou um link", ActionsCode.LINK);
+		actionsCodes.put("Removeu um link", ActionsCode.REMOVEU_LINK);
 		
 		if(actionsCodes.containsKey(value))
 			return actionsCodes.get(value);

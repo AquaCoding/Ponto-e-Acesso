@@ -8,6 +8,7 @@ import java.awt.TrayIcon;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -20,8 +21,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+
 import javax.imageio.ImageIO;
+
 import aquacoding.controller.BonificacaoCadastroController;
+import aquacoding.controller.BonificacaoLinkController;
 import aquacoding.controller.EmpresaEditarController;
 import aquacoding.controller.EmpresaVerController;
 import aquacoding.controller.FeriasEditarController;
@@ -678,7 +682,7 @@ public class Main extends Application {
 	}
 
 	// Carrega a view de editar bonificação
-	public static void loadbinificacaoEditarView(Bonificacao bonificacao) {
+	public static void loadBonificacaoEditarView(Bonificacao bonificacao) {
 		try {
 			primaryStage.setTitle(pageTitle + " - Editar Bonificação");
 			FXMLLoader loader = new FXMLLoader();
@@ -759,6 +763,36 @@ public class Main extends Application {
 			// editado
 			ImpostoNovoController controller = loader.getController();
 			controller.setImposto(imposto);
+
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de listagem de bonificações
+	public static void loadBonificacaoListarView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Bonificações");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/BonificacaoLista.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadBonificacaoLink(Bonificacao bonificacao) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Linkando bonificação");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/BonificacaoLink.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface e passa a bonificação a ser linkada
+			BonificacaoLinkController controller = loader.getController();
+			controller.setBonificacao(bonificacao);
 
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {

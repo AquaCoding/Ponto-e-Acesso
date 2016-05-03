@@ -35,7 +35,7 @@ public class FuncionarioVerController implements Initializable {
 	ListView<Bonificacao> bonificacoesListagem;
 
 	@FXML
-	Button cancelar, editar, bonificaEditar, bonificaRemover;
+	Button cancelar, editar, bonificaRemover;
 
 	private Funcionario func;
 
@@ -100,15 +100,14 @@ public class FuncionarioVerController implements Initializable {
 				// ele realmente o que remover
 				if (bonificacoesListagem.getSelectionModel().getSelectedItem() != null
 						&& CustomAlert.showConfirmationAlert("Remover Bonificação",
-								"Você tem certeza que deseja remover essa bonificação?")) {
+								"Você tem certeza que deseja remover esse link de bonificação?")) {
 					// Obtem a bonificação selecionado
 					Bonificacao b = bonificacoesListagem.getSelectionModel().getSelectedItem();
 
 					// Tenta remover a bonificação no BD
-					if (b.delete()) {
+					if (Bonificacao.removerLink(b, func)) {
 						// bonificação removido com sucesso
-						CustomAlert.showAlert("Remover Bonificação", "Bonificação removido com sucesso.",
-								AlertType.WARNING);
+						CustomAlert.showAlert("Remover Bonificação", "Bonificação removida com sucesso.", AlertType.WARNING);
 						Main.loadListaFuncionarioView();
 					} else {
 						// Erro ao remover a bonificação
@@ -124,12 +123,6 @@ public class FuncionarioVerController implements Initializable {
 		// Define a listview de bonificações
 		bonificacoesListagem.setItems(FXCollections.observableArrayList(func.getBonificacoes()));
 		setBonificacoesListagemCellFactory();
-
-		bonificaEditar.setOnMouseClicked((MouseEvent e) -> {
-			// Verifica se um funcionario foi selecionado
-			if (bonificacoesListagem.getSelectionModel().getSelectedItem() != null)
-				Main.loadbinificacaoEditarView(bonificacoesListagem.getSelectionModel().getSelectedItem());
-		});
 	}
 
 	private void setBonificacoesListagemCellFactory() {
@@ -149,7 +142,7 @@ public class FuncionarioVerController implements Initializable {
 
 						// Define o nome customizado
 						if (item != null) {
-							setText(item.getNome() + " (" + item.getValor() + ")");
+							setText(item.getNome() + " (" + item.getValor() + "%)");
 						} else {
 							setText("");
 						}
