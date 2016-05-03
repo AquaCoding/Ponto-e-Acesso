@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 public class Image {
 	
+	public static final String APP_ICON_PATH = "img/app_icon.png";
 	public static final String PROFILE_IMAGE_PATH = "img/profile/";
 	public static final String PROFILE_IMAGE_EXTENSION = ".png";
 	public static final String EMPRESA_IMAGE_PATH = "img/empresa/";

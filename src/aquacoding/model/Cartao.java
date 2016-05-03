@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import aquacoding.utils.CustomAlert;
 import aquacoding.utils.DatabaseConnect;
 import javafx.scene.control.Alert.AlertType;
@@ -113,7 +112,7 @@ public class Cartao {
 					statement2.setBoolean(1, false);
 					statement2.setInt(2, idFuncionario);
 					
-					int ret = statement2.executeUpdate();
+					statement2.executeUpdate();
 					CustomAlert.showAlert("Cartão", "Cartão revogado com sucesso.", AlertType.WARNING);
 				} else {
 					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
@@ -122,7 +121,7 @@ public class Cartao {
 					statement2.setBoolean(1, true);
 					statement2.setInt(2, idFuncionario);
 					
-					int ret = statement2.executeUpdate();
+					statement2.executeUpdate();
 					CustomAlert.showAlert("Cartão", "Cartão permitido com sucesso.", AlertType.WARNING);
 				}
 			}

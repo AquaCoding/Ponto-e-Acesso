@@ -1,31 +1,16 @@
 package aquacoding.pontoacesso;
 
+import java.awt.AWTException;
+import java.awt.MenuItem;
+import java.awt.PopupMenu;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
-import aquacoding.controller.BonificacaoCadastroController;
-import aquacoding.controller.EmpresaEditarController;
-import aquacoding.controller.EmpresaVerController;
-import aquacoding.controller.FeriasEditarController;
-import aquacoding.controller.FuncaoEditarController;
-import aquacoding.controller.FuncionarioVerController;
-import aquacoding.controller.HorarioEditarController;
-import aquacoding.controller.ImpostoNovoController;
-import aquacoding.controller.SetorEditarController;
-import aquacoding.controller.UsuarioEditarController;
-import aquacoding.controller.UsuarioNovoController;
-import aquacoding.model.Ferias;
-import aquacoding.controller.WebViewController;
-import aquacoding.model.Funcao;
-import aquacoding.controller.FuncionarioEditarController;
-import aquacoding.model.Funcionario;
-import aquacoding.model.Horario;
-import aquacoding.model.Imposto;
-import aquacoding.model.Setor;
-import aquacoding.model.Usuario;
-import aquacoding.model.Bonificacao;
-import aquacoding.model.Empresa;
-import aquacoding.utils.Serial;
-import aquacoding.utils.CustomAlert;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -34,6 +19,33 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import javax.imageio.ImageIO;
+import aquacoding.controller.BonificacaoCadastroController;
+import aquacoding.controller.EmpresaEditarController;
+import aquacoding.controller.EmpresaVerController;
+import aquacoding.controller.FeriasEditarController;
+import aquacoding.controller.FuncaoEditarController;
+import aquacoding.controller.FuncionarioEditarController;
+import aquacoding.controller.FuncionarioVerController;
+import aquacoding.controller.HorarioEditarController;
+import aquacoding.controller.ImpostoNovoController;
+import aquacoding.controller.SetorEditarController;
+import aquacoding.controller.UsuarioEditarController;
+import aquacoding.controller.UsuarioNovoController;
+import aquacoding.controller.WebViewController;
+import aquacoding.model.Bonificacao;
+import aquacoding.model.Empresa;
+import aquacoding.model.Ferias;
+import aquacoding.model.Funcao;
+import aquacoding.model.Funcionario;
+import aquacoding.model.Horario;
+import aquacoding.model.Imposto;
+import aquacoding.model.Setor;
+import aquacoding.model.Usuario;
+import aquacoding.utils.CustomAlert;
+import aquacoding.utils.Image;
+import aquacoding.utils.Serial;
 
 // Extends javafx.application.Application para user JavaFX
 public class Main extends Application {
@@ -43,28 +55,137 @@ public class Main extends Application {
 	private static Stage loginStage = new Stage();
 	private static String pageTitle = "Controle de Ponto e Acesso";
 	public static Usuario loggedUser = null;
+	
+	private static boolean firstTime = true;
+    private static TrayIcon trayIcon = null;
+    
+    private static Thread serialThread;
 
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Inicia a janela principal (Main.fxml)
 		primaryStage = stage;
+		Platform.setImplicitExit(false);
 		initLoginLayout();
 
 		// Serial
 		Serial serial = new Serial();
-		Thread t = new Thread(() -> {
+		serialThread = new Thread(() -> {
 			try {
 				serial.SerialLeitura();
 			} catch (Exception e) {
 				System.out.println("Erro Serial: " + e.getMessage());
 			}
 		});
-		t.start();
+		serialThread.start();
 	}
 
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	// Cria o icone do relogio
+    public static void createTrayIcon(final Stage stage) {
+        // Verifica se existe suporte para icones no relogio
+    	if (SystemTray.isSupported()) {
+            // Obtem a instancia dos icones do relogio
+            SystemTray tray = SystemTray.getSystemTray();
+            
+            // Remove o icone existente caso houver
+            if(trayIcon != null)
+            	tray.remove(trayIcon);
+            
+            // Carrega uma image para o icone
+            java.awt.Image image = null;
+            try {
+                image = ImageIO.read(new File(Image.APP_ICON_PATH));
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
+
+            // Subescreve o evento de fechar da janela
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent t) {
+                	// Oculta a janela
+                    hide(stage);
+                }
+            });
+            
+            // Ações a serem executadas no icone do relogio
+            // Fecha o programa
+            final ActionListener closeListener = new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                	
+                    System.exit(0);
+                }
+            };
+            
+            // Reabre a janela
+            ActionListener showListener = new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            stage.show();
+                        }
+                    });
+                }
+            };
+            
+            // Cria os menus do icone
+            PopupMenu popup = new PopupMenu();
+
+            MenuItem showItem = new MenuItem("Exibir");
+            showItem.addActionListener(showListener);
+            popup.add(showItem);
+
+            MenuItem closeItem = new MenuItem("Fechar");
+            closeItem.addActionListener(closeListener);
+            popup.add(closeItem);
+
+            // Cria o TrayIcon
+            trayIcon = new TrayIcon(image, pageTitle, popup);
+            
+            // Configura os Listeners do icone
+            trayIcon.addActionListener(showListener);
+            
+            // Define o icone para se redimensionar sozinho
+            trayIcon.setImageAutoSize(true);
+            
+            // Adiciona o icone
+            try {
+                tray.add(trayIcon);
+            } catch (AWTException e) {
+                System.err.println(e);
+            }
+        }
+    }
+
+    // Exibe uma mensagem quando o programa é minimizado pela primeira vez
+    public static void onMinimize() {
+        if (firstTime) {
+        	trayIcon.displayMessage(pageTitle, "O programa esta minimizado no relógio", TrayIcon.MessageType.INFO);
+            firstTime = false;
+        }
+    }
+
+    // Oculta a janela
+    private static void hide(final Stage stage) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (SystemTray.isSupported()) {
+                    stage.hide();
+                    onMinimize();
+                } else {
+                    System.exit(0);
+                }
+            }
+        });
+    }
 
 	// Realiza a inicialização da janela de login
 	public static void initLoginLayout() {
@@ -79,6 +200,8 @@ public class Main extends Application {
 				CustomAlert.showAlert("Primeiro acesso", "É preciso criar um usuário", AlertType.INFORMATION);
 				initPrimeiroAcesso();
 			} else {
+				createTrayIcon(loginStage);
+				
 				// Inicia a tela de login
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/Login.fxml"));
@@ -130,6 +253,8 @@ public class Main extends Application {
 	// Realiza a inicialização da janela princpal
 	public static void initRootLayout() {
 		try {
+			createTrayIcon(primaryStage);
+			
 			// Carrega o root layout do arquivo fxml.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/RootLayout.fxml"));
