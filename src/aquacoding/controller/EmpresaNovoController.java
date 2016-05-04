@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
+import aquacoding.utils.MaskField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -18,25 +19,28 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
 public class EmpresaNovoController implements Initializable {
-	
+
 	@FXML
 	TextField empresaNome, empresaRazaoSocial, empresaCNPJ, empresaRua, empresaNumero, empresaBairro, empresaEstado, empresaCidade;
 
 	@FXML
 	Button cancelar, cadastrar, btnImage;
-	
+
 	@FXML
 	Label lblImagePath;
-	
+
 	private File selectedFile;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Define o evento padrão do botão cancelar
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
 		});
-		
+
+		MaskField.cnpjMaks(empresaCNPJ);
+		MaskField.intMask(empresaNumero);
+
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				Empresa emp = new Empresa.Builder().setNome(empresaNome.getText())
@@ -48,11 +52,11 @@ public class EmpresaNovoController implements Initializable {
 						.setCidade(empresaCidade.getText())
 						.setEstado(empresaEstado.getText())
 						.build();
-				
+
 				// Adiciona a imagem ao objeto da empresa
 				if (selectedFile != null)
 					emp.setImageURL(selectedFile);
-				
+
 				// Tenta registar a empresa no BD
 				if (emp.create()) {
 					// Empresa criado com sucesso
@@ -67,7 +71,7 @@ public class EmpresaNovoController implements Initializable {
 				CustomAlert.showAlert("Cadastro da empresa", ex.getMessage(), AlertType.WARNING);
 			}
 		});
-		
+
 		btnImage.setOnMouseClicked((MouseEvent e) -> {
 			FileChooser fileC = new FileChooser();
 			fileC.setTitle("Selecione a imagem do funcionário");
@@ -78,7 +82,7 @@ public class EmpresaNovoController implements Initializable {
 				lblImagePath.setText(selectedFile.getName());
 			}
 		});
-		
+
 	}
 
 }

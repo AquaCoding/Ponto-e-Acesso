@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
+import aquacoding.utils.MaskField;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -25,12 +26,12 @@ public class EmpresaEditarController implements Initializable {
 
 	@FXML
 	Button cancelar, editar, btnImage;
-	
+
 	@FXML
 	Label lblImagePath;
-	
+
 	private File selectedFile;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Retorna para o menu de listagem ao clicar em cancelar
@@ -38,13 +39,16 @@ public class EmpresaEditarController implements Initializable {
 			Main.loadMainView();
 		});
 
+		MaskField.cnpjMaks(empresaCNPJ);
+		MaskField.intMask(empresaNumero);
+
 		// Realiza a edição da empresa
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Salva as alterações no objeto
 				ArrayList<Empresa> empresas = Empresa.getAll();
 				Empresa em = empresas.get(0);
-				
+
 				Empresa emp = new Empresa.Builder()
 						.setIdEmpresa(em.getIdEmpresa())
 						.setNome(empresaNome.getText())
@@ -56,11 +60,11 @@ public class EmpresaEditarController implements Initializable {
 						.setCidade(empresaCidade.getText())
 						.setEstado(empresaEstado.getText())
 						.build();
-				
+
 				// Adiciona a imagem ao objeto da empresa
 				if (selectedFile != null)
 					emp.setImageURL(selectedFile);
-				
+
 				// Tenta atualizar
 				if (emp.update()) {
 					CustomAlert.showAlert("Editar Empresa", "Empresa editada com sucesso.", AlertType.WARNING);
@@ -72,7 +76,7 @@ public class EmpresaEditarController implements Initializable {
 				CustomAlert.showAlert("Editar Empresa", ex.getMessage(), AlertType.WARNING);
 			}
 		});
-		
+
 		btnImage.setOnMouseClicked((MouseEvent e) -> {
 			FileChooser fileC = new FileChooser();
 			fileC.setTitle("Selecione o logo da Empresa");
@@ -85,12 +89,12 @@ public class EmpresaEditarController implements Initializable {
 		});
 
 	}
-	
+
 	public void setEmpresa(Empresa empresa) {
 		ArrayList<Empresa> empresas = Empresa.getAll();
-		
+
 		Empresa e = empresas.get(0);
-		
+
 		empresaNome.setText(e.getNome());
 		empresaRazaoSocial.setText(e.getRazaoSocial());
 		empresaCNPJ.setText(e.getCNPJ());

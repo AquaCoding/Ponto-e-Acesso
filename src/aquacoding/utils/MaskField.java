@@ -50,7 +50,51 @@ public class MaskField {
 					TextField tf = (TextField) event.getSource();
 					String newValue = tf.getText() + event.getCharacter();
 
-					if(newValue.length() <= 11) {
+					if(newValue.length() == 3) {
+						event.consume();
+						tf.setText(newValue+".");
+					}else if(newValue.length() == 7) {
+						event.consume();
+						tf.setText(newValue+".");
+					}else if(newValue.length() == 11) {
+						event.consume();
+						tf.setText(newValue+"-");
+					} else if(newValue.length() <= 14){
+						event.consume();
+						tf.setText(newValue);
+					} else {
+						event.consume();
+					}
+
+					tf.positionCaret(tf.getText().length());
+				} else {
+					event.consume();
+				}
+			}
+		});
+	}
+
+	public static void cnpjMaks(TextField field) {
+		field.setOnKeyTyped(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if(event.getCharacter().matches("\\d")) {
+					TextField tf = (TextField) event.getSource();
+					String newValue = tf.getText() + event.getCharacter();
+
+					if(newValue.length() == 2) {
+						event.consume();
+						tf.setText(newValue+".");
+					}else if(newValue.length() == 6) {
+						event.consume();
+						tf.setText(newValue+".");
+					}else if(newValue.length() == 10) {
+						event.consume();
+						tf.setText(newValue+"/");
+					}else if(newValue.length() == 15) {
+						event.consume();
+						tf.setText(newValue+"-");
+					} else if(newValue.length() <= 18){
 						event.consume();
 						tf.setText(newValue);
 					} else {
@@ -73,7 +117,16 @@ public class MaskField {
 					TextField tf = (TextField) event.getSource();
 					String newValue = tf.getText() + event.getCharacter();
 
-					if(newValue.length() <= 9) {
+					if(newValue.length() == 2) {
+						event.consume();
+						tf.setText(newValue+".");
+					}else if(newValue.length() == 6) {
+						event.consume();
+						tf.setText(newValue+".");
+					}else if(newValue.length() == 10) {
+						event.consume();
+						tf.setText(newValue+"-");
+					} else if(newValue.length() <= 12){
 						event.consume();
 						tf.setText(newValue);
 					} else {
@@ -183,7 +236,7 @@ public class MaskField {
 			return false;
 		}
 	}
-	
+
 	// Realiza o submit de um formulario ao pressionar enter
 	// O Button deve implementar setOnAction
 	public static void submitForm(TextField field, Button submit) {
@@ -191,6 +244,6 @@ public class MaskField {
 		   if(event.getCode() == KeyCode.ENTER){
 			   submit.fire();
 		   }
-		}); 
+		});
 	}
 }
