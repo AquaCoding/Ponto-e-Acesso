@@ -5,6 +5,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import aquacoding.model.Backup;
 import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
@@ -48,7 +50,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarRelatorioTrabalho;
 	
 	@FXML
-	MenuItem menuBarBackupCriar;
+	MenuItem menuBarBackupCriar, menuBarBackupSalvar;
 	
 	@FXML
 	MenuItem menuBarImpostoCriar, menuBarImpostoVer;
@@ -58,6 +60,8 @@ public class RootLayoutController implements Initializable {
 	
 	@FXML
 	MenuItem menuBarAuditoriaVer;
+	
+	private Backup backup;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -166,14 +170,23 @@ public class RootLayoutController implements Initializable {
 		
 		menuBarBackupCriar.setOnAction((ActionEvent e) -> {
 			FileChooser fileC = new FileChooser();
-			fileC.setTitle("Selecione a imagem do funcionário");
+			fileC.setTitle("Selecione o local para criar o backup");
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 			fileC.setInitialFileName("PontoAcesso_backup_" + formatter.format(LocalDate.now()));
 			fileC.getExtensionFilters().add(new ExtensionFilter("SQL Files (*.sql)", "*.sql"));
 			File localToSave = fileC.showSaveDialog(Main.primaryStage);
 			
-			DatabaseConnect.makeBackup(localToSave.getAbsolutePath());
+			DatabaseConnect.makeBackup(localToSave.getAbsolutePath());		
 		});
+		
+		menuBarBackupSalvar.setOnAction((ActionEvent e) -> {
+			
+			try {
+				backup.criarSalvarBackup();
+			} catch (Exception e1) {
+				System.out.println("Erro na criação do arquivo" + e1.getMessage());
+			}
+		});	
 		
 		// Oculta o ver da empresa, caso nenhuma empresa esteja cadastrada
 		if(Empresa.getAll().size() == 0)

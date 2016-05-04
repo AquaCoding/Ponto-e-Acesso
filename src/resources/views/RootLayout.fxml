@@ -69,6 +69,7 @@
             <Menu mnemonicParsing="false" text="Backup">
                <items>
                   <MenuItem fx:id="menuBarBackupCriar" mnemonicParsing="false" text="Criar" />
+                  <MenuItem fx:id="menuBarBackupSalvar" mnemonicParsing="false" text="Salvar" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Holerite">
