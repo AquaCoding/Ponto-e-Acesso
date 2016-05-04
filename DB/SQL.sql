@@ -201,4 +201,8 @@ CREATE VIEW FuncionarioTodasFerias as SELECT ff.idFeriasfuncionario, ff.idFerias
 FROM FuncionarioFerias as ff NATURAL JOIN Ferias as f;
 
 CREATE VIEW FuncionarioBonificacao as SELECT b.idBonificacao, b.nome, b.valor, bf.idFuncionario
-FROM Bonificacao as b NATURAL JOIN BonificacaoFuncionario as bf
+FROM Bonificacao as b NATURAL JOIN BonificacaoFuncionario as bf;
+
+CREATE VIEW AcessoRelatorio as SELECT COUNT(idAcesso) as numAcesso, DATE(horario) as dia, CONCAT(HOUR(horario),':00:00') as hora
+FROM Acesso
+GROUP BY DATE(horario), HOUR(horario);
