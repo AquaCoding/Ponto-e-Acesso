@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.RelatorioAcessoController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Relatório de acesso" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label text="Inicio" />
+            <DatePicker fx:id="dataInicio" />
+            <Label text="Fim" />
+            <DatePicker fx:id="dataFim" />
+            <AnchorPane>
+               <children>
+                  <Button fx:id="cancelar" mnemonicParsing="false" text="Cancelar" />
+                  <Button fx:id="gerar" alignment="CENTER" mnemonicParsing="false" text="Gerar" AnchorPane.rightAnchor="0.0" />
+               </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

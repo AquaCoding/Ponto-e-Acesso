@@ -45,7 +45,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarCartoesVer;
 	
 	@FXML
-	MenuItem menuBarRelatorioTrabalho;
+	MenuItem menuBarRelatorioTrabalho, menuBarRelatorioAcesso;
 	
 	@FXML
 	MenuItem menuBarBackupCriar;
@@ -150,6 +150,10 @@ public class RootLayoutController implements Initializable {
 		
 		menuBarRelatorioTrabalho.setOnAction((ActionEvent e) -> {
 			Main.loadRelatorioTrabalhoView();
+		});
+		
+		menuBarRelatorioAcesso.setOnAction((ActionEvent e) -> {
+			Main.loadRelatorioAcessoView();
 		});
 		
 		menuBarImpostoCriar.setOnAction((ActionEvent e) -> {

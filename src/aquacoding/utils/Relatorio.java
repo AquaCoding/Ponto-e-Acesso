@@ -2,6 +2,10 @@ package aquacoding.utils;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.Instant;
@@ -10,7 +14,6 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javafx.scene.control.DatePicker;
 import aquacoding.model.Funcionario;
 import aquacoding.model.Horario;
@@ -19,10 +22,10 @@ import aquacoding.pontoacesso.Main;
 public class Relatorio {
 
 	public static void gerarRelatorioTrabalho(DatePicker dataInicio, DatePicker dataFim, Funcionario selecionado) {
-		if(dataInicio == null)
+		if(dataInicio.getValue() == null)
 			throw new RuntimeException("Uma data de inicio deve ser selecionada.");
 		
-		if(dataFim == null)
+		if(dataFim.getValue() == null)
 			throw new RuntimeException("Uma data de fim deve ser selecionada.");
 		
 		if(selecionado == null)
@@ -167,6 +170,69 @@ public class Relatorio {
 		// Retorna as faltas
 		return faltas;
 	}
-}
+	
+	private static ArrayList<String> gerarRelatorioAcessosHoras(DatePicker dataInicio, DatePicker dataFim) {		
+		// Select de todos os acessos
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+			
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM AcessoRelatorio  WHERE dia >= ? AND dia <= ?");
 
-//<html>
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			// Realiza o bind dos valores
+			statement.setString(1, formatter.format(dataInicio.getValue()));
+			statement.setString(2, formatter.format(dataFim.getValue()));
+
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();
+
+			// Cria o arquivo do relatorio de horas trabalhadas
+			ArrayList<String> lines = new ArrayList<String>();
+			lines.add("<table class=\"left\"><tr><th colspan=\"3\">Acessos por hora</th></tr><tr><th>Data</th><th>Hora</th><th>Acessos</th></tr>");
+			
+			// Enquanto tiver resultado, adiciona a tabela do relatorio
+			formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			while (resultSet.next()) {
+				lines.add("<tr><td>"+formatter.format(resultSet.getDate("dia").toLocalDate())+"</td><td>"+resultSet.getString("hora")+"</td><td>"+resultSet.getInt("numAcesso")+"</td></tr>");
+			}
+			
+			// Encerra a tabela do relatório
+			lines.add("</table>");
+			
+			return lines;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException("Um erro ocorreu ao obter os acessos.");
+		}
+	}
+	
+	public static void gerarRelatorioAcesso(DatePicker dataInicio, DatePicker dataFim) {
+		if(dataInicio.getValue() == null)
+			throw new RuntimeException("Uma data de inicio deve ser selecionada.");
+		
+		if(dataFim.getValue() == null)
+			throw new RuntimeException("Uma data de fim deve ser selecionada.");
+		
+		// Gera o relatório de horas trabalhadas
+		ArrayList<String> acessosHoras = gerarRelatorioAcessosHoras(dataInicio, dataFim);
+		
+		ArrayList<String> relatorioFinal = new ArrayList<String>();
+		relatorioFinal.add("<!DOCTYPE html><html>");
+		relatorioFinal.add("<head><meta charset=\"UTF-8\"><style>* {margin: 0; padding: 0} p {font-size: 10px;} table {border-collapse: collapse;} .left {float: left} .right {float: right} td, th {padding: 5px; border: 1px solid #666;} th {background-color: #4CAF50; color: #FFF;}</style></head>");
+		relatorioFinal.add("<body>");
+		relatorioFinal.addAll(acessosHoras);
+		relatorioFinal.add("</body></html>");
+		
+		try {
+			// Salva o arquivo
+			Files.write(Paths.get("relatorioAcesso.html"), relatorioFinal);
+			
+			// Abre o arquivo
+			Main.loadWebView("relatorioAcesso.html");
+		} catch (Exception e1) {
+			throw new RuntimeException("Um erro ocorreu ao criar o relatório.");
+		}
+	}
+}
