@@ -180,7 +180,10 @@ public class RootLayoutController implements Initializable {
 			fileC.getExtensionFilters().add(new ExtensionFilter("SQL Files (*.sql)", "*.sql"));
 			File localToSave = fileC.showSaveDialog(Main.primaryStage);
 			
-			DatabaseConnect.makeBackup(localToSave.getAbsolutePath());		
+			if(localToSave != null){
+				DatabaseConnect.makeBackup(localToSave.getAbsolutePath());	
+			}
+				
 		});
 		
 		menuBarBackupSalvar.setOnAction((ActionEvent e) -> {
