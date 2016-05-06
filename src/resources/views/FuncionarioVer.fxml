@@ -7,7 +7,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioVerController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioVerController">
    <children>
       <Label text="Funcionario" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -183,7 +183,7 @@
                         </Label>
                         <Label fx:id="terminoFeriasShow" text="Label" /> 
                         
-                        <Label fx:id="lblFuncionarioFuncao" text="Função">
+                        <Label fx:id="lblFuncionarioFuncao" text="Cargo">
                            <padding>
                               <Insets bottom="2.0" top="2.0" />
                            </padding>

@@ -32,7 +32,7 @@ public class Funcao {
 
 	public void setNome(String nome) {
 		if (nome.equals(""))
-			throw new RuntimeException("O nome da função não pode estar vazio.");
+			throw new RuntimeException("O nome do cargo não pode estar vazio.");
 		this.nome = nome;
 	}
 
@@ -42,7 +42,7 @@ public class Funcao {
 
 	public void setSetor(Setor setor) {
 		if (setor == null)
-			throw new RuntimeException("Uma função precisa ter um setor.");
+			throw new RuntimeException("Um cargo precisa ter um setor.");
 		this.setor = setor;
 	}
 
@@ -57,7 +57,7 @@ public class Funcao {
 		setNome(nome);
 		setSetor(setor);
 	}
-	
+
 	public boolean create() {
 		try {
 			// Obtem uma conexão com o banco de dados
@@ -127,25 +127,26 @@ public class Funcao {
 		}
 	}
 
-	public static String getByID(int id) {
+	public static Funcao getByID(int id) {
 		try {
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"SELECT * FROM Funcao WHERE idFuncao = (SELECT idFuncao FROM FuncaoFuncionario WHERE idFuncionario = ?)", Statement.RETURN_GENERATED_KEYS);
+					"SELECT * FROM Funcao WHERE idFuncao = ?", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setInt(1, id);
 
 			// Executa o SQL
 			ResultSet resultSet = statement.executeQuery();
-			
+
 			// Obtem o primeiro resultado e o retorna
 			if(resultSet.next())
-				return resultSet.getString("nome");
-			
+				return new Funcao(resultSet.getInt("idSetor"), resultSet.getString("nome"),
+						Setor.getByID(resultSet.getInt("idSetor")));
+
 			// Se nada for achado, retorna nulo
 			return null;
 		} catch (SQLException e) {

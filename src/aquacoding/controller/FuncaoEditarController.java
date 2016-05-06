@@ -25,42 +25,42 @@ public class FuncaoEditarController implements Initializable {
 
 	@FXML
 	TextField funcaoNome;
-	
+
 	@FXML
 	ComboBox<Setor> setoresSelect;
-	
+
 	@FXML
 	Button cancelar, editar;
-	
+
 	private Funcao funcao;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Preenche o campo de seleção de setores
 		setoresSelect.setItems(FXCollections.observableArrayList(Setor.getAll()));
 		setSetoresSelectFactory();
-		
+
 		// Retorna para o menu de listagem ao clicar em cancelar
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadListaFuncaoView();
 		});
-		
+
 		// Realiza a edição da função
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Salva as alterações no objeto
 				funcao.setNome(funcaoNome.getText());
 				funcao.setSetor(setoresSelect.getSelectionModel().getSelectedItem());
-				
+
 				// Tenta atualizar
 				if(funcao.update()) {
-					CustomAlert.showAlert("Editar Função", "Função editada com sucesso.", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Cargo", "Cargo editada com sucesso.", AlertType.WARNING);
 					Main.loadListaFuncaoView();
 				} else {
-					CustomAlert.showAlert("Editar Função", "Algo errado aconteceu.", AlertType.WARNING);
+					CustomAlert.showAlert("Editar Cargo", "Algo errado aconteceu.", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
-				CustomAlert.showAlert("Editar Função", ex.getMessage(), AlertType.WARNING);
+				CustomAlert.showAlert("Editar Cargo", ex.getMessage(), AlertType.WARNING);
 			}
 		});
 	}
@@ -71,7 +71,7 @@ public class FuncaoEditarController implements Initializable {
 		funcaoNome.setText(funcao.getNome());
 		setoresSelect.getSelectionModel().select(funcao.getSetor());
 	}
-	
+
 	// Define o comportamento do combobox
 	private void setSetoresSelectFactory() {
 		// Define um novo cell factory
@@ -86,7 +86,7 @@ public class FuncaoEditarController implements Initializable {
 					protected void updateItem(Setor item, boolean empty) {
 						// Chama o construtor padrão
 						super.updateItem(item, empty);
-						
+
 						// Define o nome customizado
 						if (item != null) {
                             setText(item.getNome());
@@ -95,12 +95,12 @@ public class FuncaoEditarController implements Initializable {
                         }
 					}
 				};
-				
+
 				// Retorna a célula
 				return cell;
 			}
 		});
-		
+
 		setoresSelect.setConverter(new StringConverter<Setor>() {
 			@Override
 			public String toString(Setor item) {

@@ -3,9 +3,14 @@ package aquacoding.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import aquacoding.model.Funcao;
 import aquacoding.model.Funcionario;
+import aquacoding.model.Log;
+import aquacoding.model.Usuario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,10 +19,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 public class FuncionarioListaController implements Initializable {
 
@@ -105,12 +112,12 @@ public class FuncionarioListaController implements Initializable {
 		tcNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
 		tcSobrenome.setCellValueFactory(new PropertyValueFactory<>("sobrenome"));
 		tcCPF.setCellValueFactory(new PropertyValueFactory<>("cpf"));
-//		tcFuncao.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Funcionario, String>, ObservableValue<String>>() {
-//			@Override
-//			public ObservableValue<String> call(CellDataFeatures<Funcionario, String> item) {
-//				return new SimpleStringProperty(Funcao.getByID(item.getValue().getFuncao().get(0).getId()));
-//			}
-//		});
+		tcFuncao.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Funcionario, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Funcionario, String> item) {
+				return new SimpleStringProperty(item.getValue().getFuncao().getNome());
+			}
+		});
 	}
 
 }

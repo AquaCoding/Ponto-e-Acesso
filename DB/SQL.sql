@@ -56,6 +56,9 @@ CREATE TABLE Funcionario(
     estado			VARCHAR(45)	NOT NULL,
     salarioHoras	DOUBLE		NOT NULL,
 	suspensao 				BOOLEAN		NOT NULL,
+	idFuncao    			INT   NOT NULL,
+	CONSTRAINT fk_funcao FOREIGN KEY (idFuncao)
+		REFERENCES Funcao(idFuncao),
 	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario)
 );
 
@@ -150,17 +153,6 @@ CREATE TABLE Ponto(
 		REFERENCES Funcionario(idFuncionario),
 	CONSTRAINT fk_ponto_tag FOREIGN KEY (idFuncionarioTag)
 		REFERENCES FuncionarioTag(idFuncionarioTag)
-);
-
-CREATE TABLE FuncaoFuncionario(
-	idFuncaoFuncionario  	INT   NOT NULL auto_increment,
-	idFuncionario   		INT   NOT NULL,
-	idFuncao    			INT   NOT NULL,
-	CONSTRAINT pk_funcao_funcionario_idFuncaoFuncionario PRIMARY KEY (idFuncaoFuncionario),
-	CONSTRAINT fk_funcao_funcionario_idFuncionario FOREIGN KEY (idFuncionario)
-		REFERENCES Funcionario(idFuncionario),
-	CONSTRAINT fk_funcao_funcionario_idFuncao FOREIGN KEY (idFuncao)
-		REFERENCES Funcao(idFuncao) 
 );
   
 CREATE TABLE Imposto (

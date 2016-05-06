@@ -75,12 +75,12 @@ public class FuncionarioVerController implements Initializable {
 			this.inicio = f.getInicio();
 			this.termino = f.getTermino();
 		}
-		
+
 		nomeFeriasShow.setText(this.nome);
 		inicioFeriasShow.setText(this.inicio);
 		terminoFeriasShow.setText(this.termino);
 
-		funcaoNomeShow.setText(Funcao.getByID(func.getId()));
+		funcaoNomeShow.setText(func.getFuncao().getNome());
 
 		if(func.getSuspensao() == true){
 			statusShow.setText("Suspenso");

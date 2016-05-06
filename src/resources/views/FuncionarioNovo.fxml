@@ -50,7 +50,7 @@
                   <Label text="Horario Turno 2" />
                   <ComboBox fx:id="horarioSelect2" />
                   
-                  <Label text="Funcao" />
+                  <Label text="Cargo" />
                   <ComboBox fx:id="funcaoSelect" />
                   
                   <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar">

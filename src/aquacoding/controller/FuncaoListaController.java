@@ -34,7 +34,7 @@ public class FuncaoListaController implements Initializable {
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
 		});
-		
+
 		// Inicia a view de edição de uma função
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			if(funcaoListagem.getSelectionModel().getSelectedItem() != null)
@@ -56,23 +56,23 @@ public class FuncaoListaController implements Initializable {
 				// Verifica se algum Funcao foi selecionado e pergunta se ele
 				// realmente o que remover
 				if (funcaoListagem.getSelectionModel().getSelectedItem() != null && CustomAlert
-						.showConfirmationAlert("Remover Funcao", "Você tem certeza que deseja remover esse função?")) {
+						.showConfirmationAlert("Remover Cargo", "Você tem certeza que deseja remover esse cargo?")) {
 					// Obtem o Funcao selecionado
 					Funcao f = funcaoListagem.getSelectionModel().getSelectedItem();
 
 					// Tenta remover o Funcao no BD
 					if (f.delete()) {
 						// Funcao removido com sucesso
-						CustomAlert.showAlert("Remover Funcao", "Função removido com sucesso.", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Cargo", "Cargo removido com sucesso.", AlertType.WARNING);
 						Main.loadListaFuncaoView();
 					} else {
 						// Erro ao remover o Funcao
-						CustomAlert.showAlert("Remover Funcao", "Algo deu errado", AlertType.WARNING);
+						CustomAlert.showAlert("Remover Cargo", "Algo deu errado", AlertType.WARNING);
 					}
 				}
 			} catch (RuntimeException ex) {
 				// Erro de validação
-				CustomAlert.showAlert("Remover Setor", ex.getMessage(), AlertType.WARNING);
+				CustomAlert.showAlert("Remover Cargo", ex.getMessage(), AlertType.WARNING);
 			}
 		});
 

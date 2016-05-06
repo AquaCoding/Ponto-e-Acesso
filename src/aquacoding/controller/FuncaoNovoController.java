@@ -21,46 +21,46 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 public class FuncaoNovoController implements Initializable {
-	
+
 	@FXML
 	TextField funcaoNome;
 
 	@FXML
 	ComboBox<Setor> setoresSelect;
-	
+
 	@FXML
 	Button cancelar, cadastrar;
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		// Preenche o campo de seleção de setores
 		setoresSelect.setItems(FXCollections.observableArrayList(Setor.getAll()));
 		setSetoresSelectFactory();
-		
+
 		// Define evento no botão cancelar
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
 		});
-		
+
 		// Define o evento do botão cadastrar
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				// Cria uma nova funcao
 				Funcao f = new Funcao(funcaoNome.getText(), setoresSelect.getSelectionModel().getSelectedItem());
-				
+
 				// Registra nova função no BD
 				if(f.create()) {
-					CustomAlert.showAlert("Nova Função", "Nova função cadastrada com sucesso.", AlertType.WARNING);
+					CustomAlert.showAlert("Novo Cargo", "Nova cargo cadastrada com sucesso.", AlertType.WARNING);
 					Main.loadListaFuncaoView();
 				} else {
-					CustomAlert.showAlert("Nova Função", "Um erro ocorreu.", AlertType.WARNING);
+					CustomAlert.showAlert("Novo Cargo", "Um erro ocorreu.", AlertType.WARNING);
 				}
 			} catch (RuntimeException ex) {
-				CustomAlert.showAlert("Nova Função", ex.getMessage(), AlertType.WARNING);
+				CustomAlert.showAlert("Novo Cargo", ex.getMessage(), AlertType.WARNING);
 			}
 		});
 	}
-	
+
 	private void setSetoresSelectFactory() {
 		// Define um novo cell factory
 		setoresSelect.setCellFactory(new Callback<ListView<Setor>, ListCell<Setor>>() {
@@ -74,7 +74,7 @@ public class FuncaoNovoController implements Initializable {
 					protected void updateItem(Setor item, boolean empty) {
 						// Chama o construtor padrão
 						super.updateItem(item, empty);
-						
+
 						// Define o nome customizado
 						if (item != null) {
                             setText(item.getNome());
@@ -83,12 +83,12 @@ public class FuncaoNovoController implements Initializable {
                         }
 					}
 				};
-				
+
 				// Retorna a célula
 				return cell;
 			}
 		});
-		
+
 		setoresSelect.setConverter(new StringConverter<Setor>() {
 			@Override
 			public String toString(Setor item) {

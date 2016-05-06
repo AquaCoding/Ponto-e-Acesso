@@ -33,7 +33,7 @@ public class Funcionario {
 	private File profileImage;
 	private ArrayList<Horario> horario = new ArrayList<Horario>();
 	private ArrayList<Bonificacao> bonificacoes = new ArrayList<Bonificacao>();
-	private ArrayList<Funcao> funcao = new ArrayList<Funcao>();
+	private Funcao funcao;
 	private ArrayList<Ferias> ferias = new ArrayList<Ferias>();
 	private boolean suspensao;
 
@@ -198,18 +198,10 @@ public class Funcionario {
 		this.horario.clear();
 	}
 
-	public ArrayList<Funcao> getFuncao() {
-		return funcao;
-	}
-	
-	public void setFuncao(Funcao funcao) {
-		this.funcao.add(funcao);
-	}
-	
 	public ArrayList<Ferias> getFerias() {
 		return ferias;
 	}
-	
+
 	public void setFerias(ArrayList<Ferias> ferias) {
 		this.ferias = ferias;
 	}
@@ -222,16 +214,21 @@ public class Funcionario {
 		this.horario = horario;
 	}
 
-	public void setFuncao(ArrayList<Funcao> funcao) {
-		this.funcao = funcao;
-	}
-	
 	public void setSuspensao(boolean suspensao){
 		this.suspensao = suspensao;
 	}
 
 	public boolean getSuspensao(){
 		return suspensao;
+	}
+
+
+	public Funcao getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(Funcao funcao) {
+		this.funcao = funcao;
 	}
 
 	// Construtor de Funcionario
@@ -252,6 +249,7 @@ public class Funcionario {
 		setSalarioHoras(builder.salarioHoras);
 		setHorarios(builder.horario);
 		setSuspensao(builder.suspensao);
+		setFuncao(builder.funcao);
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
@@ -272,11 +270,11 @@ public class Funcionario {
 		private String estado;
 		private double salarioHoras;
 		private boolean suspensao;
+		private Funcao funcao;
 
 
 		private ArrayList<Horario> horario = new ArrayList<Horario>();
-		
-		private ArrayList<Funcao> funcao = new ArrayList<Funcao>();
+
 
 		// Sets do Builder
 		public Builder setId(int id) {
@@ -348,14 +346,14 @@ public class Funcionario {
 			this.horario.add(horario);
 			return this;
 		}
-		
-		public Builder setFuncao(Funcao funcao) {
-			this.funcao.add(funcao);
-			return this;
-		}
 
 		public Builder setSuspensao(Boolean suspensao){
 			this.suspensao = suspensao;
+			return this;
+		}
+
+		public Builder setFuncao(Funcao funcao){
+			this.funcao = funcao;
 			return this;
 		}
 
@@ -372,7 +370,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras, suspensao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					"INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras, suspensao, idFuncao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
@@ -389,6 +387,7 @@ public class Funcionario {
 			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
 			statement.setBoolean(13, this.suspensao);
+			statement.setInt(14, this.funcao.getId());
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -412,19 +411,6 @@ public class Funcionario {
 					// Executa o SQL
 					statement2.executeUpdate();
 				}
-				
-				// Percorre cada um dos horarios
-				for(int i = 0; i < funcao.size(); i++) {
-					// Cria um prepared statement
-					PreparedStatement statement3 = (PreparedStatement) connect.prepareStatement("INSERT INTO FuncaoFuncionario (idFuncionario, idFuncao) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
-
-					// Define os binds	
-					statement3.setInt(1, this.id);
-					statement3.setInt(2, funcao.get(i).getId());
-
-					// Executa o SQL
-					statement3.executeUpdate();
-				}
 
 				// Encerra conexao
 				connect.close();
@@ -433,7 +419,7 @@ public class Funcionario {
 				if (profileImage != null) {
 					Image.copyImage(profileImage, Image.PROFILE_IMAGE_PATH + this.id);
 				}
-				
+
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCIONARIO, this.id, ActionsCode.CADASTROU);
 
@@ -470,6 +456,7 @@ public class Funcionario {
 						.setRua(resultSet.getString("rua")).setNumero(resultSet.getInt("numero"))
 						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
+						.setFuncao(Funcao.getByID(resultSet.getInt("idFuncao")))
 						.setSuspensao(resultSet.getBoolean("suspensao"))
 						.build();
 
@@ -486,9 +473,9 @@ public class Funcionario {
 
 				// Obtem as bonificações
 				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
-				
+
 				// Obtem as ferias
-				f.setFerias(Ferias.getAllByFuncionario(f.getId()));		
+				f.setFerias(Ferias.getAllByFuncionario(f.getId()));
 
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
@@ -533,6 +520,7 @@ public class Funcionario {
 						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.setSuspensao(resultSet.getBoolean("suspensao"))
+						.setFuncao(Funcao.getByID(resultSet.getInt("idFuncao")))
 						.build();
 
 				// Obtem os horarios desse funcionario
@@ -545,10 +533,10 @@ public class Funcionario {
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-				
+
 				// Obtem as bonificações
 				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
-				
+
 				// Obtem as ferias
 				f.setFerias(Ferias.getAllByFuncionario(f.getId()));
 
@@ -573,7 +561,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ?, suspensao = ? WHERE idFuncionario = ?");
+					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ?, suspensao = ?, idFuncao = ? WHERE idFuncionario = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -588,8 +576,10 @@ public class Funcionario {
 			statement.setString(10, this.cidade);
 			statement.setString(11, this.estado);
 			statement.setDouble(12, this.salarioHoras);
-			statement.setDouble(13, this.id);
-			statement.setBoolean(14, this.suspensao);
+			statement.setBoolean(13, this.suspensao);
+			statement.setInt(14, this.funcao.getId());
+			statement.setDouble(15, this.id);
+
 
 
 			// Executa o SQL
@@ -632,7 +622,7 @@ public class Funcionario {
 			if (ret == 1) {
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCIONARIO, this.id, ActionsCode.EDITOU);
-				
+
 				return true;
 			} else {
 				return false;
@@ -664,7 +654,7 @@ public class Funcionario {
 			if (resp == 1) {
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FUNCIONARIO, this.id, ActionsCode.REMOVEU);
-				
+
 				return true;
 			} else {
 				return false;
@@ -703,7 +693,7 @@ public class Funcionario {
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.setSuspensao(resultSet.getBoolean("suspensao"))
 						.build();
-			
+
 			if(f != null) {
 				// Obtem os horarios desse funcionario
 				PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement("SELECT * FROM HorarioFuncionario WHERE idFuncionario = ?");
@@ -715,17 +705,17 @@ public class Funcionario {
 				// Se exitir horario, adiciona ao funcionario
 				while (resultSet2.next())
 					f.setHorario(Horario.getByID(resultSet2.getInt("idHorario")));
-				
+
 				// Obtem as bonificações
 				f.setBonificacoes(Bonificacao.getAllByFuncionario(f));
-				
+
 				// Obtem as ferias
 				f.setFerias(Ferias.getAllByFuncionario(f.getId()));
 
 				// Obtem a imagem do perfil
 				f.setImageURL(new File(Image.PROFILE_IMAGE_PATH + f.getId() + Image.PROFILE_IMAGE_EXTENSION));
 			}
-			
+
 			// Se nada for achado, retorna nulo
 			return f;
 		} catch (SQLException e) {
