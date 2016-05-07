@@ -4,7 +4,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="550.0" minWidth="800.0" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.RootLayoutController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="550.0" minWidth="800.0" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.RootLayoutController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -59,6 +59,7 @@
             <Menu mnemonicParsing="false" text="Cartões">
                <items>
                   <MenuItem fx:id="menuBarCartoesVer" mnemonicParsing="false" text="Ver" />
+                  <MenuItem fx:id="menuBarCartoesModelo" mnemonicParsing="false" text="Modelo" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Relatório">

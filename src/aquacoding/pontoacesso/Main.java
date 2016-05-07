@@ -811,4 +811,16 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+
+	public static void loadCartoesModeloView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Modelo de cartão");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/CartaoModeloCriar.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -44,7 +44,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarFeriasLista, menuBarFeriasNova;
 	
 	@FXML
-	MenuItem menuBarCartoesVer;
+	MenuItem menuBarCartoesVer, menuBarCartoesModelo;
 	
 	@FXML
 	MenuItem menuBarRelatorioTrabalho, menuBarRelatorioAcesso;
@@ -152,6 +152,10 @@ public class RootLayoutController implements Initializable {
 			Main.loadCartoesVerView();
 		});
 		
+		menuBarCartoesModelo.setOnAction((ActionEvent e) -> {
+			Main.loadCartoesModeloView();
+		});
+		
 		menuBarRelatorioTrabalho.setOnAction((ActionEvent e) -> {
 			Main.loadRelatorioTrabalhoView();
 		});
@@ -183,7 +187,6 @@ public class RootLayoutController implements Initializable {
 			if(localToSave != null){
 				DatabaseConnect.makeBackup(localToSave.getAbsolutePath());	
 			}
-				
 		});
 		
 		menuBarBackupSalvar.setOnAction((ActionEvent e) -> {
