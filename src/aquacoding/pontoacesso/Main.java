@@ -31,6 +31,7 @@ import aquacoding.controller.EmpresaVerController;
 import aquacoding.controller.FeriasEditarController;
 import aquacoding.controller.FuncaoEditarController;
 import aquacoding.controller.FuncionarioEditarController;
+import aquacoding.controller.FuncionarioFeriasVerController;
 import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.HorarioEditarController;
 import aquacoding.controller.ImpostoNovoController;
@@ -59,10 +60,10 @@ public class Main extends Application {
 	private static Stage loginStage = new Stage();
 	private static String pageTitle = "Controle de Ponto e Acesso";
 	public static Usuario loggedUser = null;
-	
+
 	private static boolean firstTime = true;
     private static TrayIcon trayIcon = null;
-    
+
     private static Thread serialThread;
 
 	@Override
@@ -87,18 +88,18 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	// Cria o icone do relogio
     public static void createTrayIcon(final Stage stage) {
         // Verifica se existe suporte para icones no relogio
     	if (SystemTray.isSupported()) {
             // Obtem a instancia dos icones do relogio
             SystemTray tray = SystemTray.getSystemTray();
-            
+
             // Remove o icone existente caso houver
             if(trayIcon != null)
             	tray.remove(trayIcon);
-            
+
             // Carrega uma image para o icone
             java.awt.Image image = null;
             try {
@@ -115,17 +116,17 @@ public class Main extends Application {
                     hide(stage);
                 }
             });
-            
+
             // Ações a serem executadas no icone do relogio
             // Fecha o programa
             final ActionListener closeListener = new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                	
+
                     System.exit(0);
                 }
             };
-            
+
             // Reabre a janela
             ActionListener showListener = new ActionListener() {
                 @Override
@@ -138,7 +139,7 @@ public class Main extends Application {
                     });
                 }
             };
-            
+
             // Cria os menus do icone
             PopupMenu popup = new PopupMenu();
 
@@ -152,13 +153,13 @@ public class Main extends Application {
 
             // Cria o TrayIcon
             trayIcon = new TrayIcon(image, pageTitle, popup);
-            
+
             // Configura os Listeners do icone
             trayIcon.addActionListener(showListener);
-            
+
             // Define o icone para se redimensionar sozinho
             trayIcon.setImageAutoSize(true);
-            
+
             // Adiciona o icone
             try {
                 tray.add(trayIcon);
@@ -205,7 +206,7 @@ public class Main extends Application {
 				initPrimeiroAcesso();
 			} else {
 				createTrayIcon(loginStage);
-				
+
 				// Inicia a tela de login
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClassLoader.getSystemResource("resources/views/Login.fxml"));
@@ -229,7 +230,7 @@ public class Main extends Application {
 	public static void endLoginLayout() {
 		loginStage.close();
 	}
-	
+
 	public static void endRootLayout() {
 		primaryStage.close();
 	}
@@ -262,7 +263,7 @@ public class Main extends Application {
 	public static void initRootLayout() {
 		try {
 			createTrayIcon(primaryStage);
-			
+
 			// Carrega o root layout do arquivo fxml.
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/RootLayout.fxml"));
@@ -818,6 +819,25 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/CartaoModeloCriar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// Carrega a view de editar funcionpario
+	public static void loadFuncionarioFeriasView(Funcionario funcionario) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Férias do " + funcionario.getNome());
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncionarioFeriasVer.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface e passa o funcionario a ser
+			// editado
+			FuncionarioFeriasVerController controller = loader.getController();
+			controller.setFuncionario(funcionario);
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();

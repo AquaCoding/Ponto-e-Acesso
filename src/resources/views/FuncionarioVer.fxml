@@ -79,7 +79,17 @@
                               <Font name="System Bold" size="12.0" />
                            </font>
                         </Label>
-                        <Label fx:id="salarioHorasShow" text="Label" />
+                        <Label fx:id="salarioHorasShow" text="Label" /> 
+                        
+                        <Label fx:id="lblFuncionarioFuncao" text="Cargo">
+                           <padding>
+                              <Insets bottom="2.0" top="2.0" />
+                           </padding>
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="funcaoNomeShow" text="Label" />
                      </children>
                      <padding>
                         <Insets right="15.0" />
@@ -149,52 +159,6 @@
                         <Label fx:id="cidadeShow" text="Label" />
                      </children>
                   </VBox>
-             
-            
-            <VBox HBox.hgrow="ALWAYS">
-                     <children>
-                     <Label fx:id="lblFuncionarioFerias" text="Nome Férias">
-                           <padding>
-                              <Insets bottom="2.0" top="2.0" />
-                           </padding>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="nomeFeriasShow" text="Label" />
-                    
-                     <Label fx:id="lblFuncionarioFerias" text="Inicio Férias">
-                           <padding>
-                              <Insets bottom="2.0" top="2.0" />
-                           </padding>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="inicioFeriasShow" text="Label" />
-                        
-                        <Label fx:id="lblFuncionarioFerias" text="Termino Férias">
-                           <padding>
-                              <Insets bottom="2.0" top="2.0" />
-                           </padding>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="terminoFeriasShow" text="Label" /> 
-                        
-                        <Label fx:id="lblFuncionarioFuncao" text="Cargo">
-                           <padding>
-                              <Insets bottom="2.0" top="2.0" />
-                           </padding>
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="funcaoNomeShow" text="Label" />                                              
-                           
-                     </children>
-                  </VBox>
               </children>
             </HBox>
             <Label text="Bonificações - Nome (%)">
@@ -209,6 +173,7 @@
                   
                                                       <Button fx:id="editar" focusTraversable="false" mnemonicParsing="false" text="Editar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />
                   <Button fx:id="bonificaRemover" layoutX="388.0" layoutY="10.0" mnemonicParsing="false" text="Remover bonificação" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="10.0" />
+                  <Button fx:id="ferias" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="Férias" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
          </children>

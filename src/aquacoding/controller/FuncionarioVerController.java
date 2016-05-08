@@ -16,8 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import aquacoding.model.Bonificacao;
-import aquacoding.model.Ferias;
-import aquacoding.model.Funcao;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
@@ -29,17 +27,17 @@ public class FuncionarioVerController implements Initializable {
 
 	@FXML
 	Label nomeShow, sobrenomeShow, rgShow, cpfShow, cptsShow, salarioHorasShow, telefoneShow, ruaShow, numeroShow,
-			bairroShow, estadoShow, cidadeShow, statusShow, nomeFeriasShow, inicioFeriasShow, terminoFeriasShow, funcaoNomeShow;
+			bairroShow, estadoShow, cidadeShow, statusShow,funcaoNomeShow;
 
 	@FXML
 	ListView<Bonificacao> bonificacoesListagem;
 
 	@FXML
-	Button cancelar, editar, bonificaRemover;
+	Button cancelar, editar, bonificaRemover, ferias;
 
 	private Funcionario func;
 
-	private String nome, inicio, termino;
+
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -50,6 +48,10 @@ public class FuncionarioVerController implements Initializable {
 
 		editar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadFuncionarioEditarView(func);
+		});
+
+		ferias.setOnMouseClicked((MouseEvent e) -> {
+			Main.loadFuncionarioFeriasView(func);
 		});
 	}
 
@@ -69,16 +71,6 @@ public class FuncionarioVerController implements Initializable {
 		estadoShow.setText(func.getEstado());
 		cidadeShow.setText(func.getCidade());
 
-		// Listando todas as ferias
-		for (Ferias f : func.getFerias()) {
-			this.nome = f.getNome();
-			this.inicio = f.getInicio();
-			this.termino = f.getTermino();
-		}
-
-		nomeFeriasShow.setText(this.nome);
-		inicioFeriasShow.setText(this.inicio);
-		terminoFeriasShow.setText(this.termino);
 
 		funcaoNomeShow.setText(func.getFuncao().getNome());
 
