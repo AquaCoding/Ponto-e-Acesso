@@ -18,6 +18,7 @@
       <TextField fx:id="buscar" layoutX="14.0" layoutY="45.0" prefHeight="25.0" prefWidth="570.0" promptText="Buscar (Nome ou sobrenome ou CPF)" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="45.0" />
       <TableView fx:id="funcionarioListagem" layoutX="193.0" layoutY="85.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="77.0">
         <columns>
+            <TableColumn fx:id="tcStatus" prefWidth="75.0" text="Status" />
           <TableColumn fx:id="tcNome" prefWidth="75.0" text="Nome" />
             <TableColumn fx:id="tcSobrenome" prefWidth="75.0" text="Sobrenome" />
           <TableColumn fx:id="tcCPF" prefWidth="75.0" text="CPF" />

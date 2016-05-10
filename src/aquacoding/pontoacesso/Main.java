@@ -83,6 +83,8 @@ public class Main extends Application {
 			}
 		});
 		serialThread.start();
+
+		primaryStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));		
 	}
 
 	public static void main(String[] args) {

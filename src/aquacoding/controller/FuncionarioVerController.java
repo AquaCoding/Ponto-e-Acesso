@@ -74,11 +74,8 @@ public class FuncionarioVerController implements Initializable {
 
 		funcaoNomeShow.setText(func.getFuncao().getNome());
 
-		if(func.getSuspensao() == true){
-			statusShow.setText("Suspenso");
-		}else{
-			statusShow.setText("Regular");
-		}
+		statusShow.setText(func.getStatus());
+		
 
 		File f = func.getProfileImage();
 		if (f.exists()) {

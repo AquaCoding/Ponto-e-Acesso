@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import logs.ActionsCode;
@@ -229,6 +230,28 @@ public class Funcionario {
 
 	public void setFuncao(Funcao funcao) {
 		this.funcao = funcao;
+	}
+
+	public String getStatus(){
+		Ferias fe;
+		LocalDate inicio;
+		LocalDate termino;
+		LocalDate atual = LocalDate.now();
+		for(int i = 0; i < ferias.size(); i++){
+			fe = ferias.get(i);
+			inicio = fe.getInicioLocal();
+			termino = fe.getTerminoLocal();
+
+			if(!atual.isAfter(inicio) && atual.isBefore(termino)){
+				return "Férias";
+			}
+			if(getSuspensao() == true){
+				return "Suspenso";
+			}else{
+				return "Regular";
+			}
+		}
+		return "Regular";
 	}
 
 	// Construtor de Funcionario
