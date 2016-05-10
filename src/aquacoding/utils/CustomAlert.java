@@ -3,6 +3,7 @@ package aquacoding.utils;
 import java.util.Optional;
 
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -21,6 +22,26 @@ public class CustomAlert {
         
         // Exibe e retorna o resultado do botão clicado
         return  a.showAndWait();
+	}
+	
+	public static String showDialogWithInput(String title, String message) {
+		// Cria um dialog
+		TextInputDialog dialog = new TextInputDialog();
+		dialog.setTitle(title);
+		dialog.setHeaderText(null);
+		dialog.setContentText(message);
+		
+		// Remove a imagem e define o estilo da aplicação
+		dialog.setGraphic(null);
+		applyDialogStyleAndIcon(dialog);
+
+		//  Obtem o resultado
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()){
+		    return result.get();
+		}
+		
+        return null;
 	}
 	
 	public static Optional<ButtonType> showAlertWithCustomImage(String title, String content, AlertType alertType, String imagePath) {
@@ -66,6 +87,15 @@ public class CustomAlert {
 	
 	// Aplica estilo e icones aos alerts
 	private static void applyAlertStyleAndIcon(Alert a) {
+		// Define o estilo do alert
+        a.getDialogPane().getScene().getStylesheets().add(""+Main.class.getResource("application.css"));
+        
+        // Define os icons dos alerts
+        //Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
+        //stage.getIcons().add(new Image(""+Main.class.getResource("icon.png")));
+	}
+	
+	private static void applyDialogStyleAndIcon(TextInputDialog a) {
 		// Define o estilo do alert
         a.getDialogPane().getScene().getStylesheets().add(""+Main.class.getResource("application.css"));
         

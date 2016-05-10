@@ -19,5 +19,27 @@
       <Button fx:id="salvar" mnemonicParsing="false" text="Salvar" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0" />
       <Button fx:id="addText" layoutX="15.0" layoutY="360.0" mnemonicParsing="false" text="Texto" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
       <Button fx:id="addImage" layoutX="67.0" layoutY="360.0" mnemonicParsing="false" text="Imagem" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="67.0" />
+      <AnchorPane fx:id="labelOptions" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="135.0">
+         <children>
+            <Button fx:id="labelDelete" mnemonicParsing="false" text="Remover" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Button fx:id="labelEdit" layoutX="70.0" mnemonicParsing="false" text="Editar" AnchorPane.leftAnchor="70.0" AnchorPane.topAnchor="0.0" />
+            <Label text="Fonte:" AnchorPane.leftAnchor="125.0" AnchorPane.topAnchor="4.0" />
+            <TextField fx:id="labelSize" layoutX="160.0" prefHeight="25.0" prefWidth="46.0" AnchorPane.leftAnchor="160.0" AnchorPane.topAnchor="0.0" />
+            <Label text="px" AnchorPane.leftAnchor="209.0" AnchorPane.topAnchor="4.0" />
+            <CheckBox fx:id="labelNegrito" layoutX="232.0" layoutY="4.0" mnemonicParsing="false" text="Negrito" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="4.0" />
+            <CheckBox fx:id="labelItalico" layoutX="302.0" layoutY="4.0" mnemonicParsing="false" text="Italico" AnchorPane.leftAnchor="302.0" AnchorPane.topAnchor="4.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="imageOptions" layoutX="230.0" layoutY="16.0" prefWidth="200.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <children>
+            <Button fx:id="imageDelete" layoutX="-67.0" mnemonicParsing="false" text="Remover" AnchorPane.leftAnchor="-67.0" AnchorPane.topAnchor="0.0" />
+            <Button fx:id="imageEdit" layoutX="3.0" mnemonicParsing="false" text="Editar" AnchorPane.leftAnchor="3.0" AnchorPane.topAnchor="0.0" />
+            <Label layoutX="56.0" layoutY="4.0" text="Tamanho:" AnchorPane.leftAnchor="56.0" AnchorPane.topAnchor="4.0" />
+            <TextField fx:id="imageHeight" editable="false" layoutX="177.0" prefHeight="25.0" prefWidth="46.0" AnchorPane.leftAnchor="177.0" AnchorPane.topAnchor="0.0" />
+            <Label layoutX="165.0" layoutY="4.0" text="x" AnchorPane.leftAnchor="165.0" AnchorPane.topAnchor="4.0" />
+            <CheckBox fx:id="imageRatio" layoutX="232.0" layoutY="4.0" mnemonicParsing="false" selected="true" text="Manter proporção" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="4.0" />
+            <TextField fx:id="imageWidth" layoutX="112.0" layoutY="-1.0" prefHeight="25.0" prefWidth="46.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
