@@ -2,11 +2,14 @@ package aquacoding.model;
 
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import logs.ActionsCode;
@@ -44,6 +47,10 @@ public class Ferias {
 		return format.format(inicio);
 	}
 
+	public LocalDate getInicioLocal() {
+		return inicio.toLocalDate();
+	}
+
 	public void setInicio(java.sql.Date inicio) {
 		this.inicio = inicio;
 	}
@@ -52,6 +59,11 @@ public class Ferias {
 		SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy");
 		return format.format(termino);
 	}
+
+	public LocalDate getTerminoLocal() {
+		return termino.toLocalDate();
+	}
+
 
 	public void setTermino(java.sql.Date termino) {
 		this.termino = termino;
@@ -120,10 +132,10 @@ public class Ferias {
 
 					// Encerra conexao
 					connect.close();
-					
+
 					// Gera log
 					Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FERIAS, this.id, ActionsCode.CADASTROU);
-					
+
 					return true;
 				} else {
 					// Encerra conexao
@@ -205,7 +217,7 @@ public class Ferias {
 				if (ret == 1) {
 					// Gera log
 					Logs.makeLog(Main.loggedUser.getId(), ObjectCode.FERIAS, this.id, ActionsCode.EDITOU);
-					
+
 					return true;
 				} else {
 					return false;

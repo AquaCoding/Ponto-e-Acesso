@@ -39,7 +39,7 @@ public class FuncionarioListaController implements Initializable {
 	TextField buscar;
 
 	@FXML
-	TableColumn<Funcionario, String> tcNome, tcSobrenome, tcCPF, tcFuncao;
+	TableColumn<Funcionario, String> tcNome, tcSobrenome, tcCPF, tcFuncao,tcStatus;
 
 	// Atributos
 	ObservableList<Funcionario> items;
@@ -116,6 +116,12 @@ public class FuncionarioListaController implements Initializable {
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Funcionario, String> item) {
 				return new SimpleStringProperty(item.getValue().getFuncao().getNome());
+			}
+		});
+		tcStatus.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Funcionario, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Funcionario, String> item) {
+				return new SimpleStringProperty(item.getValue().getStatus());
 			}
 		});
 	}
