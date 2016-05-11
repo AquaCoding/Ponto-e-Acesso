@@ -8,6 +8,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 import aquacoding.pontoacesso.Main;
 
 public class CustomAlert {
@@ -15,7 +16,7 @@ public class CustomAlert {
 		Alert a = new Alert(alertType);
         a.setTitle(title);
         a.setHeaderText(null);
-        a.setContentText(content);
+        a.setContentText(content);        
         
         //Define estilo e icone
         applyAlertStyleAndIcon(a);
@@ -91,8 +92,8 @@ public class CustomAlert {
         a.getDialogPane().getScene().getStylesheets().add(""+Main.class.getResource("application.css"));
         
         // Define os icons dos alerts
-        //Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
-        //stage.getIcons().add(new Image(""+Main.class.getResource("icon.png")));
+        Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
 	}
 	
 	private static void applyDialogStyleAndIcon(TextInputDialog a) {
@@ -100,7 +101,7 @@ public class CustomAlert {
         a.getDialogPane().getScene().getStylesheets().add(""+Main.class.getResource("application.css"));
         
         // Define os icons dos alerts
-        //Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
-        //stage.getIcons().add(new Image(""+Main.class.getResource("icon.png")));
+        Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
+        stage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
 	}
 }

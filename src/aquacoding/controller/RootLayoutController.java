@@ -16,6 +16,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import aquacoding.model.Backup;
 import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
+import aquacoding.utils.CustomAlert;
 import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Folders;
 
@@ -203,6 +204,8 @@ public class RootLayoutController implements Initializable {
 		});
 		
 		menuBarBackupSalvar.setOnAction((ActionEvent e) -> {
+			
+			CustomAlert.showDialogWithInput("Acesso Dropbox", "Cole o codigo gerado pela página");
 			
 			try {
 				backup.criarSalvarBackup();
