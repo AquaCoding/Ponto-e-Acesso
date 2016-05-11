@@ -1,10 +1,11 @@
 package aquacoding.model;
 
 import com.dropbox.core.*;
+
+import aquacoding.utils.CustomAlert;
+
 import java.io.*;
 import java.util.Locale;
-
-import javax.swing.JOptionPane;
 
 import java.awt.Desktop;
 import java.net.URI;
@@ -32,7 +33,7 @@ public class Backup {
 		DbxRequestConfig config = new DbxRequestConfig("JavaTutorial/1.0", Locale.getDefault().toString());
 		DbxWebAuthNoRedirect webAuth = new DbxWebAuthNoRedirect(config, appInfo);
 
-		String code = JOptionPane.showInputDialog("Cole o código gerado na página");
+		String code = CustomAlert.showDialogWithInput("Acesso Dropbox", "Cole o codigo gerado pela página");
 		
 		// This will fail if the user enters an invalid authorization code.
 		DbxAuthFinish authFinish = webAuth.finish(code);
