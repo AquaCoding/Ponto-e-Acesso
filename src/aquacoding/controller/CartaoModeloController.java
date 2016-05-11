@@ -51,7 +51,7 @@ public class CartaoModeloController implements Initializable {
 	Pane drawPane;
 	
 	@FXML
-	Button cancelar, addText, addImage, salvarPNG, salvar, labelDelete, labelEdit, imageDelete, imageEdit;
+	Button cancelar, addText, addImage, addImagePerfil, salvarPNG, salvar, labelDelete, labelEdit, imageDelete, imageEdit;
 	
 	@FXML
 	CheckBox labelNegrito, labelItalico, imageRatio;
@@ -68,6 +68,7 @@ public class CartaoModeloController implements Initializable {
 	
 	private ArrayList<ImageView> images = new ArrayList<ImageView>();
 	private ImageView selectedImage;
+	private ImageView imageProfile;
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -83,6 +84,21 @@ public class CartaoModeloController implements Initializable {
 			Main.loadMainView();
 		});
 		
+		addImagePerfil.setOnMouseClicked((MouseEvent e) -> {
+			File i = new File(aquacoding.utils.Image.PROFILE_IMAGE_DEFAULT);
+			ImageView a = new ImageView(i.toURI().toString());
+			a.setFitWidth(100);
+			a.setFitHeight(100);
+			a.setPreserveRatio(true);
+			
+			images.add(a);
+			imageProfile = a;
+			
+			setClickActionOnImage(a);
+			MouseControlUtil.makeDraggable(a);
+			drawPane.getChildren().add(a);
+		});
+		
 		// Salva os modelos para carregamentos posteriores
 		salvar.setOnMouseClicked((MouseEvent e) -> {
 			ArrayList<String> savedLabels = new ArrayList<String>();
@@ -95,6 +111,9 @@ public class CartaoModeloController implements Initializable {
 			ArrayList<String> savedImage = new ArrayList<String>();
 			for(ImageView i: images) {
 				String imageInfo = i.getImage().impl_getUrl() + "#_" + i.getFitWidth() + "#_" + i.getFitHeight() + "#_" + i.isPreserveRatio() + "#_" + i.getLayoutX() + "#_" + i.getLayoutY();
+				if(i == imageProfile) {
+					imageInfo += "#_true";
+				}
 				savedImage.add(imageInfo);
 				System.out.println(imageInfo);
 			}
@@ -403,6 +422,14 @@ public class CartaoModeloController implements Initializable {
 					
 					// Registra no ArrayList
 					images.add(a);
+					
+					// Verifica se é a imagem do perfil
+					if(infos.length == 7) {
+						if(Boolean.valueOf(infos[6])) {
+							imageProfile = a;
+							System.out.println(a.getImage().impl_getUrl());
+						}
+					}
 				}
 			}
 		} catch (IOException e) {
@@ -421,6 +448,13 @@ public class CartaoModeloController implements Initializable {
 				l.setText(funcionario.getFuncao().getNome());
 			}
 			
+			if(imageProfile != null) {				
+				File f = funcionario.getProfileImage();
+				if (f.exists()) {
+					Image i = new Image(f.toURI().toString());
+					imageProfile.setImage(i);
+				}					
+			}
 			// Oculta o botão de salvar
 			salvar.setVisible(false);
 		}
