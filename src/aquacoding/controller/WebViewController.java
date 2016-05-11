@@ -1,6 +1,5 @@
 package aquacoding.controller;
 
-import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -20,8 +19,7 @@ public class WebViewController implements Initializable {
 
 	public void openPage(String fileToOpen) {
 		WebEngine engine = webView.getEngine();
-		File a = new File(fileToOpen);
-		engine.load("file:///" + a.getAbsolutePath());
+		engine.load(fileToOpen);
 	}
 
 }

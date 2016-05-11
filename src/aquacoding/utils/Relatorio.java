@@ -1,5 +1,6 @@
 package aquacoding.utils;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -50,7 +51,8 @@ public class Relatorio {
 			Files.write(Paths.get("relatorioTrabalho.html"), relatorioFinal);
 			
 			// Abre o arquivo
-			Main.loadWebView("relatorioTrabalho.html");
+			File a = new File("relatorioTrabalho.html");
+			Main.loadWebView("file:///" + a.getAbsolutePath());
 		} catch (Exception e1) {
 			throw new RuntimeException("Um erro ocorreu ao criar o relatório.");
 		}
@@ -230,7 +232,8 @@ public class Relatorio {
 			Files.write(Paths.get("relatorioAcesso.html"), relatorioFinal);
 			
 			// Abre o arquivo
-			Main.loadWebView("relatorioAcesso.html");
+			File a = new File("relatorioAcesso.html");
+			Main.loadWebView("file:///" + a.getAbsolutePath());
 		} catch (Exception e1) {
 			throw new RuntimeException("Um erro ocorreu ao criar o relatório.");
 		}
