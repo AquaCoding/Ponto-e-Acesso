@@ -2,20 +2,22 @@ package aquacoding.controller;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-import aquacoding.model.Backup;
-import aquacoding.model.Empresa;
-import aquacoding.pontoacesso.Main;
-import aquacoding.utils.DatabaseConnect;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import aquacoding.model.Backup;
+import aquacoding.model.Empresa;
+import aquacoding.pontoacesso.Main;
+import aquacoding.utils.DatabaseConnect;
+import aquacoding.utils.Folders;
 
 public class RootLayoutController implements Initializable {
 
@@ -185,7 +187,14 @@ public class RootLayoutController implements Initializable {
 			File localToSave = fileC.showSaveDialog(Main.primaryStage);
 			
 			if(localToSave != null){
-				DatabaseConnect.makeBackup(localToSave.getAbsolutePath());	
+				DatabaseConnect.makeBackup(localToSave.getAbsolutePath());
+				try {
+					String destination = Paths.get(localToSave.toPath().getParent() + "/img").toString();
+					Folders.copyFolder(new File("img"), new File(destination));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		

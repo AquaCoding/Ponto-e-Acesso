@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-
 public abstract class DatabaseConnect {
 	
 	private final static String DB_HOST = "localhost";
@@ -68,7 +66,7 @@ public abstract class DatabaseConnect {
 		   String command = "cmd.exe /C mysqldump --user="+DB_USER+" --password="+DB_PASS+" "+DB_NAME+" > "+localToSave;	   
 		   Runtime.getRuntime().exec(command);
 		} catch (IOException ex) {
-		   JOptionPane.showMessageDialog(null, "erro" + ex.getMessage());
+		   System.out.println(ex.getMessage());
 		}
 	}
 }

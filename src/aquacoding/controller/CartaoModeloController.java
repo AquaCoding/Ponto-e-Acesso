@@ -5,44 +5,53 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.imageio.ImageIO;
-
-import aquacoding.pontoacesso.Main;
-import aquacoding.utils.CustomAlert;
-import aquacoding.utils.LabelStyle;
-import aquacoding.utils.MaskField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;import javafx.stage.FileChooser;
+import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+
+import javax.imageio.ImageIO;
+
 import jfxtras.labs.util.event.MouseControlUtil;
+import aquacoding.model.Funcionario;
+import aquacoding.pontoacesso.Main;
+import aquacoding.utils.CustomAlert;
+import aquacoding.utils.LabelStyle;
+import aquacoding.utils.MaskField;
 
 
 public class CartaoModeloController implements Initializable {
+	
+	private final String SAVED_LABEL_PATH = "data/labels.txt";
+	private final String SAVED_IMAGE_PATH = "data/images.txt";
 	
 	@FXML
 	Pane drawPane;
 	
 	@FXML
-	Button addText, addImage, salvar, labelDelete, labelEdit, imageDelete, imageEdit;
+	Button addText, addImage, salvarPNG, salvar, labelDelete, labelEdit, imageDelete, imageEdit;
 	
 	@FXML
 	CheckBox labelNegrito, labelItalico, imageRatio;
@@ -66,8 +75,37 @@ public class CartaoModeloController implements Initializable {
 		labelOptions.setVisible(false);
 		imageOptions.setVisible(false);
 		
-		// Evento de clique para salvar a imagem
+		// Carrega os labels e images salvos anteriormente
+		loadLabelsAndImage();
+		
+		// Salva os modelos para carregamentos posteriores
 		salvar.setOnMouseClicked((MouseEvent e) -> {
+			ArrayList<String> savedLabels = new ArrayList<String>();
+			for(Label l: labels) {
+				LabelStyle ls = labelsStyles.get(l);
+				String labelInfo = l.getText() + "#_" + ls.getFontSize()+ "#_" + ls.isBold() + "#_" + ls.isItalic() + "#_" + l.getLayoutX() + "#_" + l.getLayoutY();
+				savedLabels.add(labelInfo);
+			}
+			
+			ArrayList<String> savedImage = new ArrayList<String>();
+			for(ImageView i: images) {
+				String imageInfo = i.getImage().impl_getUrl() + "#_" + i.getFitWidth() + "#_" + i.getFitHeight() + "#_" + i.isPreserveRatio() + "#_" + i.getLayoutX() + "#_" + i.getLayoutY();
+				savedImage.add(imageInfo);
+				System.out.println(imageInfo);
+			}
+			
+			// Salva as images no disco
+			try {
+				Files.write(Paths.get(SAVED_LABEL_PATH), savedLabels);
+				Files.write(Paths.get(SAVED_IMAGE_PATH), savedImage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		// Evento de clique para salvar a imagem
+		salvarPNG.setOnMouseClicked((MouseEvent e) -> {
 			FileChooser fileC = new FileChooser();
 			fileC.setTitle("Selecione o local para criar o modelo do cartão");
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -296,5 +334,86 @@ public class CartaoModeloController implements Initializable {
 			// Evita a propagação do click
 			e.consume();
 		});
+	}
+	
+	private void loadLabelsAndImage() {
+		try {
+			// Carrega os labels
+			if(Files.isReadable(Paths.get(SAVED_LABEL_PATH))) {
+				List<String> savedLabels = Files.readAllLines(Paths.get(SAVED_LABEL_PATH));
+				
+				for(String l: savedLabels) {
+					// Separa as infos do labels
+					String infos[] = l.split("#_");
+					
+					// Cria o label
+					Label a = new Label(infos[0]);
+					MouseControlUtil.makeDraggable(a);
+					setClickActionOnLabel(a);
+					
+					// Cria os styles
+					LabelStyle ls = new LabelStyle();
+					ls.setFontSize(Integer.parseInt(infos[1]));
+					ls.setBold(Boolean.valueOf(infos[2]));
+					ls.setItalic(Boolean.valueOf(infos[3]));
+					
+					// Aplica o style
+					a.setStyle(ls.toStyle());
+					
+					// Adiciona o label ao panel
+					drawPane.getChildren().add(a);
+					
+					// Posiciona o elemento no local correto
+					a.setLayoutX(Double.parseDouble(infos[4]));
+					a.setLayoutY(Double.parseDouble(infos[5]));
+					
+					// Adiciona o label ao arraylist e o style ao hashmap
+					labels.add(a);
+					labelsStyles.put(a, ls);
+				}
+			}
+			
+			// Carrega as imagens
+			if(Files.isReadable(Paths.get(SAVED_IMAGE_PATH))) {
+				List<String> savedImage = Files.readAllLines(Paths.get(SAVED_IMAGE_PATH));
+				
+				for(String l: savedImage) {
+					// Separa as infos do labels
+					String infos[] = l.split("#_");
+					
+					// Cria a ImageView
+					ImageView a = new ImageView(infos[0]);
+					MouseControlUtil.makeDraggable(a);
+					setClickActionOnImage(a);
+					
+					// Define informações da image
+					a.setFitWidth(Double.parseDouble(infos[1]));
+					a.setFitHeight(Double.parseDouble(infos[2]));
+					a.setPreserveRatio(Boolean.valueOf(infos[3]));
+					a.setLayoutX(Double.parseDouble(infos[4]));
+					a.setLayoutY(Double.parseDouble(infos[5]));
+					
+					// Coloca image no painel
+					drawPane.getChildren().add(a);
+					
+					// Registra no ArrayList
+					images.add(a);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		for(Label l: labels) {
+			if(l.getText().equals("{{funcionario.nome}}")) {
+				l.setText(funcionario.getNome() + " " + funcionario.getSobrenome());
+			}
+			
+			// Oculta o botão de salvar
+			salvar.setVisible(false);
+		}
 	}
 }

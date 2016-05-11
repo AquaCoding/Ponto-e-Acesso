@@ -26,6 +26,7 @@ import javax.imageio.ImageIO;
 
 import aquacoding.controller.BonificacaoCadastroController;
 import aquacoding.controller.BonificacaoLinkController;
+import aquacoding.controller.CartaoModeloController;
 import aquacoding.controller.EmpresaEditarController;
 import aquacoding.controller.EmpresaVerController;
 import aquacoding.controller.FeriasEditarController;
@@ -840,6 +841,23 @@ public class Main extends Application {
 			FuncionarioFeriasVerController controller = loader.getController();
 			controller.setFuncionario(funcionario);
 
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void loadParsedModeloCartao(Funcionario funcionario) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Modelo de cartão");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/CartaoModeloCriar.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			
+			// Obtem o controller da interface e passa o funcionario
+			CartaoModeloController controller = loader.getController();
+			controller.setFuncionario(funcionario);
+						
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
