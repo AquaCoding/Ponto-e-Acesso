@@ -51,7 +51,7 @@ public class CartaoModeloController implements Initializable {
 	Pane drawPane;
 	
 	@FXML
-	Button addText, addImage, salvarPNG, salvar, labelDelete, labelEdit, imageDelete, imageEdit;
+	Button cancelar, addText, addImage, salvarPNG, salvar, labelDelete, labelEdit, imageDelete, imageEdit;
 	
 	@FXML
 	CheckBox labelNegrito, labelItalico, imageRatio;
@@ -77,6 +77,11 @@ public class CartaoModeloController implements Initializable {
 		
 		// Carrega os labels e images salvos anteriormente
 		loadLabelsAndImage();
+		
+		// Evento do botão de cancelar
+		cancelar.setOnMouseClicked((MouseEvent e) -> {
+			Main.loadMainView();
+		});
 		
 		// Salva os modelos para carregamentos posteriores
 		salvar.setOnMouseClicked((MouseEvent e) -> {
@@ -408,8 +413,12 @@ public class CartaoModeloController implements Initializable {
 
 	public void setFuncionario(Funcionario funcionario) {
 		for(Label l: labels) {
-			if(l.getText().equals("{{funcionario.nome}}")) {
+			if(l.getText().equals("#nome")) {
 				l.setText(funcionario.getNome() + " " + funcionario.getSobrenome());
+			} else if (l.getText().equals("#cpf")) {
+				l.setText(funcionario.getCpf());
+			} else if(l.getText().equals("#cargo")) {
+				l.setText(funcionario.getFuncao().getNome());
 			}
 			
 			// Oculta o botão de salvar

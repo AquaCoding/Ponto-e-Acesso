@@ -22,7 +22,7 @@ import aquacoding.utils.Folders;
 public class RootLayoutController implements Initializable {
 
 	@FXML
-	MenuItem menuBarSistemaDeslogar;
+	MenuItem menuBarSistemaDeslogar, menuBarSistemaInicio;
 	
 	@FXML
 	MenuItem menuBarEmpresaNovoEditar, menuBarEmpresaVer;
@@ -68,6 +68,10 @@ public class RootLayoutController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Eventos de clique no menu do sistema
+		menuBarSistemaInicio.setOnAction((ActionEvent e) -> {
+			Main.loadMainView();
+		});
+		
 		menuBarSistemaDeslogar.setOnAction((ActionEvent e) -> {
 			Main.loggedUser = null;
 			Main.initLoginLayout();
