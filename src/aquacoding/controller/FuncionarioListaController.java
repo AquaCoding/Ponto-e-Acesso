@@ -3,10 +3,7 @@ package aquacoding.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import aquacoding.model.Funcao;
 import aquacoding.model.Funcionario;
-import aquacoding.model.Log;
-import aquacoding.model.Usuario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import javafx.beans.property.SimpleStringProperty;

@@ -126,7 +126,14 @@ public class Main extends Application {
             final ActionListener closeListener = new ActionListener() {
                 @Override
                 public void actionPerformed(java.awt.event.ActionEvent e) {
+                	if (SystemTray.isSupported()) {
+                        // Obtem a instancia dos icones do relogio
+                        SystemTray tray = SystemTray.getSystemTray();
 
+                        // Remove o icone existente caso houver
+                        if(trayIcon != null)
+                        	tray.remove(trayIcon);
+                	}
                     System.exit(0);
                 }
             };
@@ -679,6 +686,28 @@ public class Main extends Application {
 			// Obtem o controller da interface
 			WebViewController controller = loader.getController();
 			controller.openPage(fileToOpen);
+
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Inicia a webview e abre o arquivo especificado
+	public static void loadWebView(String fileToOpen, boolean isDropBox) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Relatório");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/WebView.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface
+			WebViewController controller = loader.getController();
+			controller.openPage(fileToOpen);
+			
+			if(isDropBox) {
+				controller.showCodeConfirm();
+			}
 
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {

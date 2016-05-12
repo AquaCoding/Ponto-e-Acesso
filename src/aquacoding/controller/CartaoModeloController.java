@@ -121,6 +121,8 @@ public class CartaoModeloController implements Initializable {
 			try {
 				Files.write(Paths.get(SAVED_LABEL_PATH), savedLabels);
 				Files.write(Paths.get(SAVED_IMAGE_PATH), savedImage);
+				
+				CustomAlert.showAlert("Modelo do cartão", "Modelo do cartão salvo com sucesso", AlertType.WARNING);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -139,6 +141,7 @@ public class CartaoModeloController implements Initializable {
 			if(localToSave != null){
 				WritableImage snapshot = drawPane.snapshot(new SnapshotParameters(), null);
 	            saveImage(snapshot, localToSave);
+	            CustomAlert.showAlert("Modelo do cartão", "Modelo do cartão em PNG salvo com sucesso", AlertType.WARNING);
 			}
 		});	 
 		

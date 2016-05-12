@@ -6,17 +6,14 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import aquacoding.model.Backup;
 import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
-import aquacoding.utils.CustomAlert;
 import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Folders;
 
@@ -64,8 +61,6 @@ public class RootLayoutController implements Initializable {
 	@FXML
 	MenuItem menuBarAuditoriaVer;
 	
-	private Backup backup;
-
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		// Eventos de clique no menu do sistema
@@ -203,12 +198,9 @@ public class RootLayoutController implements Initializable {
 			}
 		});
 		
-		menuBarBackupSalvar.setOnAction((ActionEvent e) -> {
-			
-			CustomAlert.showDialogWithInput("Acesso Dropbox", "Cole o codigo gerado pela página");
-			
+		menuBarBackupSalvar.setOnAction((ActionEvent e) -> {		
 			try {
-				backup.criarSalvarBackup();
+				Main.loadWebView("https://www.dropbox.com/1/oauth2/authorize?locale=pt_BR&client_id=nmhlfbvih0g20dl&response_type=code", true);
 			} catch (Exception e1) {
 				System.out.println("Erro na criação do arquivo" + e1.getMessage());
 			}
