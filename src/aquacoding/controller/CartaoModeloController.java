@@ -115,7 +115,6 @@ public class CartaoModeloController implements Initializable {
 					imageInfo += "#_true";
 				}
 				savedImage.add(imageInfo);
-				System.out.println(imageInfo);
 			}
 			
 			// Salva as images no disco

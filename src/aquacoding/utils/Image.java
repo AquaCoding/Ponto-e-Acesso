@@ -25,7 +25,7 @@ public class Image {
 			bufferedImage = ImageIO.read(file);
 	
 			// Cria uma nova imagem com as informações da imagem original
-			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_RGB);
+			BufferedImage newBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			
 			// Copia a imagem original para a nova imagem
 			newBufferedImage.createGraphics().drawImage(bufferedImage, 0, 0, null);
