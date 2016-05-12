@@ -6,13 +6,20 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
+
+
+
+
+
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +39,17 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
+
+
+
+
+
 import javax.imageio.ImageIO;
+
+
+
+
+
 
 import jfxtras.labs.util.event.MouseControlUtil;
 import aquacoding.model.Funcionario;
@@ -41,11 +58,13 @@ import aquacoding.utils.CustomAlert;
 import aquacoding.utils.LabelStyle;
 import aquacoding.utils.MaskField;
 
-
+@SuppressWarnings("deprecation")
+// Utilizando metodo descontinuado .impl_getUrl() pois a classe Image não possui um método para se obter
+// A URI da imagem utilizada
 public class CartaoModeloController implements Initializable {
 	
-	private final String SAVED_LABEL_PATH = "data/labels.txt";
-	private final String SAVED_IMAGE_PATH = "data/images.txt";
+	private final String SAVED_LABEL_PATH = "data/cartao/labels.data";
+	private final String SAVED_IMAGE_PATH = "data/cartao/images.data";
 	
 	@FXML
 	Pane drawPane;
@@ -62,10 +81,12 @@ public class CartaoModeloController implements Initializable {
 	@FXML
 	TextField labelSize, imageWidth, imageHeight;
 	
+	// Armazena informações do label
 	private ArrayList<Label> labels = new ArrayList<Label>();
 	private HashMap<Label, LabelStyle> labelsStyles = new HashMap<Label, LabelStyle>();
 	private Label selectedLabel;
 	
+	// Armazena informações das imagens
 	private ArrayList<ImageView> images = new ArrayList<ImageView>();
 	private ImageView selectedImage;
 	private ImageView imageProfile;
@@ -82,21 +103,6 @@ public class CartaoModeloController implements Initializable {
 		// Evento do botão de cancelar
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
-		});
-		
-		addImagePerfil.setOnMouseClicked((MouseEvent e) -> {
-			File i = new File(aquacoding.utils.Image.PROFILE_IMAGE_DEFAULT);
-			ImageView a = new ImageView(i.toURI().toString());
-			a.setFitWidth(100);
-			a.setFitHeight(100);
-			a.setPreserveRatio(true);
-			
-			images.add(a);
-			imageProfile = a;
-			
-			setClickActionOnImage(a);
-			MouseControlUtil.makeDraggable(a);
-			drawPane.getChildren().add(a);
 		});
 		
 		// Salva os modelos para carregamentos posteriores
@@ -173,17 +179,39 @@ public class CartaoModeloController implements Initializable {
 			File image = fileC.showOpenDialog(Main.primaryStage);
 			
 			if(image != null) {
-				ImageView a = new ImageView(image.toURI().toString());
-				a.setFitWidth(100);
-				a.setFitHeight(100);
-				a.setPreserveRatio(true);
-				
-				images.add(a);
-				
-				setClickActionOnImage(a);
-				MouseControlUtil.makeDraggable(a);
-				drawPane.getChildren().add(a);
+				try {
+					Path newFile = Files.copy(Paths.get(image.toPath().toString()), Paths.get("data/cartao/images/" + image.getName()), StandardCopyOption.REPLACE_EXISTING);
+					
+					ImageView a = new ImageView(newFile.toUri().toString());
+					a.setFitWidth(100);
+					a.setFitHeight(100);
+					a.setPreserveRatio(true);
+					
+					images.add(a);
+					
+					setClickActionOnImage(a);
+					MouseControlUtil.makeDraggable(a);
+					drawPane.getChildren().add(a);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
+		});
+		
+		addImagePerfil.setOnMouseClicked((MouseEvent e) -> {
+			File i = new File(aquacoding.utils.Image.PROFILE_IMAGE_DEFAULT);
+			ImageView a = new ImageView(i.toURI().toString());
+			a.setFitWidth(100);
+			a.setFitHeight(100);
+			a.setPreserveRatio(true);
+			
+			images.add(a);
+			imageProfile = a;
+			
+			setClickActionOnImage(a);
+			MouseControlUtil.makeDraggable(a);
+			drawPane.getChildren().add(a);
 		});
 		
 		// Configura os options dos labels
@@ -297,10 +325,22 @@ public class CartaoModeloController implements Initializable {
 		// Evento das opções dos labels
 		imageDelete.setOnMouseClicked((MouseEvent e) -> {
 			if(selectedImage != null) {
-				drawPane.getChildren().remove(selectedImage);
-				images.remove(selectedImage);
-				selectedImage = null;
-				imageOptions.setVisible(false);
+				try {
+					drawPane.getChildren().remove(selectedImage);
+					images.remove(selectedImage);
+					
+					// Somente deleta a imagem se não for uma imagem de perfil padrão
+					if(selectedImage != imageProfile) {
+						String url = selectedImage.getImage().impl_getUrl().substring(6, selectedImage.getImage().impl_getUrl().length());
+						Files.delete(Paths.get(url.replaceAll("%20", " ")));
+					}
+					
+					selectedImage = null;
+					imageOptions.setVisible(false);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -429,7 +469,6 @@ public class CartaoModeloController implements Initializable {
 					if(infos.length == 7) {
 						if(Boolean.valueOf(infos[6])) {
 							imageProfile = a;
-							System.out.println(a.getImage().impl_getUrl());
 						}
 					}
 				}

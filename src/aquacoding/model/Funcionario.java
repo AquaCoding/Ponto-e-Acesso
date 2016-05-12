@@ -1,6 +1,7 @@
 package aquacoding.model;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -166,7 +167,10 @@ public class Funcionario {
 	}
 
 	public File getProfileImage() {
-		return profileImage;
+		if(profileImage != null && Files.isReadable(profileImage.toPath()))
+			return profileImage;
+		
+		return new File(Image.PROFILE_IMAGE_DEFAULT);
 	}
 
 	public void setImageURL(File profileImage) {
@@ -233,12 +237,10 @@ public class Funcionario {
 	}
 
 	public String getStatus(){
-		Ferias fe;
 		LocalDate inicio;
 		LocalDate termino;
 		LocalDate atual = LocalDate.now();
-		for(int i = 0; i < ferias.size(); i++){
-			fe = ferias.get(i);
+		for(Ferias fe: ferias) {
 			inicio = fe.getInicioLocal();
 			termino = fe.getTerminoLocal();
 
@@ -251,6 +253,7 @@ public class Funcionario {
 				return "Regular";
 			}
 		}
+		
 		return "Regular";
 	}
 
