@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -52,6 +53,7 @@ import aquacoding.model.Usuario;
 import aquacoding.utils.CustomAlert;
 import aquacoding.utils.Image;
 import aquacoding.utils.Serial;
+import aquacoding.utils.Timeout;
 
 // Extends javafx.application.Application para user JavaFX
 public class Main extends Application {
@@ -66,7 +68,9 @@ public class Main extends Application {
     private static TrayIcon trayIcon = null;
 
     private static Thread serialThread;
-
+    private static Thread timeoutThread;
+    private static Timeout timeout = new Timeout();
+   
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Inicia a janela principal (Main.fxml)
@@ -87,6 +91,12 @@ public class Main extends Application {
 
 		primaryStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));	
 		loginStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
+		
+		// Escuta por qualquer evento dentro do primaryStage e salva o momento em que ocorreu para
+		// verificação no timeout
+		primaryStage.addEventHandler(Event.ANY, (event) -> {
+			timeout.setUltimoEvento();
+		});
 	}
 
 	public static void main(String[] args) {
@@ -243,7 +253,14 @@ public class Main extends Application {
 	}
 
 	public static void endRootLayout() {
-		primaryStage.close();
+		try {
+			primaryStage.close();
+			timeout.setRunTimeoutEvent(false);
+			timeoutThread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	// Realiza a inicialização da janela princpal
@@ -273,6 +290,17 @@ public class Main extends Application {
 	// Realiza a inicialização da janela princpal
 	public static void initRootLayout() {
 		try {
+			// Cria a thread para verificar o timeout de 10 minutos
+			timeoutThread = new Thread(timeout);
+			
+			// Define o ultimo evento da inicialização
+			timeout.setUltimoEvento();
+			// Inicia a thread
+			timeout.setRunTimeoutEvent(true);
+			// Inicia a thread
+			timeoutThread.start();
+			
+			// Cria icone na barra do relogio
 			createTrayIcon(primaryStage);
 
 			// Carrega o root layout do arquivo fxml.
