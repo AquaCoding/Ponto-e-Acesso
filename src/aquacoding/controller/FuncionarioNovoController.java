@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -45,7 +46,10 @@ public class FuncionarioNovoController implements Initializable {
 
 	@FXML
 	ComboBox<Funcao> funcaoSelect;
-	
+
+	@FXML
+	DatePicker admissao;
+
 	private File selectedFile;
 
 	@Override
@@ -70,13 +74,14 @@ public class FuncionarioNovoController implements Initializable {
 
 		//Preenche o campo de funcao
 		funcaoSelect.setItems(FXCollections.observableArrayList(Funcao.getAll()));
-		
+
 		setFuncaoSelectFactory();
-		
+
 		// Tenta realizar o cadastro
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				Funcionario f;
+				java.sql.Date dataAdmissao = java.sql.Date.valueOf(admissao.getValue());
 				// Cria um novo objeto do Funcionario
 				 f = new Funcionario.Builder().setNome(funcionarioNome.getText())
 								.setSobrenome(funcionarioSobrenome.getText()).setRg(funcionarioRG.getText())
@@ -86,6 +91,7 @@ public class FuncionarioNovoController implements Initializable {
 								.setCidade(funcionarioCidade.getText()).setEstado(funcionarioEstado.getText())
 								.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()))
 								.setSuspensao(false)
+								.setAdmissao(dataAdmissao)
 								.build();
 
 				if(horarioSelect.getSelectionModel().getSelectedItem() != null){
@@ -95,7 +101,7 @@ public class FuncionarioNovoController implements Initializable {
 				if(horarioSelect2.getSelectionModel().getSelectedItem() != null){
 					f.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
 				}
-				
+
 				if(funcaoSelect.getSelectionModel().getSelectedItem() != null){
 					f.setFuncao(funcaoSelect.getSelectionModel().getSelectedItem());
 				}
@@ -139,7 +145,7 @@ public class FuncionarioNovoController implements Initializable {
 				lblImagePath.setText(selectedFile.getName());
 			}
 		});
-		
+
 		funcaoSelect.setConverter(new StringConverter<Funcao>() {
 			@Override
 			public String toString(Funcao item) {
@@ -186,7 +192,7 @@ public class FuncionarioNovoController implements Initializable {
 			}
 		});
 	}
-	
+
 	private void setFuncaoSelectFactory() {
 		// Define um novo cell factory
 		funcaoSelect.setCellFactory(new Callback<ListView<Funcao>, ListCell<Funcao>>() {

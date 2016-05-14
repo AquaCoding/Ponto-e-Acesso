@@ -27,7 +27,7 @@ public class FuncionarioVerController implements Initializable {
 
 	@FXML
 	Label nomeShow, sobrenomeShow, rgShow, cpfShow, cptsShow, salarioHorasShow, telefoneShow, ruaShow, numeroShow,
-			bairroShow, estadoShow, cidadeShow, statusShow,funcaoNomeShow;
+			bairroShow, estadoShow, cidadeShow, statusShow,funcaoNomeShow,lblAdmissao,admissaoShow,lblDemissao,demissaoShow;
 
 	@FXML
 	ListView<Bonificacao> bonificacoesListagem;
@@ -53,7 +53,7 @@ public class FuncionarioVerController implements Initializable {
 		ferias.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadFuncionarioFeriasView(func);
 		});
-		
+
 		modeloCartao.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadParsedModeloCartao(func);
 		});
@@ -74,12 +74,19 @@ public class FuncionarioVerController implements Initializable {
 		bairroShow.setText(func.getBairro());
 		estadoShow.setText(func.getEstado());
 		cidadeShow.setText(func.getCidade());
+		admissaoShow.setText(func.getAdmissaoString());
+		if(func.getDemissaoString() != null){
+			demissaoShow.setText(func.getDemissaoString());
+		}else{
+			demissaoShow.setText("");
+			lblDemissao.setText("");
+		}
 
 
 		funcaoNomeShow.setText(func.getFuncao().getNome());
 
 		statusShow.setText(func.getStatus());
-		
+
 
 		File f = func.getProfileImage();
 		if (f.exists()) {

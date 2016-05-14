@@ -6,7 +6,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="465.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioEditarController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioEditarController">
    <children>
       <HBox AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="44.0">
          <children>
@@ -52,6 +52,8 @@
                   <ComboBox fx:id="horarioSelect" />
                   <Label text="Horario Turno 2" />
                   <ComboBox fx:id="horarioSelect2" />
+                  <Label text="Cargo" />
+                  <ComboBox fx:id="funcaoSelect" />
                   <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar">
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -100,13 +102,15 @@
                      </padding>
                   </Label>
                   <TextField fx:id="funcionarioCidade" focusTraversable="false" prefHeight="25.0" prefWidth="212.0" />
-                  <Label fx:id="lblImagePath" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="183.0" text="Editar imagem" />
-                  <Button fx:id="btnImage" focusTraversable="false" mnemonicParsing="false" text="Selecionar imagem de perfil" />
+                  <Label text="Demissão" />
+                  <DatePicker fx:id="demissao" editable="false" />
                   <CheckBox fx:id="checkSuspenso" mnemonicParsing="false" text="Suspenso">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </CheckBox>
+                  <Label fx:id="lblImagePath" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="183.0" text="Editar imagem" />
+                  <Button fx:id="btnImage" focusTraversable="false" mnemonicParsing="false" text="Selecionar imagem de perfil" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <Button fx:id="alterar" focusTraversable="false" mnemonicParsing="false" text="Alterar" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="10.0" />

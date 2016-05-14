@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import aquacoding.model.Funcao;
 import aquacoding.model.Funcionario;
 import aquacoding.model.Horario;
 import aquacoding.pontoacesso.Main;
@@ -15,12 +16,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 public class FuncionarioEditarController implements Initializable {
 
@@ -42,6 +48,12 @@ public class FuncionarioEditarController implements Initializable {
 	@FXML
 	ComboBox<Horario> horarioSelect, horarioSelect2;
 
+	@FXML
+	ComboBox<Funcao> funcaoSelect;
+
+	@FXML
+	DatePicker demissao;
+
 	private Funcionario funcionario;
 	private File selectedFile;
 
@@ -62,10 +74,20 @@ public class FuncionarioEditarController implements Initializable {
 		// Preenche o campo de seleção do horario
 				horarioSelect.setItems(FXCollections.observableArrayList(Horario.getAll()));
 				horarioSelect2.setItems(FXCollections.observableArrayList(Horario.getAll()));
+				//Preenche o campo de funcao
+				funcaoSelect.setItems(FXCollections.observableArrayList(Funcao.getAll()));
+
+				setFuncaoSelectFactory();
+
+				//System.out.println(funcaoSelect.getSelectionModel().getSelectedItem().getId());
 
 		// Tenta realizar a edição
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			try {
+				java.sql.Date dataDemissao = null;
+				if(demissao.getValue() != null){
+				dataDemissao = java.sql.Date.valueOf(demissao.getValue());
+				}
 				// Atualiza a info do funcionario
 				funcionario.setNome(funcionarioNome.getText());
 				funcionario.setNome(funcionarioNome.getText());
@@ -81,6 +103,9 @@ public class FuncionarioEditarController implements Initializable {
 				funcionario.setEstado(funcionarioEstado.getText());
 				funcionario.setSalarioHoras(Double.parseDouble(funcionarioSalarioHoras.getText()));
 				funcionario.setSuspensao(checkSuspenso.isSelected());
+				if(dataDemissao != null){
+					funcionario.setDemissao(dataDemissao);
+				}
 
 				funcionario.limparHorarios();
 
@@ -90,6 +115,11 @@ public class FuncionarioEditarController implements Initializable {
 
 				if(horarioSelect2.getSelectionModel().getSelectedItem() != null){
 					funcionario.setHorario(horarioSelect2.getSelectionModel().getSelectedItem());
+				}
+
+				if(funcaoSelect.getSelectionModel().getSelectedItem() != null){
+					funcionario.setFuncao(funcaoSelect.getSelectionModel().getSelectedItem());
+
 				}
 
 				// Adiciona a imagem ao objeto do funcionario
@@ -129,6 +159,26 @@ public class FuncionarioEditarController implements Initializable {
 				lblImagePath.setText(selectedFile.getName());
 			}
 		});
+
+		funcaoSelect.setConverter(new StringConverter<Funcao>() {
+			@Override
+			public String toString(Funcao item) {
+				if (item != null) {
+					return item.getNome();
+				} else {
+					return null;
+				}
+			}
+
+			@Override
+			public Funcao fromString(String string) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
+
+
+
 	}
 
 	public void setFuncionario(Funcionario funcionario) {
@@ -147,4 +197,34 @@ public class FuncionarioEditarController implements Initializable {
 		funcionarioSalarioHoras.setText(""+funcionario.getSalarioHoras());
 	}
 
+	private void setFuncaoSelectFactory() {
+		// Define um novo cell factory
+		funcaoSelect.setCellFactory(new Callback<ListView<Funcao>, ListCell<Funcao>>() {
+			// Realiza o override do método padrão
+			@Override
+			public ListCell<Funcao> call(ListView<Funcao> param) {
+				// Cria uma nova célula da lista
+				ListCell<Funcao> cell = new ListCell<Funcao>() {
+					// Realiza o overrida do método padrão para definição do
+					// nome de exibição na lista
+					@Override
+					protected void updateItem(Funcao item, boolean empty) {
+						// Chama o construtor padrão
+						super.updateItem(item, empty);
+
+						// Define o nome customizado
+						if (item != null) {
+							setText(item.getNome());
+						} else {
+							setText("");
+						}
+					}
+				};
+				// Retorna a célula
+				return cell;
+			}
+		});
+	}
+
 }
+

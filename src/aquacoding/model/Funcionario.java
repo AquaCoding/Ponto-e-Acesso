@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -38,6 +39,8 @@ public class Funcionario {
 	private Funcao funcao;
 	private ArrayList<Ferias> ferias = new ArrayList<Ferias>();
 	private boolean suspensao;
+	private java.sql.Date admissao;
+	private java.sql.Date demissao;
 
 	// Setters e Getters
 	public int getId() {
@@ -169,7 +172,7 @@ public class Funcionario {
 	public File getProfileImage() {
 		if(profileImage != null && Files.isReadable(profileImage.toPath()))
 			return profileImage;
-		
+
 		return new File(Image.PROFILE_IMAGE_DEFAULT);
 	}
 
@@ -236,6 +239,39 @@ public class Funcionario {
 		this.funcao = funcao;
 	}
 
+
+
+	public java.sql.Date getAdmissao() {
+		if (admissao == null || admissao.equals(""))
+			throw new RuntimeException("O funcionário precissa de uma data de admissão");
+		return admissao;
+	}
+
+	public String getAdmissaoString() {
+		SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy");
+		return format.format(admissao);
+	}
+
+	public void setAdmissao(java.sql.Date admissao) {
+		this.admissao = admissao;
+	}
+
+	public java.sql.Date getDemissao() {
+		return demissao;
+	}
+
+	public String getDemissaoString() {
+		if(demissao != null){
+			SimpleDateFormat format = new SimpleDateFormat("d/MM/yyyy");
+			return format.format(demissao);
+		}
+		return null;
+	}
+
+	public void setDemissao(java.sql.Date demissao) {
+		this.demissao = demissao;
+	}
+
 	public String getStatus(){
 		LocalDate inicio;
 		LocalDate termino;
@@ -253,7 +289,7 @@ public class Funcionario {
 				return "Regular";
 			}
 		}
-		
+
 		return "Regular";
 	}
 
@@ -276,6 +312,8 @@ public class Funcionario {
 		setHorarios(builder.horario);
 		setSuspensao(builder.suspensao);
 		setFuncao(builder.funcao);
+		setAdmissao(builder.admissao);
+		setDemissao(builder.demissao);
 	}
 
 	// Builder utilizado para criar instancias de Funcionario
@@ -297,6 +335,8 @@ public class Funcionario {
 		private double salarioHoras;
 		private boolean suspensao;
 		private Funcao funcao;
+		private java.sql.Date admissao;
+		private java.sql.Date demissao;
 
 
 		private ArrayList<Horario> horario = new ArrayList<Horario>();
@@ -383,6 +423,17 @@ public class Funcionario {
 			return this;
 		}
 
+		public Builder setAdmissao(java.sql.Date admissao){
+			this.admissao = admissao;
+			return this;
+		}
+
+		public Builder setDemissao(java.sql.Date demissao){
+			this.demissao = demissao;
+			return this;
+		}
+
+
 		// Cria a instancia de Funcionario
 		public Funcionario build() {
 			return new Funcionario(this);
@@ -396,7 +447,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras, suspensao, idFuncao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					"INSERT INTO Funcionario (nome, sobrenome, rg, cpf, ctps, telefone, rua, numero, bairro, cidade, estado, salarioHoras, suspensao, idFuncao, admissao) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
@@ -414,6 +465,7 @@ public class Funcionario {
 			statement.setDouble(12, this.salarioHoras);
 			statement.setBoolean(13, this.suspensao);
 			statement.setInt(14, this.funcao.getId());
+			statement.setDate(15, this.admissao);
 
 			// Executa o SQL
 			int ret = statement.executeUpdate();
@@ -484,6 +536,8 @@ public class Funcionario {
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.setFuncao(Funcao.getByID(resultSet.getInt("idFuncao")))
 						.setSuspensao(resultSet.getBoolean("suspensao"))
+						.setAdmissao(resultSet.getDate("admissao"))
+						.setDemissao(resultSet.getDate("demissao"))
 						.build();
 
 				// Obtem os horarios desse funcionario
@@ -547,6 +601,8 @@ public class Funcionario {
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.setSuspensao(resultSet.getBoolean("suspensao"))
 						.setFuncao(Funcao.getByID(resultSet.getInt("idFuncao")))
+						.setAdmissao(resultSet.getDate("admissao"))
+						.setDemissao(resultSet.getDate("demissao"))
 						.build();
 
 				// Obtem os horarios desse funcionario
@@ -587,7 +643,7 @@ public class Funcionario {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ?, suspensao = ?, idFuncao = ? WHERE idFuncionario = ?");
+					"UPDATE Funcionario SET nome = ?, sobrenome = ?, rg = ?, cpf = ?, ctps = ?, telefone = ?, rua = ?, numero = ?, bairro = ?, cidade = ?, estado = ?, salarioHoras = ?, suspensao = ?, idFuncao = ?, demissao = ? WHERE idFuncionario = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.nome);
@@ -604,7 +660,9 @@ public class Funcionario {
 			statement.setDouble(12, this.salarioHoras);
 			statement.setBoolean(13, this.suspensao);
 			statement.setInt(14, this.funcao.getId());
-			statement.setDouble(15, this.id);
+			System.out.println(this.funcao.getId());
+			statement.setDate(15, this.demissao);
+			statement.setDouble(16, this.id);
 
 
 
@@ -718,6 +776,8 @@ public class Funcionario {
 						.setBairro(resultSet.getString("bairro")).setCidade(resultSet.getString("cidade"))
 						.setEstado(resultSet.getString("estado")).setSalarioHoras(resultSet.getDouble("salarioHoras"))
 						.setSuspensao(resultSet.getBoolean("suspensao"))
+						.setAdmissao(resultSet.getDate("admissao"))
+						.setDemissao(resultSet.getDate("demissao"))
 						.build();
 
 			if(f != null) {

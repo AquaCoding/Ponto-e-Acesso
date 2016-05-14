@@ -95,6 +95,8 @@
                         <Insets bottom="2.0" top="2.0" />
                      </padding></Label>
                   <TextField fx:id="funcionarioCidade" prefHeight="25.0" prefWidth="212.0" />
+                  <Label text="Admissão" />
+                  <DatePicker fx:id="admissao" editable="false" />
                   <Label fx:id="lblImagePath" alignment="BOTTOM_LEFT" prefHeight="17.0" prefWidth="183.0" text="Nenhuma imagem selecionada" />
                   <Button fx:id="btnImage" focusTraversable="false" mnemonicParsing="false" text="Selecionar imagem de perfil" />
                   <AnchorPane prefHeight="200.0" prefWidth="200.0">

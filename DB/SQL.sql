@@ -57,6 +57,8 @@ CREATE TABLE Funcionario(
     salarioHoras	DOUBLE		NOT NULL,
 	suspensao 				BOOLEAN		NOT NULL,
 	idFuncao    			INT   NOT NULL,
+    admissao		DATE		NOT NULL,
+    demissao		DATE,
 	CONSTRAINT fk_funcao FOREIGN KEY (idFuncao)
 		REFERENCES Funcao(idFuncao),
 	CONSTRAINT pk_funcionario PRIMARY KEY (idFuncionario)
