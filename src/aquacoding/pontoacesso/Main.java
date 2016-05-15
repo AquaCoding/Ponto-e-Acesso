@@ -72,7 +72,7 @@ public class Main extends Application {
     private static Thread serialThread;
     private static Thread timeoutThread;
     private static Timeout timeout = new Timeout();
-   
+
 	@Override
 	public void start(Stage stage) throws Exception {
 		// Inicia a janela principal (Main.fxml)
@@ -91,9 +91,9 @@ public class Main extends Application {
 		});
 		serialThread.start();
 
-		primaryStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));	
+		primaryStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
 		loginStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
-		
+
 		// Escuta por qualquer evento dentro do primaryStage e salva o momento em que ocorreu para
 		// verificação no timeout
 		primaryStage.addEventHandler(Event.ANY, (event) -> {
@@ -294,14 +294,14 @@ public class Main extends Application {
 		try {
 			// Cria a thread para verificar o timeout de 10 minutos
 			timeoutThread = new Thread(timeout);
-			
+
 			// Define o ultimo evento da inicialização
 			timeout.setUltimoEvento();
 			// Inicia a thread
 			timeout.setRunTimeoutEvent(true);
 			// Inicia a thread
 			timeoutThread.start();
-			
+
 			// Cria icone na barra do relogio
 			createTrayIcon(primaryStage);
 
@@ -618,7 +618,7 @@ public class Main extends Application {
 		}
 	}
 
-	// Carrega a view de na Férias
+	// Carrega a view de nova Férias
 	public static void loadFeriasNovoView() {
 		try {
 			primaryStage.setTitle(pageTitle + " - Nova férias");
@@ -722,7 +722,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	// Inicia a webview e abre o arquivo especificado
 	public static void loadWebView(String fileToOpen, boolean isDropBox) {
 		try {
@@ -734,7 +734,7 @@ public class Main extends Application {
 			// Obtem o controller da interface
 			WebViewController controller = loader.getController();
 			controller.openPage(fileToOpen);
-			
+
 			if(isDropBox) {
 				controller.showCodeConfirm();
 			}
@@ -913,54 +913,67 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/CartaoModeloCriar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
-			
+
 			// Obtem o controller da interface e passa o funcionario
 			CartaoModeloController controller = loader.getController();
 			controller.setFuncionario(funcionario);
-						
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void loadSuporteVerView() {
 		try {
 			primaryStage.setTitle(pageTitle + " - Ajuda");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/Suporte.fxml"));
-			AnchorPane personOverview = (AnchorPane) loader.load();														
-			
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void loadAjudaCartoesModeloVerView() {
 		try {
 			primaryStage.setTitle(pageTitle + " - Ajuda Modelo de Cartão");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/AjudaModeloCartao.fxml"));
-			AnchorPane personOverview = (AnchorPane) loader.load();														
-			
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void loadMudancaPontoAcessoView() {
 		try {
 			primaryStage.setTitle(pageTitle + " - Mudança Ponto - Acesso");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/MudancaPontoAcesso.fxml"));
-			AnchorPane personOverview = (AnchorPane) loader.load();														
-			
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public static void loadHoleriteGerarView() {
+		try {
+				primaryStage.setTitle(pageTitle + " - Gerar Holerite");
+				FXMLLoader loader = new FXMLLoader();
+				loader.setLocation(ClassLoader.getSystemResource("resources/views/HoleriteNovo.fxml"));
+				AnchorPane personOverview = (AnchorPane) loader.load();
+				rootLayout.setCenter(personOverview);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+
 }
