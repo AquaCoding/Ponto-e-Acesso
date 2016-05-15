@@ -113,7 +113,7 @@ public class Funcao {
 			ArrayList<Funcao> funcoes = new ArrayList<Funcao>();
 			while (resultSet.next()) {
 				// Cria um cliente com os dados do BD
-				Funcao c = new Funcao(resultSet.getInt("idSetor"), resultSet.getString("nome"),
+				Funcao c = new Funcao(resultSet.getInt("idFuncao"), resultSet.getString("nome"),
 						Setor.getByID(resultSet.getInt("idSetor")));
 
 				// Adiciona o cliente ao retorno

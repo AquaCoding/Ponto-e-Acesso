@@ -567,6 +567,7 @@ public class Funcionario {
 			// Retorna os funcionarios
 			return funcionarios;
 		} catch (SQLException e) {
+			System.out.println(e.getMessage());
 			throw new RuntimeException("Um erro ocorreu ao obter os funcionários.");
 		}
 	}
@@ -660,7 +661,6 @@ public class Funcionario {
 			statement.setDouble(12, this.salarioHoras);
 			statement.setBoolean(13, this.suspensao);
 			statement.setInt(14, this.funcao.getId());
-			System.out.println(this.funcao.getId());
 			statement.setDate(15, this.demissao);
 			statement.setDouble(16, this.id);
 
@@ -698,7 +698,7 @@ public class Funcionario {
 			connect.close();
 
 			// Salva a imagem
-			if (profileImage != null) {
+			if (profileImage != null && Files.isReadable(profileImage.toPath())) {
 				Image.copyImage(profileImage, "img/profile/" + this.id);
 			}
 
