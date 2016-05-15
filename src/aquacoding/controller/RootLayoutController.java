@@ -44,7 +44,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarFeriasLista, menuBarFeriasNova;
 	
 	@FXML
-	MenuItem menuBarCartoesVer, menuBarCartoesModelo;
+	MenuItem menuBarCartoesVer, menuBarCartoesModelo, menuBarAjudaCartoesModelo;
 	
 	@FXML
 	MenuItem menuBarRelatorioTrabalho, menuBarRelatorioAcesso;
@@ -60,6 +60,9 @@ public class RootLayoutController implements Initializable {
 	
 	@FXML
 	MenuItem menuBarAuditoriaVer;
+	
+	@FXML
+	MenuItem menuBarSuporteVer;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -205,6 +208,15 @@ public class RootLayoutController implements Initializable {
 				System.out.println("Erro na criação do arquivo" + e1.getMessage());
 			}
 		});	
+		
+		
+		menuBarSuporteVer.setOnAction((ActionEvent e) -> {
+			Main.loadSuporteVerView();
+		});
+		
+		menuBarAjudaCartoesModelo.setOnAction((ActionEvent e) -> {
+			Main.loadAjudaCartoesModeloVerView();
+		});
 		
 		// Oculta o ver da empresa, caso nenhuma empresa esteja cadastrada
 		if(Empresa.getAll().size() == 0)

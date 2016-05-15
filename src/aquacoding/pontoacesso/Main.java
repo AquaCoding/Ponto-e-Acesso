@@ -25,6 +25,7 @@ import javafx.stage.WindowEvent;
 
 import javax.imageio.ImageIO;
 
+import aquacoding.controller.SuporteController;
 import aquacoding.controller.BonificacaoCadastroController;
 import aquacoding.controller.BonificacaoLinkController;
 import aquacoding.controller.CartaoModeloController;
@@ -921,4 +922,31 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void loadSuporteVerView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Ajuda");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/Suporte.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();														
+			
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadAjudaCartoesModeloVerView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Ajuda Modelo de Cartão");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/AjudaModeloCartao.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();														
+			
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

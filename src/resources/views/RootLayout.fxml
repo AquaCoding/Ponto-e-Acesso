@@ -62,6 +62,7 @@
                <items>
                   <MenuItem fx:id="menuBarCartoesVer" mnemonicParsing="false" text="Ver" />
                   <MenuItem fx:id="menuBarCartoesModelo" mnemonicParsing="false" text="Modelo" />
+                  <MenuItem fx:id="menuBarAjudaCartoesModelo" mnemonicParsing="false" text="Ajuda" />                  
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Relatório">
@@ -97,6 +98,11 @@
                   <MenuItem fx:id="menuBarAuditoriaVer" mnemonicParsing="false" text="Ver" />
                </items>
             </Menu> 
+            <Menu mnemonicParsing="false" text="Suporte">
+            	<items>
+                	<MenuItem fx:id="menuBarSuporteVer" mnemonicParsing="false" text="Ver" />                    
+            	</items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
