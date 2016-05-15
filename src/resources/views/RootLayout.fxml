@@ -13,6 +13,7 @@
                <items>
                   <MenuItem fx:id="menuBarSistemaInicio" mnemonicParsing="false" text="InÃ­cio" />
                   <MenuItem fx:id="menuBarSistemaDeslogar" mnemonicParsing="false" text="Deslogar" />
+                  <MenuItem fx:id="menuBarSistemaMudanca" mnemonicParsing="false" text="Mudança Ponto - Acesso" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Empresa">

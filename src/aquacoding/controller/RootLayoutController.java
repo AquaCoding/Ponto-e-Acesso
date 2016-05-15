@@ -6,21 +6,22 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
+
+import aquacoding.model.Empresa;
+import aquacoding.pontoacesso.Main;
+import aquacoding.utils.DatabaseConnect;
+import aquacoding.utils.Folders;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import aquacoding.model.Empresa;
-import aquacoding.pontoacesso.Main;
-import aquacoding.utils.DatabaseConnect;
-import aquacoding.utils.Folders;
 
 public class RootLayoutController implements Initializable {
 
 	@FXML
-	MenuItem menuBarSistemaDeslogar, menuBarSistemaInicio;
+	MenuItem menuBarSistemaDeslogar, menuBarSistemaInicio, menuBarSistemaMudanca;
 	
 	@FXML
 	MenuItem menuBarEmpresaNovoEditar, menuBarEmpresaVer;
@@ -214,8 +215,8 @@ public class RootLayoutController implements Initializable {
 			Main.loadSuporteVerView();
 		});
 		
-		menuBarAjudaCartoesModelo.setOnAction((ActionEvent e) -> {
-			Main.loadAjudaCartoesModeloVerView();
+		menuBarSistemaMudanca.setOnAction((ActionEvent e) -> {
+			Main.loadMudancaPontoAcessoView();
 		});
 		
 		// Oculta o ver da empresa, caso nenhuma empresa esteja cadastrada

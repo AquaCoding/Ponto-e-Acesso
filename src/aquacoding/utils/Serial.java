@@ -14,11 +14,27 @@ import jssc.SerialPortException;
 
 public class Serial {
 
-	private static final String PORT_NUMBER = "COM6";
-	Boolean status;
+	private String PORT_NUMBER = "COM6";
+	private Boolean status;
 
 	SerialPort serialPort = new SerialPort(PORT_NUMBER);
 
+	public String getPort() {
+		return this.PORT_NUMBER;				
+	}
+	
+	public void setPort(String port) {
+		this.PORT_NUMBER = port.toUpperCase();				
+	}
+	
+	public Boolean getStatus() {
+		return this.status;
+	}
+	
+	public void setStatus(Boolean status) {
+		this.status = status;
+	}
+	
 	public void SerialLeitura() throws SerialPortException {
 		try {
 

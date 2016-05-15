@@ -38,6 +38,7 @@ import aquacoding.controller.FuncionarioFeriasVerController;
 import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.HorarioEditarController;
 import aquacoding.controller.ImpostoNovoController;
+import aquacoding.controller.MudancaPontoAcessoController;
 import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
 import aquacoding.controller.UsuarioNovoController;
@@ -941,6 +942,19 @@ public class Main extends Application {
 			primaryStage.setTitle(pageTitle + " - Ajuda Modelo de Cartão");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/AjudaModeloCartao.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();														
+			
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void loadMudancaPontoAcessoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Mudança Ponto - Acesso");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/MudancaPontoAcesso.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();														
 			
 			rootLayout.setCenter(personOverview);
