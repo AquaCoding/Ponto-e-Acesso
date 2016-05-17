@@ -221,6 +221,10 @@ public class RootLayoutController implements Initializable {
 		menuBarSistemaMudanca.setOnAction((ActionEvent e) -> {
 			Main.loadMudancaPontoAcessoView();
 		});
+		
+		menuBarAjudaCartoesModelo.setOnAction((ActionEvent e) -> {
+			Main.loadAjudaCartoesModeloVerView();
+		});
 
 		// Oculta o ver da empresa, caso nenhuma empresa esteja cadastrada
 		if(Empresa.getAll().size() == 0)
