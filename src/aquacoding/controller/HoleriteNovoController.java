@@ -1,9 +1,14 @@
 package aquacoding.controller;
 
 import java.net.URL;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ResourceBundle;
 
 import aquacoding.model.Funcionario;
+import aquacoding.model.Horario;
 import aquacoding.pontoacesso.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,6 +37,8 @@ public class HoleriteNovoController implements Initializable {
 	@FXML
 	CheckBox checkTodos;
 
+	Funcionario funcionario;
+
 	// Atributos
 	ObservableList<Funcionario> items;
 
@@ -50,6 +57,34 @@ public class HoleriteNovoController implements Initializable {
 		// Adiciona a lista
 		listFuncionaios.setItems(items);
 
+		gerar.setOnMouseClicked((MouseEvent e) -> {
+			ObservableList<Funcionario> fun;
+			fun = FXCollections.observableArrayList(listFuncionaios.getSelectionModel().getSelectedItems());
+
+			if(fun.size() == 1){
+
+				LocalDate inicio = Inicio.getValue();
+				LocalDate termino = Termino.getValue();
+				long dias = ChronoUnit.DAYS.between(inicio, termino);
+
+				int i = Integer.valueOf(""+dias);
+				double salario = 0;
+
+				funcionario = fun.get(0);
+				for(int j = 0; j <= i+1; j++ ){
+					 LocalDate amanhas = inicio.plusDays(j);
+
+					 Duration aux = Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas));
+					 int horas = Integer.valueOf(""+aux.toHours());
+					 double dinheiroHora = funcionario.getSalarioHoras();
+					 salario = salario +  horas * dinheiroHora;
+
+				}
+
+
+			}
+
+		});
 
 	}
 

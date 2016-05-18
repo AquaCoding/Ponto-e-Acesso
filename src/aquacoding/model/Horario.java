@@ -89,7 +89,7 @@ public class Horario {
 			throw new RuntimeException("Um horÃ¡rio de inicio ao almoÃ§o deve ser selecionado.");
 		this.terminoAlmoco = terminoAlmoco;
 	}
-	
+
 	public void setSegunda(Boolean segunda) {
 		this.segunda = segunda;
 	}
@@ -214,10 +214,10 @@ public class Horario {
 
 				// Encerra conexao
 				connect.close();
-				
+
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.HORARIO, this.id, ActionsCode.CADASTROU);
-				
+
 				return true;
 			} else {
 				// Encerra conexao
@@ -290,7 +290,7 @@ public class Horario {
 			if(resp == 1) {
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.HORARIO, this.id, ActionsCode.REMOVEU);
-				
+
 				return true;
 			}else {
 				return false;
@@ -336,7 +336,7 @@ public class Horario {
 			if (ret == 1) {
 				// Gera log
 				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.HORARIO, this.id, ActionsCode.EDITOU);
-				
+
 				return true;
 			} else {
 				return false;
@@ -383,11 +383,11 @@ public class Horario {
 			throw new RuntimeException("Um erro ocorreu ao obter o horário.");
 		}
 	}
-	
+
 	public String toString(){
 		return " " + nome;
 	}
-	
+
 	// Obtem o tempo de trabalho durante um dia por um funcionario considerando os horarios das batidades dos pontos
 	public static Duration getHorasTrabalhadasByDateAndFuncionario(Funcionario f, String date) {
 		try{
@@ -404,30 +404,30 @@ public class Horario {
 
 			// Executa o SQL
 			ResultSet resultSet = statement.executeQuery();
-			
+
 			// ArrayList para armazenar todos os pontos
 			ArrayList<Instant> pontos = new ArrayList<Instant>();
-			
+
 			// Percorre todos os pontos retornados e obtem o horario
 			while(resultSet.next()) {
 				pontos.add(resultSet.getTimestamp("horario").toInstant());
 			}
-			
+
 			// Ignora dias com pontos impares
 			if (pontos.size() % 2 != 0) {
 				return null;
 			} else {
 				// ArrayList para armazenar a duração de cada turno trabalhado
 				ArrayList<Duration> turnosTrabalhados = new ArrayList<Duration>();
-				
+
 				// Percorre pelos conjuntos de entrada/saida dos turnos, calculando a duração entre uma batida e outra
 				for(int i = 0; i < pontos.size() - 1; i += 2) {
 					turnosTrabalhados.add(Duration.between(pontos.get(i), pontos.get(i + 1)));
 				}
-										
+
 				// Armazena o tempo final trabalhado naquele dia pelo funcionario
 				Duration tempoTrabalhado = null;
-				
+
 				if(turnosTrabalhados.size() == 1) {
 					tempoTrabalhado = turnosTrabalhados.get(0);
 				} else {
@@ -436,7 +436,7 @@ public class Horario {
 						tempoTrabalhado = turnosTrabalhados.get(i).plus(turnosTrabalhados.get(i + 1));
 					}
 				}
-										
+
 				// Retorna a tempo trabalhado
 				return tempoTrabalhado;
 			}
@@ -460,14 +460,14 @@ public class Horario {
 
 			// Executa o SQL
 			ResultSet resultSet = statement.executeQuery();
-			
+
 			// ArrayList para armazenar todos os pontos
 			ArrayList<Instant> pontos = new ArrayList<Instant>();
-			
+
 			// Percorre todos os pontos retornados e obtem o horario
 			while(resultSet.next())
 				pontos.add(resultSet.getTimestamp("horario").toInstant());
-			
+
 			// Retorna a tempo trabalhado
 			return pontos;
 		} catch (SQLException e) {
