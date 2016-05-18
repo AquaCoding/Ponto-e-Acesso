@@ -11,8 +11,10 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -28,6 +30,7 @@ import javax.imageio.ImageIO;
 import aquacoding.controller.SuporteController;
 import aquacoding.controller.BonificacaoCadastroController;
 import aquacoding.controller.BonificacaoLinkController;
+import aquacoding.controller.CadastroCartaoController;
 import aquacoding.controller.CartaoModeloController;
 import aquacoding.controller.EmpresaEditarController;
 import aquacoding.controller.EmpresaVerController;
@@ -67,11 +70,11 @@ public class Main extends Application {
 	public static Usuario loggedUser = null;
 
 	private static boolean firstTime = true;
-    private static TrayIcon trayIcon = null;
+	private static TrayIcon trayIcon = null;
 
-    private static Thread serialThread;
-    private static Thread timeoutThread;
-    private static Timeout timeout = new Timeout();
+	private static Thread serialThread;
+	private static Thread timeoutThread;
+	private static Timeout timeout = new Timeout();
 
 	@Override
 	public void start(Stage stage) throws Exception {
@@ -94,126 +97,127 @@ public class Main extends Application {
 		primaryStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
 		loginStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
 
-		// Escuta por qualquer evento dentro do primaryStage e salva o momento em que ocorreu para
+		// Escuta por qualquer evento dentro do primaryStage e salva o momento
+		// em que ocorreu para
 		// verificação no timeout
 		primaryStage.addEventHandler(Event.ANY, (event) -> {
 			timeout.setUltimoEvento();
 		});
 	}
-
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 
 	// Cria o icone do relogio
-    public static void createTrayIcon(final Stage stage) {
-        // Verifica se existe suporte para icones no relogio
-    	if (SystemTray.isSupported()) {
-            // Obtem a instancia dos icones do relogio
-            SystemTray tray = SystemTray.getSystemTray();
+	public static void createTrayIcon(final Stage stage) {
+		// Verifica se existe suporte para icones no relogio
+		if (SystemTray.isSupported()) {
+			// Obtem a instancia dos icones do relogio
+			SystemTray tray = SystemTray.getSystemTray();
 
-            // Remove o icone existente caso houver
-            if(trayIcon != null)
-            	tray.remove(trayIcon);
+			// Remove o icone existente caso houver
+			if (trayIcon != null)
+				tray.remove(trayIcon);
 
-            // Carrega uma image para o icone
-            java.awt.Image image = null;
-            try {
-                image = ImageIO.read(new File(Image.APP_ICON_PATH));
-            } catch (IOException ex) {
-                System.out.println(ex);
-            }
+			// Carrega uma image para o icone
+			java.awt.Image image = null;
+			try {
+				image = ImageIO.read(new File(Image.APP_ICON_PATH));
+			} catch (IOException ex) {
+				System.out.println(ex);
+			}
 
-            // Subescreve o evento de fechar da janela
-            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-                @Override
-                public void handle(WindowEvent t) {
-                	// Oculta a janela
-                    hide(stage);
-                }
-            });
+			// Subescreve o evento de fechar da janela
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				@Override
+				public void handle(WindowEvent t) {
+					// Oculta a janela
+					hide(stage);
+				}
+			});
 
-            // Ações a serem executadas no icone do relogio
-            // Fecha o programa
-            final ActionListener closeListener = new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                	if (SystemTray.isSupported()) {
-                        // Obtem a instancia dos icones do relogio
-                        SystemTray tray = SystemTray.getSystemTray();
+			// Ações a serem executadas no icone do relogio
+			// Fecha o programa
+			final ActionListener closeListener = new ActionListener() {				
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					if (SystemTray.isSupported()) {
+						// Obtem a instancia dos icones do relogio
+						SystemTray tray = SystemTray.getSystemTray();
 
-                        // Remove o icone existente caso houver
-                        if(trayIcon != null)
-                        	tray.remove(trayIcon);
-                	}
-                    System.exit(0);
-                }
-            };
+						// Remove o icone existente caso houver
+						if (trayIcon != null)
+							tray.remove(trayIcon);
+					}					
+					System.exit(0);
+				}
+			};
 
-            // Reabre a janela
-            ActionListener showListener = new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            stage.show();
-                        }
-                    });
-                }
-            };
+			// Reabre a janela
+			ActionListener showListener = new ActionListener() {
+				@Override
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							stage.show();
+						}
+					});
+				}
+			};
 
-            // Cria os menus do icone
-            PopupMenu popup = new PopupMenu();
+			// Cria os menus do icone
+			PopupMenu popup = new PopupMenu();
 
-            MenuItem showItem = new MenuItem("Exibir");
-            showItem.addActionListener(showListener);
-            popup.add(showItem);
+			MenuItem showItem = new MenuItem("Exibir");
+			showItem.addActionListener(showListener);
+			popup.add(showItem);
 
-            MenuItem closeItem = new MenuItem("Fechar");
-            closeItem.addActionListener(closeListener);
-            popup.add(closeItem);
+			MenuItem closeItem = new MenuItem("Fechar");
+			closeItem.addActionListener(closeListener);
+			popup.add(closeItem);
 
-            // Cria o TrayIcon
-            trayIcon = new TrayIcon(image, pageTitle, popup);
+			// Cria o TrayIcon
+			trayIcon = new TrayIcon(image, pageTitle, popup);
 
-            // Configura os Listeners do icone
-            trayIcon.addActionListener(showListener);
+			// Configura os Listeners do icone
+			trayIcon.addActionListener(showListener);
 
-            // Define o icone para se redimensionar sozinho
-            trayIcon.setImageAutoSize(true);
+			// Define o icone para se redimensionar sozinho
+			trayIcon.setImageAutoSize(true);
 
-            // Adiciona o icone
-            try {
-                tray.add(trayIcon);
-            } catch (AWTException e) {
-                System.err.println(e);
-            }
-        }
-    }
+			// Adiciona o icone
+			try {
+				tray.add(trayIcon);
+			} catch (AWTException e) {
+				System.err.println(e);
+			}
+		}
+	}
 
-    // Exibe uma mensagem quando o programa é minimizado pela primeira vez
-    public static void onMinimize() {
-        if (firstTime) {
-        	trayIcon.displayMessage(pageTitle, "O programa esta minimizado no relógio", TrayIcon.MessageType.INFO);
-            firstTime = false;
-        }
-    }
+	// Exibe uma mensagem quando o programa é minimizado pela primeira vez
+	public static void onMinimize() {
+		if (firstTime) {
+			trayIcon.displayMessage(pageTitle, "O programa esta minimizado no relógio", TrayIcon.MessageType.INFO);
+			firstTime = false;
+		}
+	}
 
-    // Oculta a janela
-    private static void hide(final Stage stage) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if (SystemTray.isSupported()) {
-                    stage.hide();
-                    onMinimize();
-                } else {
-                    System.exit(0);
-                }
-            }
-        });
-    }
+	// Oculta a janela
+	private static void hide(final Stage stage) {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				if (SystemTray.isSupported()) {
+					stage.hide();
+					onMinimize();
+				} else {
+					System.exit(0);
+				}
+			}
+		});
+	}
 
 	// Realiza a inicialização da janela de login
 	public static void initLoginLayout() {
@@ -273,7 +277,8 @@ public class Main extends Application {
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/UsuarioNovo.fxml"));
 			Parent root = (AnchorPane) loader.load();
 
-			// Obtem o controller da view e informa para fechar e abrir o login apos o criar
+			// Obtem o controller da view e informa para fechar e abrir o login
+			// apos o criar
 			UsuarioNovoController controller = loader.getController();
 			controller.setCloseAfterCreate(true);
 
@@ -735,7 +740,7 @@ public class Main extends Application {
 			WebViewController controller = loader.getController();
 			controller.openPage(fileToOpen);
 
-			if(isDropBox) {
+			if (isDropBox) {
 				controller.showCodeConfirm();
 			}
 
@@ -854,7 +859,8 @@ public class Main extends Application {
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/BonificacaoLink.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
 
-			// Obtem o controller da interface e passa a bonificação a ser linkada
+			// Obtem o controller da interface e passa a bonificação a ser
+			// linkada
 			BonificacaoLinkController controller = loader.getController();
 			controller.setBonificacao(bonificacao);
 
@@ -965,15 +971,31 @@ public class Main extends Application {
 
 	public static void loadHoleriteGerarView() {
 		try {
-				primaryStage.setTitle(pageTitle + " - Gerar Holerite");
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClassLoader.getSystemResource("resources/views/HoleriteNovo.fxml"));
-				AnchorPane personOverview = (AnchorPane) loader.load();
-				rootLayout.setCenter(personOverview);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			primaryStage.setTitle(pageTitle + " - Gerar Holerite");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/HoleriteNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+	}
 
+	public static void loadCadastroCartao(Funcionario funcionario) {
+		try {
+			primaryStage.setTitle(pageTitle + " - Cadastro de cartão");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/CadastroCartao.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+
+			// Obtem o controller da interface e passa o funcionario
+			CadastroCartaoController controller = loader.getController();
+			controller.setFuncionario(funcionario);
+
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

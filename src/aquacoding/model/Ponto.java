@@ -70,7 +70,7 @@ public class Ponto {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Ponto (horario, idFuncionario, idFuncionaritag) VALUES (now(), ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					"INSERT INTO Ponto (horario, idFuncionario, idFuncionariotag) VALUES (now(), ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores
 			statement.setInt(1, this.idFuncionario);

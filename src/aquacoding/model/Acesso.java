@@ -69,7 +69,7 @@ public class Acesso {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Acesso (horario, idFuncionario, idFuncionaritag) VALUES (now(), ?, ?)",
+					"INSERT INTO Acesso (horario, idFuncionario, idFuncionariotag) VALUES (now(), ?, ?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			// Realiza o bind dos valores

@@ -33,7 +33,7 @@ public class FuncionarioVerController implements Initializable {
 	ListView<Bonificacao> bonificacoesListagem;
 
 	@FXML
-	Button cancelar, editar, bonificaRemover, ferias, modeloCartao;
+	Button cancelar, editar, bonificaRemover, ferias, modeloCartao, cadastroCartao;
 
 	private Funcionario func;
 
@@ -56,6 +56,10 @@ public class FuncionarioVerController implements Initializable {
 
 		modeloCartao.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadParsedModeloCartao(func);
+		});
+		
+		cadastroCartao.setOnMouseClicked((MouseEvent e) -> {
+			Main.loadCadastroCartao(func);
 		});
 	}
 

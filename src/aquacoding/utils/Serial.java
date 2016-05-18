@@ -14,8 +14,9 @@ import jssc.SerialPortException;
 
 public class Serial {
 
-	private String PORT_NUMBER = "COM6";
-	private Boolean status;
+	private String PORT_NUMBER = "COM4";
+	private Boolean status = true;
+	private String code;
 
 	SerialPort serialPort = new SerialPort(PORT_NUMBER);
 
@@ -35,6 +36,10 @@ public class Serial {
 		this.status = status;
 	}
 	
+	public String getCode() {		
+		return this.code;
+	}
+			
 	public void SerialLeitura() throws SerialPortException {
 		try {
 
@@ -52,13 +57,13 @@ public class Serial {
 							try {
 								marcaPonto();
 							} catch (SerialPortException e) {
-								e.printStackTrace();
+								System.out.println("Erro Ponto: "+e.getMessage());
 							}
 						} else {
 							try {
 								marcaAcesso();
 							} catch (SerialPortException e) {
-								e.printStackTrace();
+								System.out.println("Erro Acesso: "+e.getMessage());
 							}
 						}
 
@@ -73,7 +78,7 @@ public class Serial {
 	// Responsável por marcar o Ponto
 	public void marcaPonto() throws SerialPortException {
 		try {
-			String buffer = serialPort.readString();
+			this.code = serialPort.readString();
 
 			try {
 				// Obtem uma conexão com o banco de dados
@@ -89,7 +94,7 @@ public class Serial {
 					serialPort.writeString("Funcionario Suspenso");
 				} else {
 					while (resultSet.next()) {
-						if (buffer.equals(resultSet.getString("codigo"))) {
+						if (this.code.equals(resultSet.getString("codigo"))) {
 							Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
 									resultSet.getInt("idFuncionarioTag"));
 							if (ponto.create()) {
@@ -116,7 +121,7 @@ public class Serial {
 	// Responsável por marcar o acesso
 	public void marcaAcesso() throws SerialPortException {
 		try {
-			String buffer = serialPort.readString();
+			this.code = serialPort.readString();
 
 			try {
 				// Obtem uma conexão com o banco de dados
@@ -132,7 +137,7 @@ public class Serial {
 					serialPort.writeString("Funcionario Suspenso");
 				} else {
 					while (resultSet.next()) {
-						if (buffer.equals(resultSet.getString("codigo"))) {
+						if (this.code.equals(resultSet.getString("codigo"))) {
 							System.out.println("Achou");
 							Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
 									resultSet.getInt("idFuncionarioTag"));
