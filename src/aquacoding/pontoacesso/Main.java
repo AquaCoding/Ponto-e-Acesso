@@ -11,10 +11,8 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -27,7 +25,6 @@ import javafx.stage.WindowEvent;
 
 import javax.imageio.ImageIO;
 
-import aquacoding.controller.SuporteController;
 import aquacoding.controller.BonificacaoCadastroController;
 import aquacoding.controller.BonificacaoLinkController;
 import aquacoding.controller.CadastroCartaoController;
@@ -41,7 +38,6 @@ import aquacoding.controller.FuncionarioFeriasVerController;
 import aquacoding.controller.FuncionarioVerController;
 import aquacoding.controller.HorarioEditarController;
 import aquacoding.controller.ImpostoNovoController;
-import aquacoding.controller.MudancaPontoAcessoController;
 import aquacoding.controller.SetorEditarController;
 import aquacoding.controller.UsuarioEditarController;
 import aquacoding.controller.UsuarioNovoController;
@@ -84,7 +80,7 @@ public class Main extends Application {
 		initLoginLayout();
 
 		// Serial
-		Serial serial = new Serial();
+		Serial serial = Serial.getInstance();
 		serialThread = new Thread(() -> {
 			try {
 				serial.SerialLeitura();

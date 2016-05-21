@@ -40,7 +40,7 @@ public class CadastroCartaoController implements Initializable {
 		CustomAlert.showAlert("Cadastro de Cartão", "Aproxime seu cartão do leitor", AlertType.INFORMATION);
 
 		// Serial
-		Serial serial = new Serial();
+		Serial serial = Serial.getInstance();
 		serialThread = new Thread(() -> {
 			try {
 				serial.SerialLeitura();

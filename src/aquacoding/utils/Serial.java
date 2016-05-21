@@ -17,11 +17,24 @@ public class Serial {
 	private String PORT_NUMBER = "COM4";
 	private Boolean status = true;
 	private String code;
-
 	SerialPort serialPort = new SerialPort(PORT_NUMBER);
+	
+	// Armazena a instancia da leitura serial
+	private static Serial serialInstance = null;
+	
+	// Bloquea a criação de Serial para o getInstance
+	protected Serial() {}
+	
+	// Obtem uma instancia do serial
+	public static Serial getInstance() {
+		if(serialInstance == null)
+			serialInstance = new Serial();
+		
+		return serialInstance;
+	}
 
 	public String getPort() {
-		return this.PORT_NUMBER;				
+		return this.PORT_NUMBER;
 	}
 	
 	public void setPort(String port) {
