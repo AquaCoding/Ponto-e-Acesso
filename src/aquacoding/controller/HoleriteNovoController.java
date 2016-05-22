@@ -4,10 +4,10 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAdjusters;
 import java.util.ResourceBundle;
 
 import aquacoding.model.Funcionario;
+import aquacoding.model.Holerite;
 import aquacoding.model.Horario;
 import aquacoding.pontoacesso.Main;
 import javafx.collections.FXCollections;
@@ -60,28 +60,106 @@ public class HoleriteNovoController implements Initializable {
 		gerar.setOnMouseClicked((MouseEvent e) -> {
 			ObservableList<Funcionario> fun;
 			fun = FXCollections.observableArrayList(listFuncionaios.getSelectionModel().getSelectedItems());
+			Holerite h;
 
-			if(fun.size() == 1){
+			if(checkTodos.isSelected() == false){
+				if(fun.size() == 1){
 
-				LocalDate inicio = Inicio.getValue();
-				LocalDate termino = Termino.getValue();
-				long dias = ChronoUnit.DAYS.between(inicio, termino);
+					LocalDate inicio = Inicio.getValue();
+					LocalDate termino = Termino.getValue();
+					long dias = ChronoUnit.DAYS.between(inicio, termino);
 
-				int i = Integer.valueOf(""+dias);
-				double salario = 0;
+					int i = Integer.valueOf(""+dias);
+					double salario = 0;
 
-				funcionario = fun.get(0);
-				for(int j = 0; j <= i+1; j++ ){
-					 LocalDate amanhas = inicio.plusDays(j);
+					funcionario = fun.get(0);
+					for(int j = 0; j <= i+1; j++ ){
+						 LocalDate amanhas = inicio.plusDays(j);
+						 int horas;
 
-					 Duration aux = Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas));
-					 int horas = Integer.valueOf(""+aux.toHours());
-					 double dinheiroHora = funcionario.getSalarioHoras();
-					 salario = salario +  horas * dinheiroHora;
+						 Duration aux = Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas));
+						 if(Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas)) != null){
+							  horas = Integer.valueOf(""+aux.toHours());
+						 }else{
+							  horas = 0;
+						 }
+
+						 double dinheiroHora = funcionario.getSalarioHoras();
+						 salario = salario +  horas * dinheiroHora;
+
+					}
+					h = new Holerite.Builder().setSalario(salario)
+							.setFuncionario(funcionario)
+							.setMes(termino.getMonthValue() + "/" + termino.getYear())
+							.build();
+					h.gerarHolerite(h);
+				}else{
+					for(int k = 0; k < fun.size(); k ++){
+
+						LocalDate inicio = Inicio.getValue();
+						LocalDate termino = Termino.getValue();
+						long dias = ChronoUnit.DAYS.between(inicio, termino);
+
+						int i = Integer.valueOf(""+dias);
+						double salario = 0;
+
+						funcionario = fun.get(k);
+						for(int j = 0; j <= i+1; j++ ){
+							 LocalDate amanhas = inicio.plusDays(j);
+							 int horas;
+
+							 Duration aux = Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas));
+							 if(Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas)) != null){
+								  horas = Integer.valueOf(""+aux.toHours());
+							 }else{
+								  horas = 0;
+							 }
+
+							 double dinheiroHora = funcionario.getSalarioHoras();
+							 salario = salario +  horas * dinheiroHora;
+
+						}
+						h = new Holerite.Builder().setSalario(salario)
+								.setFuncionario(funcionario)
+								.setMes(termino.getMonthValue() + "/" + termino.getYear())
+								.build();
+						h.gerarHolerite(h);
+					}
 
 				}
+			}else{
 
+				for(int k = 0; k < items.size(); k ++){
 
+					LocalDate inicio = Inicio.getValue();
+					LocalDate termino = Termino.getValue();
+					long dias = ChronoUnit.DAYS.between(inicio, termino);
+
+					int i = Integer.valueOf(""+dias);
+					double salario = 0;
+
+					funcionario = items.get(k);
+					for(int j = 0; j <= i+1; j++ ){
+						 LocalDate amanhas = inicio.plusDays(j);
+						 int horas;
+
+						 Duration aux = Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas));
+						 if(Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas)) != null){
+							  horas = Integer.valueOf(""+aux.toHours());
+						 }else{
+							  horas = 0;
+						 }
+
+						 double dinheiroHora = funcionario.getSalarioHoras();
+						 salario = salario +  horas * dinheiroHora;
+
+					}
+					h = new Holerite.Builder().setSalario(salario)
+							.setFuncionario(funcionario)
+							.setMes(termino.getMonthValue() + "/" + termino.getYear())
+							.build();
+					h.gerarHolerite(h);
+				}
 			}
 
 		});
