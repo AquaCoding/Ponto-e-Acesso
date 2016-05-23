@@ -92,7 +92,7 @@ public class HoleriteNovoController implements Initializable {
 							.setFuncionario(funcionario)
 							.setMes(termino.getMonthValue() + "/" + termino.getYear())
 							.build();
-					h.gerarHolerite(h);
+					h.gerarHolerite();
 				}else{
 					for(int k = 0; k < fun.size(); k ++){
 
@@ -123,7 +123,7 @@ public class HoleriteNovoController implements Initializable {
 								.setFuncionario(funcionario)
 								.setMes(termino.getMonthValue() + "/" + termino.getYear())
 								.build();
-						h.gerarHolerite(h);
+						h.gerarHolerite();
 					}
 
 				}
@@ -158,7 +158,7 @@ public class HoleriteNovoController implements Initializable {
 							.setFuncionario(funcionario)
 							.setMes(termino.getMonthValue() + "/" + termino.getYear())
 							.build();
-					h.gerarHolerite(h);
+					h.gerarHolerite();
 				}
 			}
 

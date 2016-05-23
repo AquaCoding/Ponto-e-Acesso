@@ -56,35 +56,37 @@ public class Holerite {
 		this.funcionario = funcionario;
 	}
 
-	public void gerarHolerite(Holerite holerite){
+	public void gerarHolerite(){
 		double desconto = 0;
 		double bonifi = 0;
 
-		for(int k = 0; k < funcionario.getBonificacoes().size() ; k++){
-			float boni = funcionario.getBonificacoes().get(k).getValor();
-			bonifi = bonifi + (salario * boni) /100;
+		if(funcionario.getBonificacoes() != null){
+			for(int k = 0; k < funcionario.getBonificacoes().size() ; k++){
+				float boni = funcionario.getBonificacoes().get(k).getValor();
+				bonifi = bonifi + (salario * boni) /100;
+			}
 		}
 
 		ArrayList<Imposto> imposts = Imposto.getAll();
-		
+
 		for(int i = 0; i < imposts.size() ; i++){
 			double desco = imposts.get(i).getValor();
 			desconto = desconto + (salario * desco) /100;
 		}
 
-		holerite.setBruto(salario + bonifi);
-		holerite.setBonificacao(bonifi);
-		holerite.setDescontos(desconto);
-		holerite.setLiquido(bruto - desconto);
+		this.setBruto(salario + bonifi);
+		this.setBonificacao(bonifi);
+		this.setDescontos(desconto);
+		this.setLiquido(bruto - desconto);
 
 		System.out.println("########################");
 		System.out.println(funcionario.getNome() + " " + funcionario.getSobrenome());
-		System.out.println("Salario: " + holerite.getSalario());
-		System.out.println("Mes: " + holerite.getMes());
-		System.out.println("Bonificação: " + holerite.getBonificacao());
-		System.out.println("Descontos: " + holerite.getDescontos());
-		System.out.println("Liquido: " + holerite.getLiquido());
-		System.out.println("Bruto: " + holerite.getBruto());
+		System.out.println("Salario: " + this.getSalario());
+		System.out.println("Mes: " + this.getMes());
+		System.out.println("Bonificação: " + this.getBonificacao());
+		System.out.println("Descontos: " + this.getDescontos());
+		System.out.println("Liquido: " + this.getLiquido());
+		System.out.println("Bruto: " + this.getBruto());
 
 
 	}
