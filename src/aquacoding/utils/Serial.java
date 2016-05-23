@@ -18,41 +18,42 @@ public class Serial {
 	private Boolean status = true;
 	private String code;
 	SerialPort serialPort = new SerialPort(PORT_NUMBER);
-	
+
 	// Armazena a instancia da leitura serial
 	private static Serial serialInstance = null;
-	
+
 	// Bloquea a criação de Serial para o getInstance
-	protected Serial() {}
-	
+	protected Serial() {
+	}
+
 	// Obtem uma instancia do serial
 	public static Serial getInstance() {
-		if(serialInstance == null)
+		if (serialInstance == null)
 			serialInstance = new Serial();
-		
+
 		return serialInstance;
 	}
 
 	public String getPort() {
 		return this.PORT_NUMBER;
 	}
-	
+
 	public void setPort(String port) {
-		this.PORT_NUMBER = port.toUpperCase();				
+		this.PORT_NUMBER = port.toUpperCase();
 	}
-	
+
 	public Boolean getStatus() {
 		return this.status;
 	}
-	
+
 	public void setStatus(Boolean status) {
 		this.status = status;
 	}
-	
-	public String getCode() {		
+
+	public String getCode() {
 		return this.code;
 	}
-			
+
 	public void SerialLeitura() throws SerialPortException {
 		try {
 
@@ -70,13 +71,13 @@ public class Serial {
 							try {
 								marcaPonto();
 							} catch (SerialPortException e) {
-								System.out.println("Erro Ponto: "+e.getMessage());
+								System.out.println("Erro Ponto: " + e.getMessage());
 							}
 						} else {
 							try {
 								marcaAcesso();
 							} catch (SerialPortException e) {
-								System.out.println("Erro Acesso: "+e.getMessage());
+								System.out.println("Erro Acesso: " + e.getMessage());
 							}
 						}
 
@@ -103,22 +104,23 @@ public class Serial {
 				// Executa um SQL
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
 
-				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
-					serialPort.writeString("Funcionario Suspenso");
-				} else {
-					while (resultSet.next()) {
-						if (this.code.equals(resultSet.getString("codigo"))) {
-							Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
-									resultSet.getInt("idFuncionarioTag"));
-							if (ponto.create()) {
-								serialPort.writeString("Ponto registrado");
-							} else {
-								serialPort.writeString("Erro, contate o Suporte");
-							}
-						}
-					};
-				}
+				resultSet.next();
 
+					if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
+						serialPort.writeString("Funcionario Suspenso");
+					} else {
+						while (resultSet.next()) {
+							if (this.code.equals(resultSet.getString("codigo"))) {
+								Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
+										resultSet.getInt("idFuncionarioTag"));
+								if (ponto.create()) {
+									serialPort.writeString("Ponto registrado");
+								} else {
+									serialPort.writeString("Erro, contate o Suporte");
+								}
+							}
+						};
+					}				
 				// encerra conexão
 				connect.close();
 
@@ -146,25 +148,26 @@ public class Serial {
 				// Executa um SQL
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
 
-				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
-					serialPort.writeString("Funcionario Suspenso");
-				} else {
-					while (resultSet.next()) {
-						if (this.code.equals(resultSet.getString("codigo"))) {
-							System.out.println("Achou");
-							Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
-									resultSet.getInt("idFuncionarioTag"));
-							System.out.println("Objeto");
-							if (acesso.create()) {
-								serialPort.writeString("Acesso registrado");
-								System.out.println("criou");
-							} else {
-								serialPort.writeString("Erro, contate o Suporte");
-								System.out.println("errou");
+				resultSet.next();			
+					if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
+						serialPort.writeString("Funcionario Suspenso");
+					} else {
+						while (resultSet.next()) {
+							if (this.code.equals(resultSet.getString("codigo"))) {
+								System.out.println("Achou");
+								Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
+										resultSet.getInt("idFuncionarioTag"));
+								System.out.println("Objeto");
+								if (acesso.create()) {
+									serialPort.writeString("Acesso registrado");
+									System.out.println("criou");
+								} else {
+									serialPort.writeString("Erro, contate o Suporte");
+									System.out.println("errou");
+								}
 							}
-						}
-					};
-				}
+						};
+					}				
 				// encerra conexão
 				connect.close();
 
@@ -197,7 +200,8 @@ public class Serial {
 				} else {
 					return false;
 				}
-			};
+			}
+			;
 
 			// encerra conexão
 			connect.close();

@@ -26,10 +26,8 @@ public class CadastroCartaoController implements Initializable {
 	Button cancelar;
 
 	private static Thread serialThread;
-	private static Thread timeoutThread;
 
 	private Funcionario func;
-	private Serial serial;
 
 	public void initialize(URL location, ResourceBundle resources) {
 		// Evento de click do botão cancelar
@@ -42,11 +40,12 @@ public class CadastroCartaoController implements Initializable {
 		// Serial
 		Serial serial = Serial.getInstance();
 		serialThread = new Thread(() -> {
-			try {
-				serial.SerialLeitura();
-				wait(3000);
+			try {				
+				serial.SerialLeitura();	
+				serial.wait(2000);
 				String code = serial.getCode();
-				
+				System.out.println(code);
+				cadastro(func.getId(), code);
 			} catch (Exception e) {
 				System.out.println("Erro Serial: " + e.getMessage());
 			}
