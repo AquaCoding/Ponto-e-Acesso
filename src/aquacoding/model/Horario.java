@@ -415,6 +415,7 @@ public class Horario {
 
 			// Ignora dias com pontos impares
 			if (pontos.size() % 2 != 0) {
+				connect.close();
 				return null;
 			} else {
 				// ArrayList para armazenar a duração de cada turno trabalhado
@@ -437,6 +438,8 @@ public class Horario {
 					}
 				}
 
+				connect.close();
+				
 				// Retorna a tempo trabalhado
 				return tempoTrabalhado;
 			}

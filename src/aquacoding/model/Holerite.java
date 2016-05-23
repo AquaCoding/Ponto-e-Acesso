@@ -1,5 +1,7 @@
 package aquacoding.model;
 
+import java.util.ArrayList;
+
 public class Holerite {
 
 	private double salario;
@@ -63,8 +65,10 @@ public class Holerite {
 			bonifi = bonifi + (salario * boni) /100;
 		}
 
-		for(int i = 0; i < Imposto.getAll().size() ; i++){
-			double desco = Imposto.getAll().get(i).getValor();
+		ArrayList<Imposto> imposts = Imposto.getAll();
+		
+		for(int i = 0; i < imposts.size() ; i++){
+			double desco = imposts.get(i).getValor();
 			desconto = desconto + (salario * desco) /100;
 		}
 

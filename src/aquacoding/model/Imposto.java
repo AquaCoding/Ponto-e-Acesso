@@ -114,6 +114,8 @@ public class Imposto {
 				// Adiciona o imposto ao retorno
 				impostos.add(new Imposto(resultSet.getInt("idImposto"), resultSet.getString("nome"), resultSet.getDouble("valor")));
 			}
+			
+			connect.close();
 
 			// Retorna os clientes
 			return impostos;
