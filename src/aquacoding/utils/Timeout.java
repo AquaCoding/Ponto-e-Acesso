@@ -19,7 +19,7 @@ public class Timeout implements Runnable {
 		ultimoEvento = Instant.now();
 	}
 	
-	private void logout() {
+	public static void logout() {
 		Main.loggedUser = null;
 		Main.initLoginLayout();
 		Main.endRootLayout();
@@ -37,7 +37,7 @@ public class Timeout implements Runnable {
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
-							logout();
+							Timeout.logout();
 						}
 					});
 				}

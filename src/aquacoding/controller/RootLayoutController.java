@@ -11,6 +11,7 @@ import aquacoding.model.Empresa;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Folders;
+import aquacoding.utils.Timeout;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,7 +46,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarFeriasLista, menuBarFeriasNova;
 
 	@FXML
-	MenuItem menuBarCartoesVer, menuBarCartoesModelo, menuBarAjudaCartoesModelo;
+	MenuItem menuBarCartoesVer, menuBarCartoesModelo, menuBarAjudaCartoesModelo, menuBarCartoesPonto;
 
 	@FXML
 	MenuItem menuBarRelatorioTrabalho, menuBarRelatorioAcesso;
@@ -76,9 +77,7 @@ public class RootLayoutController implements Initializable {
 		});
 
 		menuBarSistemaDeslogar.setOnAction((ActionEvent e) -> {
-			Main.loggedUser = null;
-			Main.initLoginLayout();
-			Main.endRootLayout();
+			Timeout.logout();
 		});
 
 		menuBarSetorNovo.setOnAction((ActionEvent e) -> {
@@ -163,6 +162,10 @@ public class RootLayoutController implements Initializable {
 
 		menuBarCartoesModelo.setOnAction((ActionEvent e) -> {
 			Main.loadCartoesModeloView();
+		});
+		
+		menuBarCartoesPonto.setOnAction((ActionEvent e) -> {
+			Main.PontoNovoView();
 		});
 
 		menuBarRelatorioTrabalho.setOnAction((ActionEvent e) -> {

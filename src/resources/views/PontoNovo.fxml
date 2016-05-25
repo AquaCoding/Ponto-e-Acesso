@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.PontoNovoController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Novo Ponto Manual" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <Label text="Data" />
+            <DatePicker fx:id="dataSeletor" VBox.vgrow="ALWAYS" />
+            <Label text="Horário" />
+            <TextField fx:id="horario" VBox.vgrow="ALWAYS" />
+            <HBox>
+               <children>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Funcionário" />
+                        <ListView fx:id="funcionarioListagem" />
+                        
+                              <Button fx:id="cancelar" focusTraversable="false" mnemonicParsing="false" styleClass="cancelar" text="Cancelar">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets right="15.0" />
+                     </padding>
+                  </VBox>
+                  <VBox HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Cartão" />
+                        <ListView fx:id="cartaoListagem" />
+                        <AnchorPane>
+                           <children>
+                              
+                                                            <Button fx:id="cadastrar" focusTraversable="false" mnemonicParsing="false" text="Cadastrar" AnchorPane.bottomAnchor="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="7.0" />
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

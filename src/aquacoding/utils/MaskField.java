@@ -108,6 +108,54 @@ public class MaskField {
 			}
 		});
 	}
+	
+	public static void horarioMask(TextField field) {
+		field.setOnKeyTyped(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if(event.getCharacter().matches("\\d")) {
+					TextField tf = (TextField) event.getSource();
+					String newValue = tf.getText() + event.getCharacter();
+					//00:00:00
+					//12345678
+					
+					if(newValue.length() == 1) {
+						if(!event.getCharacter().matches("[0-2]")) {
+							event.consume();
+						}	
+					} else if(newValue.length() == 2) { 
+						if(!event.getCharacter().matches("[0-3]")) {
+							event.consume();
+						} else {
+							event.consume();
+							tf.setText(newValue+":");
+						}
+					} else if(newValue.length() == 4 || newValue.length() == 7) { 
+						if(!event.getCharacter().matches("[0-5]")) {
+							event.consume();
+						}
+					} else {
+						if(newValue.length() == 2) {
+							event.consume();
+							tf.setText(newValue+":");
+						} else if(newValue.length() == 5) {
+							event.consume();
+							tf.setText(newValue+":");
+						} else if(newValue.length() <= 8){
+							event.consume();
+							tf.setText(newValue);
+						} else {
+							event.consume();
+						}
+					}
+
+					tf.positionCaret(tf.getText().length());
+				} else {
+					event.consume();
+				}
+			}
+		});
+	}
 
 	public static void rgMaks(TextField field) {
 		field.setOnKeyTyped(new EventHandler<KeyEvent>() {

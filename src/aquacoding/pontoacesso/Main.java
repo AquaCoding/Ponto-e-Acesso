@@ -130,6 +130,8 @@ public class Main extends Application {
 				public void handle(WindowEvent t) {
 					// Oculta a janela
 					hide(stage);
+					Timeout.logout();
+					loginStage.hide();
 				}
 			});
 
@@ -988,6 +990,18 @@ public class Main extends Application {
 			CadastroCartaoController controller = loader.getController();
 			controller.setFuncionario(funcionario);
 
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void PontoNovoView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Cadastro de ponto");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/PontoNovo.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
