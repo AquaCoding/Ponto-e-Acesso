@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="libs/dropbox-core-sdk-1.8.2.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-core-2.6.1.jar"/>
 	<classpathentry kind="lib" path="libs/jfxtras-labs-8.0-r4.jar"/>
+	<classpathentry kind="lib" path="libs/zip4j_1.3.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

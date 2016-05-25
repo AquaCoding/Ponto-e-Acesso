@@ -93,7 +93,7 @@ public class CustomAlert {
         
         // Define os icons dos alerts
         Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
+        stage.getIcons().add(new javafx.scene.image.Image("file:"+Image.APP_ICON_PATH));
 	}
 	
 	private static void applyDialogStyleAndIcon(TextInputDialog a) {
@@ -102,6 +102,6 @@ public class CustomAlert {
         
         // Define os icons dos alerts
         Stage stage = (Stage) a.getDialogPane().getScene().getWindow();
-        stage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
+        stage.getIcons().add(new javafx.scene.image.Image("file:"+Image.APP_ICON_PATH));
 	}
 }

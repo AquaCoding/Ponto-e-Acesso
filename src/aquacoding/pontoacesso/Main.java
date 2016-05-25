@@ -90,8 +90,8 @@ public class Main extends Application {
 		});
 		serialThread.start();
 
-		primaryStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
-		loginStage.getIcons().add(new javafx.scene.image.Image("file:img/app_icon.png"));
+		primaryStage.getIcons().add(new javafx.scene.image.Image("file:"+Image.APP_ICON_PATH));
+		loginStage.getIcons().add(new javafx.scene.image.Image("file:"+Image.APP_ICON_PATH));
 
 		// Escuta por qualquer evento dentro do primaryStage e salva o momento
 		// em que ocorreu para
