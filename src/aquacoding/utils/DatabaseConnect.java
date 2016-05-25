@@ -69,4 +69,13 @@ public abstract class DatabaseConnect {
 		   System.out.println(ex.getMessage());
 		}
 	}
+	
+	public static void restoreBackup(String fileToExecute) {
+		try {
+		   String command = "cmd.exe /C mysql -u "+DB_USER+" "+DB_NAME+" < "+fileToExecute;	   
+		   Runtime.getRuntime().exec(command);
+		} catch (IOException ex) {
+		   System.out.println(ex.getMessage());
+		}
+	}
 }

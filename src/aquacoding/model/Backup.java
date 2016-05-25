@@ -8,7 +8,12 @@ import javafx.application.Platform;
 import javafx.scene.control.Alert.AlertType;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
+import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -72,6 +77,9 @@ public class Backup {
 						// Coloca a thread para dormir enquanto o backuo é terminado
 						Thread.sleep(2000);
 						
+						// Deleta o arquivo original
+						localToSave.delete();
+						
 						// Inicia um arquivo zip
 						ZipFile zipFile = new ZipFile(localToSave.getAbsolutePath());
 						
@@ -102,5 +110,67 @@ public class Backup {
 				e1.printStackTrace();
 			}
 		}
+	}
+
+	public static void restaurar(File fileToOpen) {
+		try {
+			boolean confirmation = CustomAlert.showConfirmationAlert("Restaurar backup", "Isso irá deletar todos os seus dados atuais da aplicação. Caso um arquivo de backup invalido seja informado dados podem ser perdidos. Você tem certeza que deseja continuar?");
+			
+			if(confirmation) {
+				// Exclui os arquivos existente do usuario no sistema
+				deleteDir(new File("user_data"));
+				
+				// Inicia o arquivo ZIP
+				ZipFile zipFile = new ZipFile(fileToOpen.getAbsolutePath());
+				
+				// Extrai o arquivo ZIP
+				zipFile.extractAll(new File("").getAbsolutePath());
+				
+				// Obtem o arquivo de backup
+				Stream<Path> paths = Files.list(Paths.get(""));
+				paths.forEach(new Consumer<Path>() {
+
+					@Override
+					public void accept(Path t) {
+						String fileName = t.getFileName().toString();
+						if(fileName.matches("^backup_[\\d]+.sql$")) {
+							// Realiza o backup
+							DatabaseConnect.restoreBackup(fileName);
+							
+							CustomAlert.showAlert("Restaurar Backup", "Backup restaurado com sucesso", AlertType.WARNING);
+							
+							// Deleta o arquivo de backup
+							Thread t2 = new Thread(() -> {
+								try {
+									Thread.sleep(5000);
+									new File(fileName).delete();
+								} catch (Exception e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								
+							});
+							t2.start();
+						}
+					}
+				});
+				paths.close();
+			}
+		} catch (ZipException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void deleteDir(File file) {
+	    File[] contents = file.listFiles();
+	    if (contents != null) {
+	        for (File f : contents) {
+	            deleteDir(f);
+	        }
+	    }
+	    file.delete();
 	}
 }

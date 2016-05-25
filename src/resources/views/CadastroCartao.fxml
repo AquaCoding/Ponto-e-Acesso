@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.CadastroCartaoController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.CadastroCartaoController">
    <children>
       <Label layoutX="14.0" layoutY="14.0" text="Cadastro Cartão" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -23,12 +23,12 @@
       <Button fx:id="cancelar" layoutX="15.0" layoutY="360.0" mnemonicParsing="false" text="Cancelar" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
       <ImageView fitHeight="250.0" fitWidth="200.0" layoutX="77.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/cartao.jpg" />
+            <Image url="@../../../app_data/cartao.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="250.0" fitWidth="220.0" layoutX="336.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/rfid.png" />
+            <Image url="@../../../app_data/rfid.png" />
          </image>
       </ImageView>
    </children>

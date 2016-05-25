@@ -78,8 +78,9 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Backup">
                <items>
-                  <MenuItem fx:id="menuBarBackupCriar" mnemonicParsing="false" text="Criar" />
-                  <MenuItem fx:id="menuBarBackupSalvar" mnemonicParsing="false" text="Salvar" />
+                  <MenuItem fx:id="menuBarBackupCriar" mnemonicParsing="false" text="Criar Local" />
+                  <MenuItem fx:id="menuBarBackupSalvar" mnemonicParsing="false" text="Salvar no DropBox" />
+                  <MenuItem fx:id="menuBarBackupRestaurar" mnemonicParsing="false" text="Restaurar" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Holerite">

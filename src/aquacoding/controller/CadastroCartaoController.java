@@ -3,22 +3,20 @@ package aquacoding.controller;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Serial;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.MouseEvent;
-import jssc.SerialPortException;
 
 public class CadastroCartaoController implements Initializable {
 
@@ -73,7 +71,7 @@ public class CadastroCartaoController implements Initializable {
 			statement.setInt(3, id);
 			
 			// Executa o SQL
-			int ret = statement.executeUpdate();
+			statement.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu ao registrar ponto");
 		}

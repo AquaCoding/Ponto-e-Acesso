@@ -50,7 +50,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarRelatorioTrabalho, menuBarRelatorioAcesso;
 
 	@FXML
-	MenuItem menuBarBackupCriar, menuBarBackupSalvar;
+	MenuItem menuBarBackupCriar, menuBarBackupSalvar, menuBarBackupRestaurar;
 
 	@FXML
 	MenuItem menuBarImpostoCriar, menuBarImpostoVer;
@@ -204,6 +204,16 @@ public class RootLayoutController implements Initializable {
 			} catch (Exception e1) {
 				System.out.println("Erro na criação do arquivo" + e1.getMessage());
 			}
+		});
+		
+		menuBarBackupRestaurar.setOnAction((ActionEvent e) -> {
+			FileChooser fileC = new FileChooser();
+			fileC.setTitle("Selecione o arquivo do backup");
+			fileC.getExtensionFilters().add(new ExtensionFilter("ZIP File (*.zip)", "*.zip"));
+			File fileToOpen = fileC.showOpenDialog(Main.primaryStage);
+			
+			if(fileToOpen != null)
+				Backup.restaurar(fileToOpen);
 		});
 
 
