@@ -180,7 +180,6 @@ public class Backup {
 	}
 
 	public static void restaurarDropBox(String code) {
-		System.out.println("Passou");
 		try {
 			// Get your app key and secret from the Dropbox developers website.
 			final String APP_KEY = "nmhlfbvih0g20dl";
@@ -190,30 +189,21 @@ public class Backup {
 
 			DbxRequestConfig config = new DbxRequestConfig("JavaTutorial/1.0", Locale.getDefault().toString());
 			DbxWebAuthNoRedirect webAuth = new DbxWebAuthNoRedirect(config, appInfo);
-
-			System.out.println("Passou 1");
 			
 			// This will fail if the user enters an invalid authorization code.
 			DbxAuthFinish authFinish = webAuth.finish(code);
 			String accessToken = authFinish.accessToken;
 
 			DbxClient client = new DbxClient(config, accessToken);
-
-			System.out.println("Passou 2");
 			
 			FileOutputStream outputStream = new FileOutputStream("temp.sql");
 			try {
 				DbxEntry.File downloadedFile = client.getFile("/temp.sql", null, outputStream);
-				System.out.println("Passou 4");
 				System.out.println("Metadata: " + downloadedFile.toString());
-				System.out.println("Passou 5");
 				
 				DatabaseConnect.restoreBackup("temp.sql");
-				
-				System.out.println("Passou 6");
-				
+								
 				CustomAlert.showAlert("Restaurar Backup", "Backup restaurado com sucesso", AlertType.WARNING);
-				System.out.println("Passou 7");
 			} finally {
 				outputStream.close();
 			}
