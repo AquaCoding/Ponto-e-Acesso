@@ -81,6 +81,7 @@
                   <MenuItem fx:id="menuBarBackupCriar" mnemonicParsing="false" text="Criar Local" />
                   <MenuItem fx:id="menuBarBackupSalvar" mnemonicParsing="false" text="Salvar no DropBox" />
                   <MenuItem fx:id="menuBarBackupRestaurar" mnemonicParsing="false" text="Restaurar" />
+                   <MenuItem fx:id="menuBarBackupRestaurarDropBox" mnemonicParsing="false" text="Restaurar backup feito no DropBox" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Holerite">

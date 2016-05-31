@@ -50,7 +50,7 @@ public class RootLayoutController implements Initializable {
 	MenuItem menuBarRelatorioTrabalho, menuBarRelatorioAcesso;
 
 	@FXML
-	MenuItem menuBarBackupCriar, menuBarBackupSalvar, menuBarBackupRestaurar;
+	MenuItem menuBarBackupCriar, menuBarBackupSalvar, menuBarBackupRestaurar, menuBarBackupRestaurarDropBox;
 
 	@FXML
 	MenuItem menuBarImpostoCriar, menuBarImpostoVer;
@@ -216,6 +216,13 @@ public class RootLayoutController implements Initializable {
 				Backup.restaurar(fileToOpen);
 		});
 
+		menuBarBackupRestaurarDropBox.setOnAction((ActionEvent e) -> {
+			try {
+				Main.loadWebView("https://www.dropbox.com/1/oauth2/authorize?locale=pt_BR&client_id=nmhlfbvih0g20dl&response_type=code", true);
+			} catch (Exception e1) {
+				System.out.println("Erro na criação do arquivo" + e1.getMessage());
+			}
+		});
 
 		menuBarSuporteVer.setOnAction((ActionEvent e) -> {
 			Main.loadSuporteVerView();

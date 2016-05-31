@@ -37,7 +37,7 @@ public class WebViewController implements Initializable {
 		engine.load(fileToOpen);
 	}
 
-	public void showCodeConfirm() {
+	public void showCodeConfirm(boolean restaurarDropBox) {
 		title.setText("Insira seu código e confirme");
 		
 		code.setVisible(true);
@@ -45,7 +45,11 @@ public class WebViewController implements Initializable {
 		
 		confirmCode.setOnMouseClicked((MouseEvent e) -> {
 			if(!code.equals("")) {
-				Backup.criarSalvarBackup(code.getText());
+				if (restaurarDropBox) {
+					Backup.restaurarDropBox(code.getText());
+				} else {
+					Backup.criarSalvarBackup(code.getText());
+				}				
 			} else {
 				CustomAlert.showAlert("Backup", "O seu codigo é inválido", AlertType.WARNING);
 			}

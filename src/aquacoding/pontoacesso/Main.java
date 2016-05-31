@@ -739,9 +739,9 @@ public class Main extends Application {
 			controller.openPage(fileToOpen);
 
 			if (isDropBox) {
-				controller.showCodeConfirm();
+				controller.showCodeConfirm(true);
 			}
-
+			
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
