@@ -53,6 +53,7 @@ public class BonificacaoLinkController implements Initializable {
 				}
 				
 				CustomAlert.showAlert("Linkar Bonificação", "Encerrado link das bonificações.", AlertType.WARNING);
+				Main.loadBonificacaoListarView();
 			}
 		});
 	}
