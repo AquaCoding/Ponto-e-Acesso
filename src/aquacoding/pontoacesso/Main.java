@@ -260,7 +260,8 @@ public class Main extends Application {
 		try {
 			primaryStage.close();
 			timeout.setRunTimeoutEvent(false);
-			timeoutThread.join();
+			if(timeoutThread != null)
+				timeoutThread.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
