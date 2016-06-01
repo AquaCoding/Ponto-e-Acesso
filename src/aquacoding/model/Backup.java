@@ -2,6 +2,7 @@ package aquacoding.model;
 
 import com.dropbox.core.*;
 
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import aquacoding.utils.DatabaseConnect;
 import javafx.application.Platform;
@@ -15,6 +16,9 @@ import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
@@ -51,6 +55,9 @@ public class Backup {
 						inputStream);
 				System.out.println("Uploaded: " + uploadedFile.toString());
 				CustomAlert.showAlert("Backup", "Backup realizado com sucesso no seu DropBox", AlertType.WARNING);
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.BACKUP, 0, ActionsCode.REALIZOU);
 			} finally {
 				inputStream.close();
 			}
@@ -100,6 +107,9 @@ public class Backup {
 
 						Platform.runLater(() -> {
 							CustomAlert.showAlert("Backup", "Backup realizado com sucesso.", AlertType.WARNING);
+							
+							// Gera log
+							Logs.makeLog(Main.loggedUser.getId(), ObjectCode.BACKUP, 0, ActionsCode.REALIZOU);
 						});
 					} catch (ZipException ex) {
 						ex.printStackTrace();
@@ -143,6 +153,9 @@ public class Backup {
 
 							CustomAlert.showAlert("Restaurar Backup", "Backup restaurado com sucesso",
 									AlertType.WARNING);
+							
+							// Gera log
+							Logs.makeLog(Main.loggedUser.getId(), ObjectCode.BACKUP, 0, ActionsCode.RESTAUROU);
 
 							// Deleta o arquivo de backup
 							Thread t2 = new Thread(() -> {
@@ -204,6 +217,9 @@ public class Backup {
 				DatabaseConnect.restoreBackup("temp.sql");
 								
 				CustomAlert.showAlert("Restaurar Backup", "Backup restaurado com sucesso", AlertType.WARNING);
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.BACKUP, 0, ActionsCode.RESTAUROU);
 			} finally {
 				outputStream.close();
 			}

@@ -56,7 +56,7 @@ public class Horario {
 
 	public void setInicio(Time inicio) {
 		if(inicio == null)
-			throw new RuntimeException("Um horÃ¡rio de inicio deve ser selecionado.");
+			throw new RuntimeException("Um horário de inicio deve ser selecionado.");
 		this.inicio = inicio;
 	}
 
@@ -66,7 +66,7 @@ public class Horario {
 
 	public void setTermino(Time termino) {
 		if(termino == null)
-			throw new RuntimeException("Um horÃ¡rio de termino deve ser selecionado.");
+			throw new RuntimeException("Um horário de termino deve ser selecionado.");
 		this.termino = termino;
 	}
 
@@ -76,7 +76,7 @@ public class Horario {
 
 	public void setInicioAlmoco(Time inicioAlmoco) {
 		if(inicioAlmoco == null)
-			throw new RuntimeException("Um horÃ¡rio de inicio ao almoÃ§o deve ser selecionado.");
+			throw new RuntimeException("Um horário de inicio ao almoço deve ser selecionado.");
 		this.inicioAlmoco = inicioAlmoco;
 	}
 
@@ -86,7 +86,7 @@ public class Horario {
 
 	public void setTerminoAlmoco(Time terminoAlmoco) {
 		if(terminoAlmoco == null)
-			throw new RuntimeException("Um horÃ¡rio de inicio ao almoÃ§o deve ser selecionado.");
+			throw new RuntimeException("Um horário de inicio ao almoço deve ser selecionado.");
 		this.terminoAlmoco = terminoAlmoco;
 	}
 
@@ -271,7 +271,7 @@ public class Horario {
 
 	public boolean delete() {
 		try {
-			// Obtem uma conexï¿½o com o banco de dados
+			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement

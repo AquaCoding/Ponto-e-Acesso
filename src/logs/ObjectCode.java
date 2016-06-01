@@ -13,7 +13,9 @@ public enum ObjectCode {
 	HORARIO("Horário"),
 	IMPOSTO("Imposto"),
 	SETOR("Setor"),
-	USUARIO("Usuário");
+	USUARIO("Usuário"), 
+	BACKUP("Backup"), 
+	HOLERITE("Holerite");
 	
 	private final String value;
 	private static HashMap<String, ObjectCode> objectsCodes = new HashMap<String, ObjectCode>();
@@ -38,6 +40,8 @@ public enum ObjectCode {
 		objectsCodes.put("Imposto", ObjectCode.IMPOSTO);
 		objectsCodes.put("Setor", ObjectCode.SETOR);
 		objectsCodes.put("Usuário", ObjectCode.USUARIO);
+		objectsCodes.put("Backup", ObjectCode.BACKUP);
+		objectsCodes.put("Holerite", ObjectCode.HOLERITE);
 		
 		if(objectsCodes.containsKey(value))
 			return objectsCodes.get(value);

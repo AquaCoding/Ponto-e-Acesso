@@ -173,7 +173,7 @@ public class Setor {
 
 	public boolean delete() {
 		try {
-			// Obtem uma conex�o com o banco de dados
+			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement

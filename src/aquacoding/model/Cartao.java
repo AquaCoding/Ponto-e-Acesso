@@ -8,9 +8,13 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import aquacoding.utils.DatabaseConnect;
 import javafx.scene.control.Alert.AlertType;
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
 
 public class Cartao {
 
@@ -116,6 +120,9 @@ public class Cartao {
 					
 					statement2.executeUpdate();
 					CustomAlert.showAlert("Cartão", "Cartão revogado com sucesso.", AlertType.WARNING);
+					
+					// Gera log
+					Logs.makeLog(Main.loggedUser.getId(), ObjectCode.CARTAO, 0, ActionsCode.REVOGOU);
 				} else {
 					PreparedStatement statement2 = (PreparedStatement) connect.prepareStatement(
 							"UPDATE FuncionarioTag SET ativo = ? WHERE idFuncionario = ?");
@@ -125,6 +132,9 @@ public class Cartao {
 					
 					statement2.executeUpdate();
 					CustomAlert.showAlert("Cartão", "Cartão permitido com sucesso.", AlertType.WARNING);
+					
+					// Gera log
+					Logs.makeLog(Main.loggedUser.getId(), ObjectCode.CARTAO, 0, ActionsCode.PERMITIU);
 				}
 			}
 			;
@@ -189,6 +199,8 @@ public class Cartao {
 			if (ret == 1) {
 				// Encerra conexao
 				connect.close();
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.CARTAO, 0, ActionsCode.CRIOU_PONTO_MANUAL);
 				return true;
 			} else {
 				// Encerra conexao

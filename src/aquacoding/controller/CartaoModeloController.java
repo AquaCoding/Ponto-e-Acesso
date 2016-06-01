@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 
 
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,6 +45,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 
 
+
 import javax.imageio.ImageIO;
 
 
@@ -51,7 +53,11 @@ import javax.imageio.ImageIO;
 
 
 
+
 import jfxtras.labs.util.event.MouseControlUtil;
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
@@ -129,6 +135,9 @@ public class CartaoModeloController implements Initializable {
 				Files.write(Paths.get(SAVED_IMAGE_PATH), savedImage);
 				
 				CustomAlert.showAlert("Modelo do cartão", "Modelo do cartão salvo com sucesso", AlertType.WARNING);
+				
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.CARTAO, 0, ActionsCode.SALVOU_MODELO);
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

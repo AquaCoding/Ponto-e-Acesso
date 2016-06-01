@@ -2,6 +2,11 @@ package aquacoding.model;
 
 import java.util.ArrayList;
 
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
+
 public class Holerite {
 
 	private double salario;
@@ -88,7 +93,8 @@ public class Holerite {
 		System.out.println("Liquido: " + this.getLiquido());
 		System.out.println("Bruto: " + this.getBruto());
 
-
+		// Gera log
+		Logs.makeLog(Main.loggedUser.getId(), ObjectCode.HOLERITE, 0, ActionsCode.GEROU);
 	}
 
 	//Construtor
