@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
@@ -23,6 +24,9 @@ public class CadastroCartaoController implements Initializable {
 	@FXML
 	Button cancelar;
 
+	@FXML
+	TextArea textHelp;
+	
 	private static Thread serialThread;
 
 	private Funcionario func;
@@ -33,6 +37,13 @@ public class CadastroCartaoController implements Initializable {
 			Main.loadListaFuncionarioView();
 		});
 
+		textHelp.setText("Instruções: \n"
+				+ "Aproxime o cartão ou tag do leitor \n"
+				+ "Aguarde confirmação na tela \n"
+				+ "Retire o cartão \n"
+				+ "Caso o procedimento for bem sucedido, prossiga \n"
+				+ "Caso contrário contate o suporte");
+		
 		CustomAlert.showAlert("Cadastro de Cartão", "Aproxime seu cartão do leitor", AlertType.INFORMATION);
 
 		// Serial
