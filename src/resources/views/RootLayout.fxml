@@ -17,6 +17,7 @@
                   <MenuItem fx:id="menuBarSistemaInicio" mnemonicParsing="false" text="Início" />
                   <MenuItem fx:id="menuBarSistemaDeslogar" mnemonicParsing="false" text="Deslogar" />
                   <MenuItem fx:id="menuBarSistemaMudanca" mnemonicParsing="false" text="Mudança Ponto - Acesso" />
+                  <MenuItem fx:id="menuBarSistemaDataHora" mnemonicParsing="false" text="Alterar data e hora do Ponto" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Empresa">

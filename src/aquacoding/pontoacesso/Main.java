@@ -1008,5 +1008,17 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
+	
+	public static void DataHoraView() {
+		try {
+			primaryStage.setTitle(pageTitle + " - Data Hora do Ponto");
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(ClassLoader.getSystemResource("resources/views/DataHora.fxml"));
+			AnchorPane personOverview = (AnchorPane) loader.load();
+			rootLayout.setCenter(personOverview);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 }
