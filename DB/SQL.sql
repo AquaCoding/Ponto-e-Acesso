@@ -188,6 +188,13 @@ CREATE TABLE Acesso(
 		REFERENCES FuncionarioTag(idFuncionarioTag)
 );
 
+CREATE TABLE Config (
+	idConfig	INT			NOT NULL auto_increment,
+	com			VARCHAR(5)	NOT NULL,
+    ponto		BOOLEAN		NOT NULL,
+	CONSTRAINT pk_config PRIMARY KEY (idConfig)
+);
+
 CREATE VIEW ShowTags as SELECT ft.idFuncionarioTag, concat(f.nome, ' ', f.sobrenome) as nome, f.cpf, ft.codigo, ft.ativo
 FROM Funcionario as f NATURAL JOIN FuncionarioTag as ft;
 
