@@ -195,6 +195,9 @@ CREATE TABLE Config (
 	CONSTRAINT pk_config PRIMARY KEY (idConfig)
 );
 
+INSERT INTO Config (com, ponto)
+VALUES ("COM1", true);
+
 CREATE VIEW ShowTags as SELECT ft.idFuncionarioTag, concat(f.nome, ' ', f.sobrenome) as nome, f.cpf, ft.codigo, ft.ativo
 FROM Funcionario as f NATURAL JOIN FuncionarioTag as ft;
 
