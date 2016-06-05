@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import aquacoding.model.Usuario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
+import aquacoding.utils.MaskField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -28,11 +30,13 @@ public class UsuarioNovoController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		MaskField.submitForm(usuarioConPassword, cadastrar);
+		
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
 		});
 
-		cadastrar.setOnMouseClicked((MouseEvent e) -> {
+		cadastrar.setOnAction((ActionEvent e) -> {
 			if (usuarioPassword.getText().equals("") || usuarioConPassword.getText().equals("")
 					|| usuarioNome.getText().equals("")) {
 				CustomAlert.showAlert("Usuário - Cadastro", "Todos os campos são obrigatários.", AlertType.INFORMATION);

@@ -20,7 +20,7 @@ import aquacoding.utils.Timeout;
 public class RootLayoutController implements Initializable {
 
 	@FXML
-	MenuItem menuBarSistemaDeslogar, menuBarSistemaInicio, menuBarSistemaMudanca;
+	MenuItem menuBarSistemaDeslogar, menuBarSistemaInicio, menuBarSistemaMudanca, menuBarSistemaDataHora;
 
 	@FXML
 	MenuItem menuBarEmpresaNovoEditar, menuBarEmpresaVer;
@@ -242,6 +242,10 @@ public class RootLayoutController implements Initializable {
 
 		menuBarHoleriteGerar.setOnAction((ActionEvent e) -> {
 			Main.loadHoleriteGerarView();
+		});
+		
+		menuBarSistemaDataHora.setOnAction((ActionEvent e) -> {
+			Main.DataHoraView();
 		});
 	}
 

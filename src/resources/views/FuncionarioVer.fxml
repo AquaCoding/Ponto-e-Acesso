@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioVerController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.71" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aquacoding.controller.FuncionarioVerController">
    <children>
       <Label text="Funcionario" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
          <font>
@@ -191,7 +194,7 @@
                   <Button fx:id="bonificaRemover" layoutX="388.0" layoutY="10.0" mnemonicParsing="false" text="Remover bonificação" AnchorPane.rightAnchor="54.0" AnchorPane.topAnchor="10.0" />
                   <Button fx:id="ferias" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" text="Férias" AnchorPane.leftAnchor="69.0" AnchorPane.topAnchor="10.0" />
                   <Button fx:id="modeloCartao" layoutX="123.0" layoutY="10.0" mnemonicParsing="false" text="Modelo cartão" AnchorPane.leftAnchor="123.0" AnchorPane.topAnchor="10.0" />
-                  <Button fx:id="cadastroCartao" layoutX="225.0" layoutY="9.0" mnemonicParsing="false" text="Cadastrar cartão" />
+                  <Button fx:id="cadastroCartao" layoutX="225.0" layoutY="9.0" mnemonicParsing="false" text="Cadastrar cartão" AnchorPane.topAnchor="10.0" />
                </children>
             </AnchorPane>
          </children>

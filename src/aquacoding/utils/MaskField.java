@@ -72,6 +72,32 @@ public class MaskField {
 				}
 			}
 		});
+		
+		field.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				KeyCode a = event.getCode();
+				if(a.getName().equals("Backspace")){
+					TextField tf = (TextField) event.getSource();
+
+					if(tf.getText().length() == 4) {
+						event.consume();
+						tf.setText(tf.getText(0, 2));
+					} else if(tf.getText().length() == 8) {
+						event.consume();
+						tf.setText(tf.getText(0, 6));
+					} else if(tf.getText().length() == 12) {
+						event.consume();
+						tf.setText(tf.getText(0, 10));
+					}					
+
+					tf.positionCaret(tf.getText().length());
+				} else {
+					if(!a.getName().equals("Tab"))
+						event.consume();
+				}
+			}
+		});
 	}
 
 	public static void cnpjMaks(TextField field) {
@@ -107,6 +133,36 @@ public class MaskField {
 				}
 			}
 		});
+		
+		field.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				KeyCode a = event.getCode();
+				if(a.getName().equals("Backspace")){
+					TextField tf = (TextField) event.getSource();
+
+					if(tf.getText().length() == 3) {
+						event.consume();
+						tf.setText(tf.getText(0, 1));
+					} else if(tf.getText().length() == 7) {
+						event.consume();
+						tf.setText(tf.getText(0, 5));
+					} else if(tf.getText().length() == 11) {
+						event.consume();
+						tf.setText(tf.getText(0, 9));
+					} else if(tf.getText().length() == 16) {
+						event.consume();
+						tf.setText(tf.getText(0, 14));
+					}
+					
+
+					tf.positionCaret(tf.getText().length());
+				} else {
+					if(!a.getName().equals("Tab"))
+						event.consume();
+				}
+			}
+		});
 	}
 	
 	public static void horarioMask(TextField field) {
@@ -116,20 +172,28 @@ public class MaskField {
 				if(event.getCharacter().matches("\\d")) {
 					TextField tf = (TextField) event.getSource();
 					String newValue = tf.getText() + event.getCharacter();
-					//00:00:00
-					//12345678
 					
 					if(newValue.length() == 1) {
 						if(!event.getCharacter().matches("[0-2]")) {
 							event.consume();
 						}	
 					} else if(newValue.length() == 2) { 
-						if(!event.getCharacter().matches("[0-3]")) {
-							event.consume();
+						if(tf.getText().equals("2")) {
+							if(!event.getCharacter().matches("[0-3]")) {
+								event.consume();
+							} else {
+								event.consume();
+								tf.setText(newValue+":");
+							}
 						} else {
-							event.consume();
-							tf.setText(newValue+":");
+							if(!event.getCharacter().matches("[0-9]")) {
+								event.consume();
+							} else {
+								event.consume();
+								tf.setText(newValue+":");
+							}
 						}
+						
 					} else if(newValue.length() == 4 || newValue.length() == 7) { 
 						if(!event.getCharacter().matches("[0-5]")) {
 							event.consume();
@@ -152,6 +216,29 @@ public class MaskField {
 					tf.positionCaret(tf.getText().length());
 				} else {
 					event.consume();
+				}
+			}
+		});
+		
+		field.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				KeyCode a = event.getCode();
+				if(a.getName().equals("Backspace")){
+					TextField tf = (TextField) event.getSource();
+
+					if(tf.getText().length() == 3) {
+						event.consume();
+						tf.setText(tf.getText(0, 1));
+					} else if(tf.getText().length() == 6) {
+						event.consume();
+						tf.setText(tf.getText(0, 4));
+					}
+
+					tf.positionCaret(tf.getText().length());
+				} else {
+					if(!a.getName().equals("Tab"))
+						event.consume();
 				}
 			}
 		});
@@ -184,6 +271,32 @@ public class MaskField {
 					tf.positionCaret(tf.getText().length());
 				} else {
 					event.consume();
+				}
+			}
+		});
+
+		field.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				KeyCode a = event.getCode();
+				if(a.getName().equals("Backspace")){
+					TextField tf = (TextField) event.getSource();
+
+					if(tf.getText().length() == 3) {
+						event.consume();
+						tf.setText(tf.getText(0, 1));
+					} else if(tf.getText().length() == 7) {
+						event.consume();
+						tf.setText(tf.getText(0, 5));
+					} else if(tf.getText().length() == 11) {
+						event.consume();
+						tf.setText(tf.getText(0, 9));
+					}
+
+					tf.positionCaret(tf.getText().length());
+				} else {
+					if(!a.getName().equals("Tab"))
+						event.consume();
 				}
 			}
 		});

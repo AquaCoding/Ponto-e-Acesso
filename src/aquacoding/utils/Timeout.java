@@ -22,7 +22,8 @@ public class Timeout implements Runnable {
 	public static void logout() {
 		Main.loggedUser = null;
 		Main.initLoginLayout();
-		Main.endRootLayout();
+		if(Main.primaryStage != null)
+			Main.endRootLayout();
 	}
 	
 	@Override

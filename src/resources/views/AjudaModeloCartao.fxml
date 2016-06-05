@@ -20,6 +20,9 @@
          </font>
       </Label>
       <Button fx:id="cancelar" layoutX="15.0" layoutY="360.0" mnemonicParsing="false" text="Cancelar" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" />
-      <TextArea fx:id="textAjuda" editable="false" layoutX="15.0" layoutY="51.0" prefHeight="297.0" prefWidth="568.0" />
+      <TextArea fx:id="textAjuda" editable="false" layoutX="15.0" layoutY="51.0" prefHeight="297.0" prefWidth="568.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></TextArea>
    </children>
 </AnchorPane>

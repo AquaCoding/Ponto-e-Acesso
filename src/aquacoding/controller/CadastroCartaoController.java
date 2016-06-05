@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import aquacoding.model.Cartao;
 import aquacoding.model.Funcionario;
@@ -18,7 +19,10 @@ public class CadastroCartaoController implements Initializable {
 
 	@FXML
 	Button cancelar, cadastrar;
-	
+
+	@FXML
+	TextArea textHelp;
+
 	private Funcionario func;
 
 	public void initialize(URL location, ResourceBundle resources) {
@@ -27,9 +31,20 @@ public class CadastroCartaoController implements Initializable {
 			Main.loadListaFuncionarioView();
 		});
 
-		CustomAlert.showAlert("Cadastro de Cartão", "Aproxime seu cartão do leitor e clique em cadastrar. O sensor ficar desabilitado para leitura por 15 segundos.", AlertType.INFORMATION);
+		textHelp.setText("Instruções: \n"
+				+ "Aproxime o cartão ou tag do leitor \n"
+				+ "Click em cadastrar\n"
+				+ "Aguarde confirmação na tela \n"
+				+ "Retire o cartão \n"
+				+ "Caso o procedimento for bem sucedido, prossiga \n"
+				+ "Caso contrário contate o suporte\n"
+				+ "(O funcionamento de ponto fica desativado por 10 segundos durante esse procedimento)");
+		
+		CustomAlert.showAlert("Cadastro de Cartão", "Aproxime seu cartão do leitor", AlertType.INFORMATION);
+
+		// Serial
 		Serial serial = Serial.getInstance();
-		serial.stopLogic(15000);
+		serial.stopLogic(10000);
 		
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			// Serial

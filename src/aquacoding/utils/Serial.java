@@ -3,6 +3,7 @@ package aquacoding.utils;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,12 +17,32 @@ import jssc.SerialPortException;
 
 public class Serial {
 
-	private String PORT_NUMBER = "COM3";
-	private Boolean status = true;
+	private static String PORT_NUMBER;
+	private static Boolean status;
 	private Boolean canRegisterPontoOrAcesso = true;
 	private String code;
-	SerialPort serialPort = new SerialPort(PORT_NUMBER);
+	SerialPort serialPort = new SerialPort(PORT_NUMBER);	
+	
+	public String getPort() {
+		return PORT_NUMBER;
+	}
 
+	public void setPort(String port) {
+		PORT_NUMBER = port.toUpperCase();
+	}
+
+	public Boolean getStatus() {
+		return status;
+	}
+
+	public void setStatus(Boolean ponto) {
+		status = ponto;
+	}
+
+	public String getCode() {
+		return this.code;
+	}
+	
 	// Armazena a instancia da leitura serial
 	private static Serial serialInstance = null;
 
@@ -30,31 +51,32 @@ public class Serial {
 	}
 
 	// Obtem uma instancia do serial
-	public static Serial getInstance() {
+	public static Serial getInstance() {		
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um statement
+			Statement statement = connect.createStatement();
+
+			// Executa um SQL
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM config");
+			
+			resultSet.next();
+			
+			PORT_NUMBER = resultSet.getString("com");
+			
+			status = resultSet.getBoolean("ponto");
+			
+			connect.close();
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu ao obter as configurações do sistema");
+		}
+		
 		if (serialInstance == null)
 			serialInstance = new Serial();
 
 		return serialInstance;
-	}
-
-	public String getPort() {
-		return this.PORT_NUMBER;
-	}
-
-	public void setPort(String port) {
-		this.PORT_NUMBER = port.toUpperCase();
-	}
-
-	public Boolean getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
-	}
-
-	public String getCode() {
-		return this.code;
 	}
 
 	public void SerialLeitura() throws SerialPortException {
