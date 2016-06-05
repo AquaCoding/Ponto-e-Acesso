@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import aquacoding.model.Acesso;
 import aquacoding.model.Ponto;
@@ -14,8 +16,9 @@ import jssc.SerialPortException;
 
 public class Serial {
 
-	private String PORT_NUMBER = "COM4";
+	private String PORT_NUMBER = "COM3";
 	private Boolean status = true;
+	private Boolean canRegisterPontoOrAcesso = true;
 	private String code;
 	SerialPort serialPort = new SerialPort(PORT_NUMBER);
 
@@ -66,21 +69,39 @@ public class Serial {
 				@Override
 				public void serialEvent(SerialPortEvent event) {
 					if (event.isRXCHAR()) {
-
-						if (status) {
-							try {
-								marcaPonto();
-							} catch (SerialPortException e) {
-								System.out.println("Erro Ponto: " + e.getMessage());
+						try {
+							// Obtem o codigo do cartão e limpa removendo espaços e quebras de linhas
+							if(serialPort.getInputBufferBytesCount() == 14) {
+								code = serialPort.readString();
+								Pattern codePattern = Pattern.compile("[\\w]{2} [\\w]{2} [\\w]{2} [\\w]{2}");
+								Matcher m = codePattern.matcher(code);
+								
+								while(m.find())
+									code = m.group(0);
 							}
-						} else {
-							try {
-								marcaAcesso();
-							} catch (SerialPortException e) {
-								System.out.println("Erro Acesso: " + e.getMessage());
-							}
+								
+						} catch (SerialPortException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
 
+						if(canRegisterPontoOrAcesso) {
+							if (status) {
+								try {
+									marcaPonto();
+									System.out.println("Cadastrando ponto...");
+								} catch (SerialPortException e) {
+									System.out.println("Erro Ponto: " + e.getMessage());
+								}
+							} else {
+								try {
+									marcaAcesso();
+									System.out.println("Cadastrando Acesso...");
+								} catch (SerialPortException e) {
+									System.out.println("Erro Acesso: " + e.getMessage());
+								}
+							}
+						}
 					}
 				}
 			});
@@ -91,8 +112,7 @@ public class Serial {
 
 	// Responsável por marcar o Ponto
 	public void marcaPonto() throws SerialPortException {
-		try {
-			this.code = serialPort.readString();
+			//this.code = serialPort.readString();
 
 			try {
 				// Obtem uma conexão com o banco de dados
@@ -103,7 +123,6 @@ public class Serial {
 
 				// Executa um SQL
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
-
 				resultSet.next();
 
 					if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
@@ -127,10 +146,6 @@ public class Serial {
 			} catch (Exception e) {
 				System.out.println("Erro na busca pelo banco: " + e.getMessage());
 			}
-
-		} catch (SerialPortException e) {
-			System.out.println("Erro na leitura serial " + e.getMessage());
-		}
 	}
 
 	// Responsável por marcar o acesso
@@ -212,5 +227,24 @@ public class Serial {
 
 		return false;
 
+	}
+
+	public void stopLogic(int millis) {
+		canRegisterPontoOrAcesso = false;
+		Thread t = new Thread(() -> {
+			try {
+				Thread.sleep(millis);
+				Serial.getInstance().startLogic();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			System.out.println("Retornando leitura...");
+		});
+		t.start();
+	}
+
+	public void startLogic() {
+		canRegisterPontoOrAcesso = true;
 	}
 }

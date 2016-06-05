@@ -5,7 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
+import logs.ActionsCode;
+import logs.Logs;
+import logs.ObjectCode;
+import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
 
 public class Ponto {
@@ -98,5 +103,44 @@ public class Ponto {
 			throw new RuntimeException("Um erro ocorreu ao registrar ponto");
 		}
 	}
+	
+	public static boolean criarManual(LocalDate data, String horario, int idFuncionario, int idCartao) {
+		try {
+			if(data == null)
+				throw new RuntimeException("A data não pode ser fazia.");
+			
+			if(horario == null || horario.equals("") || !horario.matches("^[0-2][0-3]:[0-5][0-9]:[0-5][0-9]$"))
+				throw new RuntimeException("O horário não pode ser fazio.");
+			
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+			
+			// Executa um SQL
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"INSERT INTO Ponto (horario, idFuncionario, idFuncionarioTag) VALUES (?, ?, ?)");
 
+			statement.setString(1, data.toString() + " " + horario);
+			statement.setInt(2, idFuncionario);
+			statement.setInt(3, idCartao);
+
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+
+			// Retorna resultado
+			if (ret == 1) {
+				// Encerra conexao
+				connect.close();
+				// Gera log
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.CARTAO, 0, ActionsCode.CRIOU_PONTO_MANUAL);
+				return true;
+			} else {
+				// Encerra conexao
+				connect.close();
+				return false;
+			}
+		} catch (SQLException e) {
+			System.out.println(e);
+			throw new RuntimeException("Um erro ocorreu ao obter os cartões.");
+		}
+	}
 }

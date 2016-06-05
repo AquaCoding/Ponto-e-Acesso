@@ -1,10 +1,6 @@
 package aquacoding.controller;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
@@ -12,19 +8,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import aquacoding.model.Cartao;
 import aquacoding.model.Funcionario;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
-import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Serial;
 
 public class CadastroCartaoController implements Initializable {
 
 	@FXML
-	Button cancelar;
-
-	private static Thread serialThread;
-
+	Button cancelar, cadastrar;
+	
 	private Funcionario func;
 
 	public void initialize(URL location, ResourceBundle resources) {
@@ -33,47 +27,33 @@ public class CadastroCartaoController implements Initializable {
 			Main.loadListaFuncionarioView();
 		});
 
-		CustomAlert.showAlert("Cadastro de Cartão", "Aproxime seu cartão do leitor", AlertType.INFORMATION);
-
-		// Serial
+		CustomAlert.showAlert("Cadastro de Cartão", "Aproxime seu cartão do leitor e clique em cadastrar. O sensor ficar desabilitado para leitura por 15 segundos.", AlertType.INFORMATION);
 		Serial serial = Serial.getInstance();
-		serialThread = new Thread(() -> {
-			try {				
-				serial.SerialLeitura();	
-				serial.wait(2000);
-				String code = serial.getCode();
-				System.out.println(code);
-				cadastro(func.getId(), code);
-			} catch (Exception e) {
-				System.out.println("Erro Serial: " + e.getMessage());
-			}
+		serial.stopLogic(15000);
+		
+		cadastrar.setOnMouseClicked((MouseEvent e) -> {
+			// Serial
+			
+			String code = serial.getCode();
+			
+			if(code.equals("")) {
+				CustomAlert.showAlert("Cadastro de Cartão", "Nenhum cartão detectado.", AlertType.INFORMATION);
+			} else {
+				try {
+					if(Cartao.create(func, code)) {
+						CustomAlert.showAlert("Cadastro de Cartão", "Cartão cadastrado com sucesso.", AlertType.INFORMATION);
+					} else {
+						CustomAlert.showAlert("Cadastro de cartão", "Algo deu errado.", AlertType.INFORMATION);
+					}
+				}catch(RuntimeException ex) {
+					CustomAlert.showAlert("Cadastro de Cartão", ex.getMessage(), AlertType.INFORMATION);
+				}
+				
+			}			
 		});
-		serialThread.start();
-
 	}
 
 	public void setFuncionario(Funcionario funcionario) {
 		this.func = funcionario;
-	}
-	
-	public void cadastro(int id, String code) {
-		try {
-			// Obtem uma conexão com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-
-			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO FuncionarioTag (code, ativo, idFuncionario) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-
-			// Realiza o bind dos valores
-			statement.setString(1, code);
-			statement.setInt(2, 1);
-			statement.setInt(3, id);
-			
-			// Executa o SQL
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException("Um erro ocorreu ao registrar ponto");
-		}
 	}
 }

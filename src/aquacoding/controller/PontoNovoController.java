@@ -7,8 +7,10 @@ import java.util.ResourceBundle;
 
 
 
+
 import aquacoding.model.Cartao;
 import aquacoding.model.Funcionario;
+import aquacoding.model.Ponto;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.CustomAlert;
 import aquacoding.utils.MaskField;
@@ -54,7 +56,7 @@ public class PontoNovoController implements Initializable{
 		cadastrar.setOnMouseClicked((MouseEvent e) -> {
 			try {
 				if(cartaoListagem.getSelectionModel().getSelectedItem() != null && funcionarioListagem.getSelectionModel().getSelectedItem() != null) {
-					if(Cartao.criarManual(dataSeletor.getValue(), horario.getText(), funcionarioListagem.getSelectionModel().getSelectedItem().getId(), cartaoListagem.getSelectionModel().getSelectedItem().getId())) {
+					if(Ponto.criarManual(dataSeletor.getValue(), horario.getText(), funcionarioListagem.getSelectionModel().getSelectedItem().getId(), cartaoListagem.getSelectionModel().getSelectedItem().getId())) {
 						CustomAlert.showAlert("Cadastrar Ponto Manual", "Ponto adicionado com sucesso.", AlertType.WARNING);
 					} else {
 						CustomAlert.showAlert("Cadastrar Ponto Manual", "Um erro ocorreu.", AlertType.WARNING);

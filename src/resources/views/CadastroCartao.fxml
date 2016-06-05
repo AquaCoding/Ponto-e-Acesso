@@ -31,5 +31,6 @@
             <Image url="@../../../app_data/rfid.png" />
          </image>
       </ImageView>
+      <Button fx:id="cadastrar" layoutX="91.0" layoutY="360.0" mnemonicParsing="false" text="Cadastrar" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="91.0" />
    </children>
 </AnchorPane>

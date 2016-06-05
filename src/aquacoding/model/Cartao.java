@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 import aquacoding.pontoacesso.Main;
@@ -71,6 +70,39 @@ public class Cartao {
 		this.codigo = codigo;
 		this.ativo = ativo;
 	}
+	
+	public static boolean create(Funcionario func, String code) {
+		try {
+			if(Cartao.getAll(code).size() > 0)
+				throw new RuntimeException("Esse cartão já foi cadastrado");
+			
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
+					"INSERT INTO FuncionarioTag (codigo, ativo, idFuncionario) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+
+			// Realiza o bind dos valores
+			statement.setString(1, code);
+			statement.setInt(2, 1);
+			statement.setInt(3, func.getId());
+			
+			// Executa o SQL
+			int ret = statement.executeUpdate();
+			
+			if(ret == 1) {
+				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.CARTAO, 0, ActionsCode.CADASTROU);
+				return true;
+			}
+				
+			
+			return false;
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new RuntimeException("Um erro ocorreu ao registrar ponto");
+		}
+	}
 
 	public static ArrayList<Cartao> getAll() {
 		try {
@@ -82,6 +114,32 @@ public class Cartao {
 
 			// Executa um SQL
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM ShowTags");
+
+			ArrayList<Cartao> cartoes = new ArrayList<>();
+			while (resultSet.next()) {
+				// Adiciona o cartão ao retorno
+				cartoes.add(new Cartao(resultSet.getInt("idFuncionarioTag"), resultSet.getString("nome"),
+						resultSet.getString("cpf"), resultSet.getString("codigo"), resultSet.getBoolean("ativo")));
+			}
+
+			// Retorna os cartões
+			return cartoes;
+		} catch (SQLException e) {
+			throw new RuntimeException("Um erro ocorreu ao obter os cartões.");
+		}
+	}
+	
+	public static ArrayList<Cartao> getAll(String codigo) {
+		try {			
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
+
+			// Executa um SQL
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM ShowTags WHERE codigo = ?");
+
+			statement.setString(1, codigo);
+
+			ResultSet resultSet = statement.executeQuery();
 
 			ArrayList<Cartao> cartoes = new ArrayList<>();
 			while (resultSet.next()) {
@@ -172,45 +230,4 @@ public class Cartao {
 			throw new RuntimeException("Um erro ocorreu ao obter os cartões.");
 		}
 	}
-
-	public static boolean criarManual(LocalDate data, String horario, int idFuncionario, int idCartao) {
-		try {
-			if(data == null)
-				throw new RuntimeException("A data não pode ser fazia.");
-			
-			if(horario == null || horario.equals("") || !horario.matches("^[0-2][0-3]:[0-5][0-9]:[0-5][0-9]$"))
-				throw new RuntimeException("O horário não pode ser fazio.");
-			
-			// Obtem uma conexão com o banco de dados
-			Connection connect = DatabaseConnect.getInstance();
-			
-			// Executa um SQL
-			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Ponto (horario, idFuncionario, idFuncionarioTag) VALUES (?, ?, ?)");
-
-			statement.setString(1, data.toString() + " " + horario);
-			statement.setInt(2, idFuncionario);
-			statement.setInt(3, idCartao);
-
-			// Executa o SQL
-			int ret = statement.executeUpdate();
-
-			// Retorna resultado
-			if (ret == 1) {
-				// Encerra conexao
-				connect.close();
-				// Gera log
-				Logs.makeLog(Main.loggedUser.getId(), ObjectCode.CARTAO, 0, ActionsCode.CRIOU_PONTO_MANUAL);
-				return true;
-			} else {
-				// Encerra conexao
-				connect.close();
-				return false;
-			}
-		} catch (SQLException e) {
-			System.out.println(e);
-			throw new RuntimeException("Um erro ocorreu ao obter os cartões.");
-		}
-	}
-
 }
