@@ -36,7 +36,7 @@ public class BonificacaoListaController implements Initializable{
 		cancelar.setOnMouseClicked((MouseEvent e) -> {
 			Main.loadMainView();
 		});
-		
+
 		// Inicia a view de edição de uma função
 		alterar.setOnMouseClicked((MouseEvent e) -> {
 			if(bonificacaoListagem.getSelectionModel().getSelectedItem() != null)
@@ -74,7 +74,7 @@ public class BonificacaoListaController implements Initializable{
 				CustomAlert.showAlert("Remover Setor", ex.getMessage(), AlertType.WARNING);
 			}
 		});
-		
+
 		linkar.setOnMouseClicked((MouseEvent e) -> {
 			if(bonificacaoListagem.getSelectionModel().getSelectedItem() != null)
 				Main.loadBonificacaoLink(bonificacaoListagem.getSelectionModel().getSelectedItem());
@@ -99,7 +99,7 @@ public class BonificacaoListaController implements Initializable{
 
 						// Define o nome customizado
 						if (item != null) {
-							setText(item.getNome() + " (" + item.getValor() + ")");
+							setText(item.getNome() + " (" + item.getValor() + "%)");
 						} else {
 							setText("");
 						}

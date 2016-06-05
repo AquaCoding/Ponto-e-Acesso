@@ -100,7 +100,7 @@ public class Main extends Application {
 			timeout.setUltimoEvento();
 		});
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -137,7 +137,7 @@ public class Main extends Application {
 
 			// Ações a serem executadas no icone do relogio
 			// Fecha o programa
-			final ActionListener closeListener = new ActionListener() {				
+			final ActionListener closeListener = new ActionListener() {
 				@Override
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					if (SystemTray.isSupported()) {
@@ -147,7 +147,7 @@ public class Main extends Application {
 						// Remove o icone existente caso houver
 						if (trayIcon != null)
 							tray.remove(trayIcon);
-					}					
+					}
 					System.exit(0);
 				}
 			};
@@ -368,7 +368,7 @@ public class Main extends Application {
 	// Carrega a view de nova função
 	public static void loadNovoFuncaoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Nova função");
+			primaryStage.setTitle(pageTitle + " - Novo cargo");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -381,7 +381,7 @@ public class Main extends Application {
 	// Carrega a view de listagem de função
 	public static void loadListaFuncaoView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - funções");
+			primaryStage.setTitle(pageTitle + " - Cargos");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoLista.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -412,7 +412,7 @@ public class Main extends Application {
 	// Carrega a view de novo horario
 	public static void loadNovoHorarioView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Novo horário");
+			primaryStage.setTitle(pageTitle + " - Novo turno");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioNovo.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -425,7 +425,7 @@ public class Main extends Application {
 	// Carrega a view de listagem de horarios
 	public static void loadListaHorarioView() {
 		try {
-			primaryStage.setTitle(pageTitle + " - Horários");
+			primaryStage.setTitle(pageTitle + " - Turnos");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioLista.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -451,7 +451,7 @@ public class Main extends Application {
 	// Carrega a view de editar função
 	public static void loadFuncaoEditarView(Funcao funcao) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar função");
+			primaryStage.setTitle(pageTitle + " - Editar cargo");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/FuncaoEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -563,7 +563,7 @@ public class Main extends Application {
 	// Carrega a view de editar um horario
 	public static void loadHorarioEditarView(Horario horario) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Editar horário");
+			primaryStage.setTitle(pageTitle + " - Editar turno");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/HorarioEditar.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
@@ -578,7 +578,7 @@ public class Main extends Application {
 		}
 	}
 
-	// Carrega a view de editar um horario
+	// Carrega a view de cadastrar empresa
 	public static void loadEmpresaNovoView() {
 		try {
 			primaryStage.setTitle(pageTitle + " - Nova empresa");
@@ -591,7 +591,7 @@ public class Main extends Application {
 		}
 	}
 
-	// Carrega a view de editar um horario
+	// Carrega a view de ver detalhes da empresa
 	public static void loadEmpresaVer() {
 		try {
 			primaryStage.setTitle(pageTitle + " - Ver empresa");
@@ -742,7 +742,7 @@ public class Main extends Application {
 			if (isDropBox) {
 				controller.showCodeConfirm(true);
 			}
-			
+
 			rootLayout.setCenter(personOverview);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1008,7 +1008,7 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void DataHoraView() {
 		try {
 			primaryStage.setTitle(pageTitle + " - Data Hora do Ponto");
