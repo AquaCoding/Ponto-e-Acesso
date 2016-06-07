@@ -59,10 +59,27 @@ public class TableData {
 	
 	// Return the data formated as a HTML <td> or <th>
 	public String getAsHTML() {
-		if(isTH)
-			return "<th colSpan=\""+ getColSpan() +"\" rowSpan=\""+ getRowSpan() +"\">" + getValue() + "</th>";
-		
-		return "<td colSpan=\""+ getColSpan() +"\" rowSpan=\""+ getRowSpan() +"\">" + getValue() + "</td>";
+		if(isTH) {
+			String r = "<th ";
+			if(getColSpan() > 0)
+				r += "colspan=\""+ getColSpan() +"\" ";
+			if(getRowSpan() > 0)
+				r += "rowspan=\""+ getRowSpan() +"\" ";
+			
+			r += ">" + getValue() + "</th>";
+			
+			return r;
+		} else {
+			String r = "<td ";
+			if(getColSpan() > 0)
+				r += "colspan=\""+ getColSpan() +"\" ";
+			if(getRowSpan() > 0)
+				r += "rowspan=\""+ getRowSpan() +"\" ";
+			
+			r += ">" + getValue() + "</td>";
+			
+			return r;
+		}
 	}
 	
 }

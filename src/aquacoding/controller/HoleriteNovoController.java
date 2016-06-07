@@ -1,15 +1,14 @@
 package aquacoding.controller;
 
 import java.net.URL;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 import aquacoding.model.Funcionario;
 import aquacoding.model.Holerite;
-import aquacoding.model.Horario;
 import aquacoding.pontoacesso.Main;
+import aquacoding.utils.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,6 +19,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
@@ -37,7 +37,7 @@ public class HoleriteNovoController implements Initializable {
 	@FXML
 	CheckBox checkTodos;
 
-	Funcionario funcionario;
+	//Funcionario funcionario;
 
 	// Atributos
 	ObservableList<Funcionario> items;
@@ -58,110 +58,51 @@ public class HoleriteNovoController implements Initializable {
 		listFuncionaios.setItems(items);
 
 		gerar.setOnMouseClicked((MouseEvent e) -> {
-			ObservableList<Funcionario> fun;
-			fun = FXCollections.observableArrayList(listFuncionaios.getSelectionModel().getSelectedItems());
+			ObservableList<Funcionario> fun = FXCollections.observableArrayList(listFuncionaios.getSelectionModel().getSelectedItems());
 			Holerite h;
-
-			if(checkTodos.isSelected() == false){
-				if(fun.size() == 1){
-
-					LocalDate inicio = Inicio.getValue();
-					LocalDate termino = Termino.getValue();
-					long dias = ChronoUnit.DAYS.between(inicio, termino);
-
-					int i = Integer.valueOf(""+dias);
-					double salario = 0;
-
-					funcionario = fun.get(0);
-					for(int j = 0; j <= i+1; j++ ){
-						 LocalDate amanhas = inicio.plusDays(j);
-						 int horas;
-
-						 Duration aux = Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas));
-						 if(Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas)) != null){
-							  horas = Integer.valueOf(""+aux.toHours());
-						 }else{
-							  horas = 0;
-						 }
-
-						 double dinheiroHora = funcionario.getSalarioHoras();
-						 salario = salario +  horas * dinheiroHora;
-
-					}
-					h = new Holerite.Builder().setSalario(salario)
-							.setFuncionario(funcionario)
-							.setMes(termino.getMonthValue() + "/" + termino.getYear())
-							.build();
-					h.gerarHolerite();
-				}else{
+			
+			// Verifica se uma data foi fornecida
+			if(Inicio.getValue() != null && Termino.getValue() != null) {
+				
+				// Verifica se deve gerar holerite para todos os funcionarios
+				if(checkTodos.isSelected()) {
+					fun = FXCollections.observableArrayList(Funcionario.getAll());
+				}
+				
+				// Verifica se ao menos um funcionario foi selecionado
+				if(fun.size() > 0) {
+					
+					// Percorre por cada um dos funcionarios
 					for(int k = 0; k < fun.size(); k ++){
-
+						// Obtem o funcionarios
+						Funcionario funcionario = fun.get(k);
+						
+						// Obtem a data de inicio e fim
 						LocalDate inicio = Inicio.getValue();
 						LocalDate termino = Termino.getValue();
+						
+						// Obtem o numero de dias entre as duas datas
 						long dias = ChronoUnit.DAYS.between(inicio, termino);
-
+						
+						// Tranforma o numero de dias pra int
 						int i = Integer.valueOf(""+dias);
-						double salario = 0;
-
-						funcionario = fun.get(k);
-						for(int j = 0; j <= i+1; j++ ){
-							 LocalDate amanhas = inicio.plusDays(j);
-							 int horas;
-
-							 Duration aux = Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas));
-							 if(Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas)) != null){
-								  horas = Integer.valueOf(""+aux.toHours());
-							 }else{
-								  horas = 0;
-							 }
-
-							 double dinheiroHora = funcionario.getSalarioHoras();
-							 salario = salario +  horas * dinheiroHora;
-
-						}
+						
+						// Calcula o salario
+						double salario = Holerite.getSalario(i, inicio, funcionario);
+						
+						// Gera um holerite
 						h = new Holerite.Builder().setSalario(salario)
 								.setFuncionario(funcionario)
 								.setMes(termino.getMonthValue() + "/" + termino.getYear())
 								.build();
 						h.gerarHolerite();
 					}
-
+				} else {
+					CustomAlert.showAlert("Gerar holerite", "Ao menos um funcionário deve ser selecionado.", AlertType.WARNING);
 				}
-			}else{
-
-				for(int k = 0; k < items.size(); k ++){
-
-					LocalDate inicio = Inicio.getValue();
-					LocalDate termino = Termino.getValue();
-					long dias = ChronoUnit.DAYS.between(inicio, termino);
-
-					int i = Integer.valueOf(""+dias);
-					double salario = 0;
-
-					funcionario = items.get(k);
-					for(int j = 0; j <= i+1; j++ ){
-						 LocalDate amanhas = inicio.plusDays(j);
-						 int horas;
-
-						 Duration aux = Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas));
-						 if(Horario.getHorasTrabalhadasByDateAndFuncionario(funcionario, String.valueOf(amanhas)) != null){
-							  horas = Integer.valueOf(""+aux.toHours());
-						 }else{
-							  horas = 0;
-						 }
-
-						 double dinheiroHora = funcionario.getSalarioHoras();
-						 salario = salario +  horas * dinheiroHora;
-
-					}
-					h = new Holerite.Builder().setSalario(salario)
-							.setFuncionario(funcionario)
-							.setMes(termino.getMonthValue() + "/" + termino.getYear())
-							.build();
-					h.gerarHolerite();
-				}
+			} else {
+				CustomAlert.showAlert("Gerar holerite", "Uma data de início e termino deve ser dada.", AlertType.WARNING);
 			}
-
 		});
 
 	}
