@@ -135,26 +135,31 @@ public class Serial {
 
 	// Responsável por marcar o Ponto
 	public void marcaPonto() throws SerialPortException {
-		// this.code = serialPort.readString();
-
 		try {
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
 
-			// Cria um statement
-			Statement statement = connect.createStatement();
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM FuncionarioTag WHERE codigo = ?");
 
-			// Executa um SQL
-			ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
-			resultSet.next();
+			// Realiza o bind dos valores
+			statement.setString(1, this.code);
 
-			if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
-				serialPort.writeString("Funcionario Suspenso");
-			} else {
-				while (resultSet.next()) {
-					if (this.code.equals(resultSet.getString("codigo"))) {
-						Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
-								resultSet.getInt("idFuncionarioTag"));
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();
+			
+			while(resultSet.next()) {
+				if(verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
+					serialPort.writeString("Funcionario Suspenso");
+				} else {
+					// Verifica a data do ultimo ponto
+					statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM Ponto WHERE horario >= NOW() - INTERVAL 10 MINUTE AND idFuncionario = ?;");
+					statement.setInt(1, resultSet.getInt("idFuncionario"));
+					ResultSet resultSet2 = statement.executeQuery();
+					
+					// Se não houver nenhum ponto nos ultimos 10 minutos do mesmo idFuncionario, registra o ponto
+					if(!resultSet2.next()) {
+						Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"), resultSet.getInt("idFuncionarioTag"));
 						if (ponto.create()) {
 							serialPort.writeString("Ponto registrado");
 						} else {
@@ -162,8 +167,8 @@ public class Serial {
 						}
 					}
 				}
-				;
 			}
+			
 			// encerra conexão
 			connect.close();
 
