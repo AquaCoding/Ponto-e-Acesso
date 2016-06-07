@@ -21,8 +21,8 @@ public class Serial {
 	private static Boolean status;
 	private Boolean canRegisterPontoOrAcesso = true;
 	private String code;
-	SerialPort serialPort = new SerialPort(PORT_NUMBER);	
-	
+	SerialPort serialPort = new SerialPort(PORT_NUMBER);
+
 	public String getPort() {
 		return PORT_NUMBER;
 	}
@@ -42,7 +42,7 @@ public class Serial {
 	public String getCode() {
 		return this.code;
 	}
-	
+
 	// Armazena a instancia da leitura serial
 	private static Serial serialInstance = null;
 
@@ -51,7 +51,7 @@ public class Serial {
 	}
 
 	// Obtem uma instancia do serial
-	public static Serial getInstance() {		
+	public static Serial getInstance() {
 		try {
 			// Obtem uma conexão com o banco de dados
 			Connection connect = DatabaseConnect.getInstance();
@@ -61,18 +61,18 @@ public class Serial {
 
 			// Executa um SQL
 			ResultSet resultSet = statement.executeQuery("SELECT * FROM config");
-			
+
 			resultSet.next();
-			
+
 			PORT_NUMBER = resultSet.getString("com");
-			
+
 			status = resultSet.getBoolean("ponto");
-			
+
 			connect.close();
 		} catch (SQLException e) {
 			throw new RuntimeException("Um erro ocorreu ao obter as configurações do sistema");
 		}
-		
+
 		if (serialInstance == null)
 			serialInstance = new Serial();
 
@@ -92,22 +92,23 @@ public class Serial {
 				public void serialEvent(SerialPortEvent event) {
 					if (event.isRXCHAR()) {
 						try {
-							// Obtem o codigo do cartão e limpa removendo espaços e quebras de linhas
-							if(serialPort.getInputBufferBytesCount() == 14) {
+							// Obtem o codigo do cartão e limpa removendo
+							// espaços e quebras de linhas
+							if (serialPort.getInputBufferBytesCount() == 14) {
 								code = serialPort.readString();
 								Pattern codePattern = Pattern.compile("[\\w]{2} [\\w]{2} [\\w]{2} [\\w]{2}");
 								Matcher m = codePattern.matcher(code);
-								
-								while(m.find())
+
+								while (m.find())
 									code = m.group(0);
 							}
-								
+
 						} catch (SerialPortException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 
-						if(canRegisterPontoOrAcesso) {
+						if (canRegisterPontoOrAcesso) {
 							if (status) {
 								try {
 									marcaPonto();
@@ -134,40 +135,41 @@ public class Serial {
 
 	// Responsável por marcar o Ponto
 	public void marcaPonto() throws SerialPortException {
-			//this.code = serialPort.readString();
+		// this.code = serialPort.readString();
 
-			try {
-				// Obtem uma conexão com o banco de dados
-				Connection connect = DatabaseConnect.getInstance();
+		try {
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
 
-				// Cria um statement
-				Statement statement = connect.createStatement();
+			// Cria um statement
+			Statement statement = connect.createStatement();
 
-				// Executa um SQL
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
-				resultSet.next();
+			// Executa um SQL
+			ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
+			resultSet.next();
 
-					if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
-						serialPort.writeString("Funcionario Suspenso");
-					} else {
-						while (resultSet.next()) {
-							if (this.code.equals(resultSet.getString("codigo"))) {
-								Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
-										resultSet.getInt("idFuncionarioTag"));
-								if (ponto.create()) {
-									serialPort.writeString("Ponto registrado");
-								} else {
-									serialPort.writeString("Erro, contate o Suporte");
-								}
-							}
-						};
-					}				
-				// encerra conexão
-				connect.close();
-
-			} catch (Exception e) {
-				System.out.println("Erro na busca pelo banco: " + e.getMessage());
+			if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
+				serialPort.writeString("Funcionario Suspenso");
+			} else {
+				while (resultSet.next()) {
+					if (this.code.equals(resultSet.getString("codigo"))) {
+						Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
+								resultSet.getInt("idFuncionarioTag"));
+						if (ponto.create()) {
+							serialPort.writeString("Ponto registrado");
+						} else {
+							serialPort.writeString("Erro, contate o Suporte");
+						}
+					}
+				}
+				;
 			}
+			// encerra conexão
+			connect.close();
+
+		} catch (Exception e) {
+			System.out.println("Erro na busca pelo banco: " + e.getMessage());
+		}
 	}
 
 	// Responsável por marcar o acesso
@@ -185,26 +187,27 @@ public class Serial {
 				// Executa um SQL
 				ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
 
-				resultSet.next();			
-					if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
-						serialPort.writeString("Funcionario Suspenso");
-					} else {
-						while (resultSet.next()) {
-							if (this.code.equals(resultSet.getString("codigo"))) {
-								System.out.println("Achou");
-								Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
-										resultSet.getInt("idFuncionarioTag"));
-								System.out.println("Objeto");
-								if (acesso.create()) {
-									serialPort.writeString("Acesso registrado");
-									System.out.println("criou");
-								} else {
-									serialPort.writeString("Erro, contate o Suporte");
-									System.out.println("errou");
-								}
+				resultSet.next();
+				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
+					serialPort.writeString("Funcionario Suspenso");
+				} else {
+					while (resultSet.next()) {
+						if (this.code.equals(resultSet.getString("codigo"))) {
+							System.out.println("Achou");
+							Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
+									resultSet.getInt("idFuncionarioTag"));
+							System.out.println("Objeto");
+							if (acesso.create()) {
+								serialPort.writeString("Acesso registrado");
+								System.out.println("criou");
+							} else {
+								serialPort.writeString("Erro, contate o Suporte");
+								System.out.println("errou");
 							}
-						};
-					}				
+						}
+					}
+					;
+				}
 				// encerra conexão
 				connect.close();
 
@@ -231,17 +234,16 @@ public class Serial {
 
 			ResultSet resultSet = statement.executeQuery();
 
-			while (resultSet.next()) {
-				if (resultSet.getBoolean("suspensao") == true) {
-					return true;
-				} else {
-					return false;
-				}
+			resultSet.next();
+			if (resultSet.getBoolean("suspensao") == true) {
+				// encerra conexão
+				connect.close();
+				return true;
+			} else {
+				// encerra conexão
+				connect.close();
+				return false;
 			}
-			;
-
-			// encerra conexão
-			connect.close();
 
 		} catch (Exception e) {
 			System.out.println("Erro na busca pelo banco: " + e.getMessage());
