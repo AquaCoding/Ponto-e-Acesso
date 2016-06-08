@@ -5,10 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 import logs.ActionsCode;
 import logs.Logs;
@@ -81,10 +80,11 @@ public class Ponto {
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
 					"INSERT INTO Ponto (horario, idFuncionario, idFuncionariotag) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 			LocalDateTime now = Time.roundTime(LocalDateTime.now());
 			
 			// Realiza o bind dos valores
-			statement.setTimestamp(1, new Timestamp(now.toEpochSecond(ZoneOffset.UTC)));
+			statement.setString(1, formatter.format(now));
 			statement.setInt(2, this.idFuncionario);
 			statement.setInt(3, this.idFuncionarioTag);
 			
