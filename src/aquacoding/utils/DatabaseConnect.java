@@ -24,7 +24,7 @@ public abstract class DatabaseConnect {
 	// MySQL Connection
 	private static Connection con;
 
-	// Retorna uma conex„o com o banco de dados
+	// Retorna uma conex√£o com o banco de dados
 	public static Connection getInstance() {
 		try {
 			// Carrega nome de usuario e senha
@@ -35,13 +35,13 @@ public abstract class DatabaseConnect {
 			// Carrega o driver do MySQL
 			Class.forName("com.mysql.jdbc.Driver");
 
-			// Cria uma conex„o com o MySQL
+			// Cria uma conex√£o com o MySQL
 			con = DriverManager.getConnection("jdbc:mysql://"+DB_HOST+"/"+DB_NAME, DB_USER, DB_PASS);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		// Retorna a conex„o
+		// Retorna a conex√£o
 		return con;
 	}
 
@@ -83,7 +83,7 @@ public abstract class DatabaseConnect {
 	
 	public static void restoreBackup(String fileToExecute) {
 		try {
-		   String command = "cmd.exe /C mysql -u "+DB_USER+" "+DB_NAME+" < "+fileToExecute;	   
+		   String command = "cmd.exe /C mysql --user="+DB_USER+" --password="+DB_NAME+" < "+fileToExecute;	   
 		   Runtime.getRuntime().exec(command);
 		} catch (IOException ex) {
 		   System.out.println(ex.getMessage());
@@ -111,8 +111,8 @@ public abstract class DatabaseConnect {
 				Files.write(Paths.get("app_data/firstAccess.data"), file);
 				
 				// Solicita nome de usuario do banco e senha
-				String user = CustomAlert.showDialogWithInput("ConfiguraÁ„o do banco", "Qual o nome do usu·rio do banco de dados?");
-				String pass = CustomAlert.showDialogWithInput("ConfiguraÁ„o do banco", "Qual a senha do usu·rio do banco de dados?");
+				String user = CustomAlert.showDialogWithInput("Configura√ß√£o do banco", "Qual o nome do usu√°rio do banco de dados?");
+				String pass = CustomAlert.showDialogWithInput("Configura√ß√£o do banco", "Qual a senha do usu√°rio do banco de dados?");
 				
 				// Cria o banco
 				File sql = new File("app_data/DB/SQL.sql");
@@ -126,7 +126,7 @@ public abstract class DatabaseConnect {
 				
 				Thread.sleep(1000);
 				
-				CustomAlert.showAlert("ConfiguraÁ„o do banco", "Banco configurado.", AlertType.WARNING);
+				CustomAlert.showAlert("Configura√ß√£o do banco", "Banco configurado.", AlertType.WARNING);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
