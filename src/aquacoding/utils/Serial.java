@@ -164,7 +164,7 @@ public class Serial {
 					if (!resultSet2.next()) {
 						Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
 								resultSet.getInt("idFuncionarioTag"));
-						if (ponto.create()) {
+						if (ponto.create()) {							
 							serialPort.writeInt(1);
 						} else {
 							serialPort.writeInt(5);
@@ -213,7 +213,7 @@ public class Serial {
 						Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
 								resultSet.getInt("idFuncionarioTag"));
 						if (acesso.create()) {
-							serialPort.writeInt(2);
+							serialPort.writeInt(2);							
 						} else {
 							serialPort.writeInt(3);
 						}
