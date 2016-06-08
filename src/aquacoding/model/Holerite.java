@@ -1,8 +1,14 @@
 package aquacoding.model;
 
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import javax.swing.filechooser.FileSystemView;
 
 import logs.ActionsCode;
 import logs.Logs;
@@ -66,7 +72,7 @@ public class Holerite {
 		this.funcionario = funcionario;
 	}
 
-	public void gerarHolerite(){
+	public void gerarHolerite(boolean multiplos){
 		double desconto = 0;
 		double bonifi = 0;
 
@@ -89,22 +95,37 @@ public class Holerite {
 		this.setDescontos(desconto);
 		this.setLiquido(bruto - desconto);
 
-		System.out.println("########################");
-		System.out.println(funcionario.getNome() + " " + funcionario.getSobrenome());
-		System.out.println("Salario: " + this.getSalario());
-		System.out.println("Mes: " + this.getMes());
-		System.out.println("Bonificação: " + this.getBonificacao());
-		System.out.println("Descontos: " + this.getDescontos());
-		System.out.println("Liquido: " + this.getLiquido());
-		System.out.println("Bruto: " + this.getBruto());
-
 		// Gera log
 		Logs.makeLog(Main.loggedUser.getId(), ObjectCode.HOLERITE, -1, ActionsCode.GEROU);
-		
+
+		String nomeArquivo = funcionario.getCpf()+ " " +funcionario.getNome() +" "+ funcionario.getSobrenome() + ".html";
+
 		Table table = generateTable();
-		System.out.println(table.getAsHTML());
+
+		ArrayList<String> hole = new ArrayList<String>();
+		hole.add(table.getAsHTML());
+
+		//Cria pasta Holerite no desktop
+		FileSystemView system = FileSystemView.getFileSystemView();
+		String caminho = system.getHomeDirectory().getPath();
+		caminho += "\\Holerite";
+
+		try {
+			// Salva o arquivo
+			new File(caminho).mkdir();
+			Files.write(Paths.get(caminho + "\\" + nomeArquivo), hole);
+
+			// Abre o arquivo
+			if(multiplos == false){
+			File a = new File(caminho + "\\" + nomeArquivo);
+			Main.loadWebView("file:///" + a.getAbsolutePath());
+			}
+		} catch (Exception e1) {
+			throw new RuntimeException("Um erro ocorreu ao criar o Holerite.");
+		}
+
 	}
-	
+
 	public static double getSalario(int i, LocalDate inicio, Funcionario funcionario) {
 		double salario = 0;
 		for(int j = 0; j <= i+1; j++ ){
@@ -123,10 +144,10 @@ public class Holerite {
 		}
 		return salario;
 	}
-	
+
 	private Table generateTable() {
 		Table table = new Table();
-		
+
 		// Cria as linhas
 		TableRow tr1 = new TableRow();
 		TableRow tr2 = new TableRow();
@@ -145,31 +166,31 @@ public class Holerite {
 		TableRow tr15 = new TableRow();
 		TableRow tr16 = new TableRow();
 		TableRow tr17 = new TableRow();
-		
+
 		// Primeira linha
 		TableData l1c1 = new TableData("Dados da empresa");
 		l1c1.setIsTH(true);
 		l1c1.setColSpan(6);
 		tr1.add(l1c1);
-		
+
 		// Segunda linha
 		TableData l2c1 = new TableData("Nome da empresa");
 		l2c1.setIsTH(true);
 		l2c1.setColSpan(3);
 		tr2.add(l2c1);
-		
+
 		TableData l2c2 = new TableData("CNPJ");
 		l2c2.setIsTH(true);
 		l2c2.setColSpan(3);
 		tr2.add(l2c2);
-		
+
 		ArrayList<Empresa> e = Empresa.getAll();
 		if(e != null && e.size() == 1) {
 			// Terceira linha
 			TableData l3c1 = new TableData(e.get(0).getNome());
 			l3c1.setColSpan(3);
 			tr3.add(l3c1);
-			
+
 			TableData l3c2 = new TableData(e.get(0).getCNPJ());
 			l3c2.setColSpan(3);
 			tr3.add(l3c2);
@@ -178,143 +199,143 @@ public class Holerite {
 			TableData l4c1 = new TableData("Razão Social");
 			l4c1.setIsTH(true);
 			l4c1.setColSpan(6);
-			tr4.add(l4c1);	
-			
+			tr4.add(l4c1);
+
 			// Quinta linha
 			TableData l5c1 = new TableData(e.get(0).getRazaoSocial());
 			l5c1.setColSpan(6);
 			tr5.add(l5c1);
 		}
-		
+
 		// Sexta linha
 		TableData l6c1 = new TableData("Dados do funcionário");
 		l6c1.setIsTH(true);
 		l6c1.setColSpan(6);
 		tr6.add(l6c1);
-		
+
 		// Setima linha
 		TableData l7c1 = new TableData("Nome");
 		l7c1.setIsTH(true);
 		l7c1.setColSpan(3);
 		tr7.add(l7c1);
-		
+
 		TableData l7c2 = new TableData("CPF");
 		l7c2.setIsTH(true);
 		l7c2.setColSpan(2);
 		tr7.add(l7c2);
-		
+
 		TableData l7c3 = new TableData("RG");
 		l7c3.setIsTH(true);
 		tr7.add(l7c3);
-		
+
 		// Oitava linha
 		TableData l8c1 = new TableData(funcionario.getNome() + " " + funcionario.getSobrenome());
 		l8c1.setColSpan(3);
 		tr8.add(l8c1);
-		
+
 		TableData l8c2 = new TableData(funcionario.getCpf());
 		l8c2.setColSpan(2);
 		tr8.add(l8c2);
-		
+
 		TableData l8c3 = new TableData(funcionario.getRg());
 		tr8.add(l8c3);
-		
+
 		// Nona linha
 		TableData l9c1 = new TableData("Setor");
 		l9c1.setIsTH(true);
 		l9c1.setColSpan(2);
 		tr9.add(l9c1);
-		
+
 		TableData l9c2 = new TableData("Cargo");
 		l9c2.setIsTH(true);
 		l9c2.setColSpan(2);
 		tr9.add(l9c2);
-		
+
 		TableData l9c3 = new TableData("Data de admissão");
 		l9c3.setIsTH(true);
 		l9c3.setColSpan(2);
 		tr9.add(l9c3);
-		
+
 		// Decima linha
 		TableData l10c1 = new TableData(funcionario.getFuncao().getSetor().getNome());
 		l10c1.setColSpan(2);
 		tr10.add(l10c1);
-		
+
 		TableData l10c2 = new TableData(funcionario.getFuncao().getNome());
 		l10c2.setColSpan(2);
 		tr10.add(l10c2);
-		
+
 		TableData l10c3 = new TableData(funcionario.getAdmissaoString());
 		l10c3.setColSpan(2);
 		tr10.add(l10c3);
-		
+
 		// Decima primeira linha
 		TableData l11c1 = new TableData("Data");
 		l11c1.setIsTH(true);
 		tr11.add(l11c1);
-		
+
 		TableData l11c2 = new TableData(getMes());
 		l11c2.setColSpan(5);
 		tr11.add(l11c2);
-		
+
 		// Decima segunda linha
 		TableData l12c1 = new TableData("Descrição");
 		l12c1.setIsTH(true);
 		l12c1.setColSpan(5);
 		tr12.add(l12c1);
-		
+
 		TableData l12c2 = new TableData("Valor");
 		l12c2.setIsTH(true);
 		l12c2.setColSpan(5);
 		tr12.add(l12c2);
-		
+
 		// Decima terceira linha
 		TableData l13c1 = new TableData("Salário");
 		l13c1.setColSpan(5);
 		tr13.add(l13c1);
-		
-		TableData l13c2 = new TableData(getSalario());
+
+		TableData l13c2 = new TableData("R$ " + getSalario());
 		l13c2.setColSpan(5);
 		tr13.add(l13c2);
-		
+
 		// Decima quarta linha
 		TableData l14c1 = new TableData("Bonificações");
 		l14c1.setColSpan(5);
 		tr14.add(l14c1);
-		
-		TableData l14c2 = new TableData(getBonificacao());
+
+		TableData l14c2 = new TableData("R$ " + getBonificacao());
 		l14c2.setColSpan(5);
 		tr14.add(l14c2);
-		
+
 		// Decima quinta linha
 		TableData l15c1 = new TableData("Descontos");
 		l15c1.setColSpan(5);
 		tr15.add(l15c1);
-		
-		TableData l15c2 = new TableData(getDescontos());
+
+		TableData l15c2 = new TableData("R$ " + getDescontos());
 		l15c2.setColSpan(5);
 		tr15.add(l15c2);
-		
+
 		// Decima sexta linha
 		TableData l16c1 = new TableData("Liquido");
 		l16c1.setIsTH(true);
 		l16c1.setColSpan(3);
 		tr16.add(l16c1);
-		
+
 		TableData l16c2 = new TableData("Bruto");
 		l16c2.setIsTH(true);
 		l16c2.setColSpan(3);
 		tr16.add(l16c2);
-		
+
 		// Decima setima linha
-		TableData l17c1 = new TableData(getLiquido());
+		TableData l17c1 = new TableData("R$ " + getLiquido());
 		l17c1.setColSpan(3);
 		tr17.add(l17c1);
-		
-		TableData l17c2 = new TableData(getBruto());
+
+		TableData l17c2 = new TableData("R$ " + getBruto());
 		l17c2.setColSpan(3);
 		tr17.add(l17c2);
-				
+
 		// Adiciona a tabela
 		table.add(tr1);
 		table.add(tr2);
@@ -333,7 +354,7 @@ public class Holerite {
 		table.add(tr15);
 		table.add(tr16);
 		table.add(tr17);
-		
+
 		return table;
 	}
 

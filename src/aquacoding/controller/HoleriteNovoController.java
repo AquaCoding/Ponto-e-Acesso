@@ -60,43 +60,48 @@ public class HoleriteNovoController implements Initializable {
 		gerar.setOnMouseClicked((MouseEvent e) -> {
 			ObservableList<Funcionario> fun = FXCollections.observableArrayList(listFuncionaios.getSelectionModel().getSelectedItems());
 			Holerite h;
-			
+
 			// Verifica se uma data foi fornecida
 			if(Inicio.getValue() != null && Termino.getValue() != null) {
-				
+
 				// Verifica se deve gerar holerite para todos os funcionarios
 				if(checkTodos.isSelected()) {
 					fun = FXCollections.observableArrayList(Funcionario.getAll());
 				}
-				
+
 				// Verifica se ao menos um funcionario foi selecionado
 				if(fun.size() > 0) {
-					
+
 					// Percorre por cada um dos funcionarios
 					for(int k = 0; k < fun.size(); k ++){
 						// Obtem o funcionarios
 						Funcionario funcionario = fun.get(k);
-						
+
 						// Obtem a data de inicio e fim
 						LocalDate inicio = Inicio.getValue();
 						LocalDate termino = Termino.getValue();
-						
+
 						// Obtem o numero de dias entre as duas datas
 						long dias = ChronoUnit.DAYS.between(inicio, termino);
-						
+
 						// Tranforma o numero de dias pra int
 						int i = Integer.valueOf(""+dias);
-						
+
 						// Calcula o salario
 						double salario = Holerite.getSalario(i, inicio, funcionario);
-						
+
 						// Gera um holerite
 						h = new Holerite.Builder().setSalario(salario)
 								.setFuncionario(funcionario)
 								.setMes(termino.getMonthValue() + "/" + termino.getYear())
 								.build();
-						h.gerarHolerite();
+						if(fun.size() > 1 || checkTodos.isSelected()){
+							h.gerarHolerite(true);
+						}else{
+						h.gerarHolerite(false);
+						}
 					}
+					CustomAlert.showAlert("Gerar holerite", "Holerites gerados com sucesso.", AlertType.WARNING);
 				} else {
 					CustomAlert.showAlert("Gerar holerite", "Ao menos um funcionário deve ser selecionado.", AlertType.WARNING);
 				}

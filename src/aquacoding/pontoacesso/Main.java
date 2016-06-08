@@ -730,7 +730,7 @@ public class Main extends Application {
 	// Inicia a webview e abre o arquivo especificado
 	public static void loadWebView(String fileToOpen, boolean isDropBox) {
 		try {
-			primaryStage.setTitle(pageTitle + " - Relatório");
+			primaryStage.setTitle(pageTitle + " - DropBox");
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(ClassLoader.getSystemResource("resources/views/WebView.fxml"));
 			AnchorPane personOverview = (AnchorPane) loader.load();
