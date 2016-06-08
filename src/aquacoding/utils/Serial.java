@@ -151,7 +151,7 @@ public class Serial {
 
 			while (resultSet.next()) {
 				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
-					serialPort.writeInt(4);
+					serialPort.writeInt('4');
 				} else {
 					// Verifica a data do ultimo ponto
 					statement = (PreparedStatement) connect.prepareStatement(
@@ -165,9 +165,9 @@ public class Serial {
 						Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
 								resultSet.getInt("idFuncionarioTag"));
 						if (ponto.create()) {
-							serialPort.writeInt(1);
+							serialPort.writeInt('1');
 						} else {
-							serialPort.writeInt(5);
+							serialPort.writeInt('5');
 						}
 					}
 				}
@@ -199,7 +199,7 @@ public class Serial {
 
 			while (resultSet.next()) {
 				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
-					serialPort.writeInt(4);
+					serialPort.writeInt('4');
 				} else {
 					// Verifica a data do ultimo acesso
 					statement = (PreparedStatement) connect.prepareStatement(
@@ -213,9 +213,9 @@ public class Serial {
 						Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
 								resultSet.getInt("idFuncionarioTag"));
 						if (acesso.create()) {
-							serialPort.writeInt(2);
+							serialPort.writeInt('2');
 						} else {
-							serialPort.writeInt(3);
+							serialPort.writeInt('3');
 						}
 					}
 				}

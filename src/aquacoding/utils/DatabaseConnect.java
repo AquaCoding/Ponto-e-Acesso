@@ -115,8 +115,7 @@ public abstract class DatabaseConnect {
 				String pass = CustomAlert.showDialogWithInput("Configuração do banco", "Qual a senha do usuário do banco de dados?");
 				
 				// Cria o banco
-				File sql = new File("DB/SQL.sql");
-				System.out.println(sql.getAbsolutePath());
+				File sql = new File("app_data/DB/SQL.sql");
 				DatabaseConnect.restoreBackup(sql.getAbsolutePath(), user, pass);
 				
 				// Salva as credencias
