@@ -52,6 +52,7 @@ import aquacoding.model.Imposto;
 import aquacoding.model.Setor;
 import aquacoding.model.Usuario;
 import aquacoding.utils.CustomAlert;
+import aquacoding.utils.DatabaseConnect;
 import aquacoding.utils.Image;
 import aquacoding.utils.Serial;
 import aquacoding.utils.Timeout;
@@ -225,6 +226,9 @@ public class Main extends Application {
 				loginStage.initModality(Modality.APPLICATION_MODAL);
 				loginStage.setAlwaysOnTop(true);
 			}
+			
+			// Verifica primeiro acesso
+			DatabaseConnect.firstAccess();
 
 			if (!Usuario.haveUsuario()) {
 				CustomAlert.showAlert("Primeiro acesso", "É preciso criar um usuário", AlertType.INFORMATION);

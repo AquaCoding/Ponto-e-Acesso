@@ -1,19 +1,25 @@
 package aquacoding.utils;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javafx.scene.control.Alert.AlertType;
 
 public abstract class DatabaseConnect {
 	
 	private final static String DB_HOST = "localhost";
 	private final static String DB_NAME = "PontoAcesso";
-	private final static String DB_USER = "root";
-	private final static String DB_PASS = "";
+	private static String DB_USER = "root";
+	private static String DB_PASS = "";
 
 	// MySQL Connection
 	private static Connection con;
@@ -21,6 +27,11 @@ public abstract class DatabaseConnect {
 	// Retorna uma conexão com o banco de dados
 	public static Connection getInstance() {
 		try {
+			// Carrega nome de usuario e senha
+			ArrayList<String> bd = (ArrayList<String>) Files.readAllLines(Paths.get("app_data/db.data"));
+			DB_USER = bd.get(0);
+			DB_PASS = bd.get(1);
+			
 			// Carrega o driver do MySQL
 			Class.forName("com.mysql.jdbc.Driver");
 
@@ -76,6 +87,53 @@ public abstract class DatabaseConnect {
 		   Runtime.getRuntime().exec(command);
 		} catch (IOException ex) {
 		   System.out.println(ex.getMessage());
+		}
+	}
+	
+	public static void restoreBackup(String fileToExecute, String user, String pass) {
+		try {
+		   String command = "cmd.exe /C mysql -u "+user+" "+pass+" < \""+fileToExecute+"\"";
+		   Runtime.getRuntime().exec(command);
+		} catch (IOException ex) {
+		   System.out.println(ex.getMessage());
+		}
+	}
+
+	public static void firstAccess() {
+		try {
+			ArrayList<String> file = (ArrayList<String>) Files.readAllLines(Paths.get("app_data/firstAccess.data"));
+			
+			// Precisa configurar o primeiro acesso
+			if(Boolean.valueOf(file.get(0))) {
+				// Define que o primeiro accesso ocorreu
+				file.clear();
+				file.add("false");
+				Files.write(Paths.get("app_data/firstAccess.data"), file);
+				
+				// Solicita nome de usuario do banco e senha
+				String user = CustomAlert.showDialogWithInput("Configuração do banco", "Qual o nome do usuário do banco de dados?");
+				String pass = CustomAlert.showDialogWithInput("Configuração do banco", "Qual a senha do usuário do banco de dados?");
+				
+				// Cria o banco
+				File sql = new File("app_data/DB/SQL.sql");
+				DatabaseConnect.restoreBackup(sql.getAbsolutePath(), user, pass);
+				
+				// Salva as credencias
+				file.clear();
+				file.add(user);
+				file.add(pass);
+				Files.write(Paths.get("app_data/db.data"), file);
+				
+				Thread.sleep(1000);
+				
+				CustomAlert.showAlert("Configuração do banco", "Banco configurado.", AlertType.WARNING);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

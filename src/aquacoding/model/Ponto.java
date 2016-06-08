@@ -6,12 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import logs.ActionsCode;
 import logs.Logs;
 import logs.ObjectCode;
 import aquacoding.pontoacesso.Main;
 import aquacoding.utils.DatabaseConnect;
+import aquacoding.utils.Time;
 
 public class Ponto {
 
@@ -75,11 +78,15 @@ public class Ponto {
 
 			// Cria um prepared statement
 			PreparedStatement statement = (PreparedStatement) connect.prepareStatement(
-					"INSERT INTO Ponto (horario, idFuncionario, idFuncionariotag) VALUES (now(), ?, ?)", Statement.RETURN_GENERATED_KEYS);
+					"INSERT INTO Ponto (horario, idFuncionario, idFuncionariotag) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
 
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			LocalDateTime now = Time.roundTime(LocalDateTime.now());
+			
 			// Realiza o bind dos valores
-			statement.setInt(1, this.idFuncionario);
-			statement.setInt(2, this.idFuncionarioTag);
+			statement.setString(1, formatter.format(now));
+			statement.setInt(2, this.idFuncionario);
+			statement.setInt(3, this.idFuncionarioTag);
 			
 			// Executa o SQL
 			int ret = statement.executeUpdate();
