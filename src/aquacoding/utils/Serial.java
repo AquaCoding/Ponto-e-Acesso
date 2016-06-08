@@ -140,26 +140,30 @@ public class Serial {
 			Connection connect = DatabaseConnect.getInstance();
 
 			// Cria um prepared statement
-			PreparedStatement statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM FuncionarioTag WHERE codigo = ?");
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("SELECT * FROM FuncionarioTag WHERE codigo = ?");
 
 			// Realiza o bind dos valores
 			statement.setString(1, this.code);
 
 			// Executa o SQL
 			ResultSet resultSet = statement.executeQuery();
-			
-			while(resultSet.next()) {
-				if(verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
+
+			while (resultSet.next()) {
+				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
 					serialPort.writeString("Funcionario Suspenso");
 				} else {
 					// Verifica a data do ultimo ponto
-					statement = (PreparedStatement) connect.prepareStatement("SELECT * FROM Ponto WHERE horario >= NOW() - INTERVAL 10 MINUTE AND idFuncionario = ?;");
+					statement = (PreparedStatement) connect.prepareStatement(
+							"SELECT * FROM Ponto WHERE horario >= NOW() - INTERVAL 10 MINUTE AND idFuncionario = ?;");
 					statement.setInt(1, resultSet.getInt("idFuncionario"));
 					ResultSet resultSet2 = statement.executeQuery();
-					
-					// Se não houver nenhum ponto nos ultimos 10 minutos do mesmo idFuncionario, registra o ponto
-					if(!resultSet2.next()) {
-						Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"), resultSet.getInt("idFuncionarioTag"));
+
+					// Se não houver nenhum ponto nos ultimos 10 minutos do
+					// mesmo idFuncionario, registra o ponto
+					if (!resultSet2.next()) {
+						Ponto ponto = new Ponto(resultSet.getInt("idFuncionario"),
+								resultSet.getInt("idFuncionarioTag"));
 						if (ponto.create()) {
 							serialPort.writeString("Ponto registrado");
 						} else {
@@ -168,7 +172,7 @@ public class Serial {
 					}
 				}
 			}
-			
+
 			// encerra conexão
 			connect.close();
 
@@ -180,48 +184,48 @@ public class Serial {
 	// Responsável por marcar o acesso
 	public void marcaAcesso() throws SerialPortException {
 		try {
-			this.code = serialPort.readString();
+			// Obtem uma conexão com o banco de dados
+			Connection connect = DatabaseConnect.getInstance();
 
-			try {
-				// Obtem uma conexão com o banco de dados
-				Connection connect = DatabaseConnect.getInstance();
+			// Cria um prepared statement
+			PreparedStatement statement = (PreparedStatement) connect
+					.prepareStatement("SELECT * FROM FuncionarioTag WHERE codigo = ?");
 
-				// Cria um statement
-				Statement statement = connect.createStatement();
+			// Realiza o bind dos valores
+			statement.setString(1, this.code);
 
-				// Executa um SQL
-				ResultSet resultSet = statement.executeQuery("SELECT * FROM FuncionarioTag");
+			// Executa o SQL
+			ResultSet resultSet = statement.executeQuery();
 
-				resultSet.next();
+			while (resultSet.next()) {
 				if (verificaSuspensao(resultSet.getInt("idFuncionario")) == true) {
 					serialPort.writeString("Funcionario Suspenso");
 				} else {
-					while (resultSet.next()) {
-						if (this.code.equals(resultSet.getString("codigo"))) {
-							System.out.println("Achou");
-							Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
-									resultSet.getInt("idFuncionarioTag"));
-							System.out.println("Objeto");
-							if (acesso.create()) {
-								serialPort.writeString("Acesso registrado");
-								System.out.println("criou");
-							} else {
-								serialPort.writeString("Erro, contate o Suporte");
-								System.out.println("errou");
-							}
+					// Verifica a data do ultimo acesso
+					statement = (PreparedStatement) connect.prepareStatement(
+							"SELECT * FROM Acesso WHERE horario >= NOW() - INTERVAL 1 MINUTE AND idFuncionario = ?;");
+					statement.setInt(1, resultSet.getInt("idFuncionario"));
+					ResultSet resultSet2 = statement.executeQuery();
+
+					// Se não houver nenhum ponto nos ultimos 10 minutos do
+					// mesmo idFuncionario, registra o ponto
+					if (!resultSet2.next()) {
+						Acesso acesso = new Acesso(resultSet.getInt("idFuncionario"),
+								resultSet.getInt("idFuncionarioTag"));
+						if (acesso.create()) {
+							serialPort.writeString("Ponto registrado");
+						} else {
+							serialPort.writeString("Erro, contate o Suporte");
 						}
 					}
-					;
 				}
-				// encerra conexão
-				connect.close();
-
-			} catch (Exception e) {
-				System.out.println("Erro na busca pelo banco: " + e.getMessage());
 			}
 
-		} catch (SerialPortException e) {
-			System.out.println("Erro na leitura serial " + e.getMessage());
+			// encerra conexão
+			connect.close();
+
+		} catch (Exception e) {
+			System.out.println("Erro na busca pelo banco: " + e.getMessage());
 		}
 	}
 
