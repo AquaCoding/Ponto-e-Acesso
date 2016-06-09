@@ -92,7 +92,7 @@ public abstract class DatabaseConnect {
 	
 	public static void restoreBackup(String fileToExecute, String user, String pass) {
 		try {
-		   String command = "cmd.exe /C mysql -u "+user+" "+pass+" < \""+fileToExecute+"\"";
+		   String command = "cmd.exe /C mysql --user="+user+" --password="+pass+" < \""+fileToExecute+"\"";
 		   Runtime.getRuntime().exec(command);
 		} catch (IOException ex) {
 		   System.out.println(ex.getMessage());
