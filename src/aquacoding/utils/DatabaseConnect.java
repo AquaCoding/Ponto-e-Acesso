@@ -111,8 +111,8 @@ public abstract class DatabaseConnect {
 				Files.write(Paths.get("app_data/firstAccess.data"), file);
 				
 				// Solicita nome de usuario do banco e senha
-				String user = CustomAlert.showDialogWithInput("Configura√ß√£o do banco", "Qual o nome do usu√°rio do banco de dados?");
-				String pass = CustomAlert.showDialogWithInput("Configura√ß√£o do banco", "Qual a senha do usu√°rio do banco de dados?");
+				String user = CustomAlert.showDialogWithInput("ConfiguraÁ„o do banco", "Qual o nome do usu·rio do banco de dados?");
+				String pass = CustomAlert.showDialogWithInput("ConfiguraÁ„o do banco", "Qual a senha do usu·rio do banco de dados?");
 				
 				// Cria o banco
 				File sql = new File("app_data/DB/SQL.sql");
@@ -126,7 +126,7 @@ public abstract class DatabaseConnect {
 				
 				Thread.sleep(1000);
 				
-				CustomAlert.showAlert("Configura√ß√£o do banco", "Banco configurado.", AlertType.WARNING);
+				CustomAlert.showAlert("ConfiguraÁ„o do banco", "Banco configurado.", AlertType.WARNING);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
